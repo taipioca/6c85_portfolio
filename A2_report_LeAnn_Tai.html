@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Vis & Society Assignment 2</title>
+	<link rel="stylesheet" href="https://vis-society.github.io/assignments/report.css" />
+</head>
+
+<body>
+	<header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Visual Analysis
+		</h1>
+
+		<p>
+			<strong>LeAnn</strong> | <em>leanntai@mit.edu</em>
+		</p>
+	</header>
+
+	<main>
+		<section>
+			<h2>Subtheme: Speculation</h2>
+
+			<h3>Overall Analysis Questions</h3>
+
+			<ol>
+				<li>
+					<strong>The Investor Flip Premium Over Time:</strong> How do profit margins on flipped properties compare across investor types (Small, Medium, Large, Institutional, and non-investor flippers), and has the investor premium grown relative to non-flipped property appreciation from 2000 to 2022?
+					<br><br>
+					<em>Motivation:</em> Reading the Homes for Profit report, I was struck by the statistic that a household now needs nearly $200,000 in annual income to afford a median-priced home in the Boston Metro. That number felt abstract until I connected it to the report's description of how investors buy properties and resell them at a markup within short windows, effectively embedding their profit into the new asking price that the next family must pay. I grew up hearing about how Boston used to be more affordable, and I wanted to put a concrete number on how much of today's price inflation is investors cashing out rather than genuine market appreciation.
+					<br><br>
+					<em>Evidence:</em> The Homes for Profit report (MAPC, 2023) explicitly classifies investor types by portfolio size and identifies flipping as a key mechanism by which investors extract value from the housing market. The report motivates this question directly by showing that investor activity has grown significantly since 2010.
+				</li>
+
+				<li>
+					<strong>Corporate Ownership vs. Owner-Occupancy: A Neighborhood Divergence Story:</strong> Across Boston's neighborhoods from 2004 to 2024, which areas have seen the sharpest simultaneous rise in corporate ownership rates and fall in owner-occupancy rates, and does this divergence map onto neighborhoods with the highest concentrations of recent LLC buyer activity?
+					<br><br>
+					<em>Motivation:</em> The ProPublica piece "When Private Equity Becomes Your Landlord" describes tenants who suddenly find their building owned by a distant corporation that raises rents, cuts maintenance, and has no connection to the community. I kept thinking: is this happening in Boston too, and where? The Globe's "Reckoning with Boston's Towers of Wealth" reinforced this concern, describing luxury developments in the Seaport where a large share of units sit empty or are owned by out-of-state entities. That made me want to go beyond anecdote and find the neighborhoods where corporate ownership is rising fastest while actual residents are being squeezed out.
+					<br><br>
+					<em>Evidence:</em> The Homes for Profit report (MAPC, 2023) identifies LLC investors as a specific category of speculator who obscures large portfolios behind shell companies, making corporate ownership data a critical lens for understanding the true scale of non-resident investment. ProPublica's reporting further documents how this corporate ownership model produces measurable declines in residential stability.
+				</li>
+
+				<li>
+					<strong>Geographic Concentration of Speculative Displacement:</strong> Which Boston zip codes show the highest density of Large and Institutional value investor purchases, and does that concentration correlate geographically with neighborhoods experiencing the steepest declines in owner-occupancy over the same period?
+					<br><br>
+					<em>Motivation:</em> The Homes for Profit report includes case studies of tenants who received rent increase notices of up to 70% shortly after an investor purchased their building. What struck me was that these were not scattered stories; they clustered in specific neighborhoods. The ProPublica piece makes a similar point nationally, arguing that once investors establish a foothold in a market, they tend to expand within it, creating a kind of speculative contagion. I wanted to test whether that pattern holds in Boston: are the neighborhoods absorbing the most high-value investor dollars the same ones where long-term residents are disappearing?
+					<br><br>
+					<em>Evidence:</em> The Homes for Profit report (MAPC, 2023) defines value investors as those spending $3.45M or more in aggregate and identifies them as the category most likely to reshape neighborhood housing markets. The ProPublica piece (2022) provides the broader national context for why geographic concentration of institutional investment is a meaningful signal of displacement risk, motivating the spatial focus of this question.
+				</li>
+			</ol>
+		</section>
+
+		<section>
+			<h2>Discoveries &amp; Insights</h2>
+
+			<p>I begin my exploration by studying individual variables and addressing data quality issues. From there I move into multivariate plots and maps that speak directly to my analysis questions.</p>
+
+			<h3>Phase 1: Data Overview</h3>
+
+			<figure>
+				<img src="Residential_Sales_by_Year.png" alt="Residential Sales Volume by Year in Boston" />
+				<figcaption>
+					<strong>Residential Sales Volume by Year in Boston (2000 to 2022).</strong>
+					I begin by examining the overall volume of residential sales transactions in Boston from 2000 to 2022. The data reveals two clear troughs: one in 2009 following the 2008 financial crisis, and one in 2020 during the COVID-19 pandemic, followed by a sharp rebound in 2021. The years 1999 and 2023 show near-zero transactions, indicating they are only partially captured in the dataset. In all subsequent analysis I restrict the data to 2000 to 2022 to account for these anomalies.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="Investor_Counts.png" alt="Investor Type Purchase Counts" />
+				<figcaption>
+					<strong>Investor Type Purchase Counts.</strong>
+					This chart shows the breakdown of all residential transactions by investor type. Non-investors dominate, accounting for roughly 36,000 of approximately 49,000 total transactions, about 73% of all sales. Among investors, Small investors are the most common at roughly 6,500 transactions, followed by Medium, Large, and Institutional in decreasing order. While investors are a minority of transactions, their roughly 13,000 purchases are substantial enough to meaningfully shape the market, and the relative rarity of Institutional buyers makes their outsized price impact all the more worth investigating.
+				</figcaption>
+			</figure>
+
+			<h3>Phase 2, Question 1: The Investor Flip Premium Over Time</h3>
+
+			<figure>
+				<img src="Median_Flip_Profit_Margin2.png" alt="Median Flip Profit Margin by Investor Type" />
+				<figcaption>
+					<strong>Median Flip Profit Margin by Investor Type (filtered to confirmed flips only).</strong>
+					When filtered to only confirmed flips, a strikingly different picture emerges. Institutional investors, who flip rarely but deliberately, achieve a median profit margin of approximately 54%, more than three times the margin of any other investor type. Large, Medium, Small, and Non-investors all cluster between 10 and 15%, suggesting that once I isolate true speculative flipping behavior, institutional capital is overwhelmingly the most extractive force in Boston's housing market. This raises an urgent follow-up question: has institutional dominance in flip profitability grown over time, particularly after 2015 when private equity buying accelerated nationally?
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="Median_Flip_Profit_Margin_by_Investor_Type_-_zoomed.png" alt="Median Flip Profit Margin Over Time by Investor Type" />
+				<figcaption>
+					<strong>Median Flip Profit Margin Over Time by Investor Type (2003 to 2021).</strong>
+					This chart tracks median flip profit margins over time for each investor type from 2003 to 2021. Non-investors and Small investors show the most stable and consistent margins, staying close to 10 to 20% throughout the period, while Institutional and Large investors exhibit dramatic spikes in certain years, reaching above 200% in some cases. These spikes should be interpreted cautiously: they likely reflect years where very few flips occurred in those categories, making the median statistically unreliable rather than indicating a genuine market event. Importantly, from 2013 onward Institutional investors begin showing increasingly volatile and elevated margins, consistent with the national pattern of private equity entering urban housing markets more aggressively after the post-crisis recovery, a trend documented in both the Homes for Profit report and the ProPublica piece.
+				</figcaption>
+			</figure>
+
+			<h3>Phase 2, Question 2: Corporate Ownership vs. Owner-Occupancy</h3>
+
+			<figure>
+				<img src="Corp_Ownership_vs_Owner_Occupancy_in_Boston_2.png" alt="Corporate Ownership vs Owner-Occupancy by Neighborhood" />
+				<figcaption>
+					<strong>Corporate Ownership vs. Owner-Occupancy in 8 Representative Boston Neighborhoods (2004 to 2024).</strong>
+					This small multiples chart shows corporate ownership rate (blue) and owner-occupancy rate (orange) across 8 representative Boston neighborhoods from 2004 to 2024. After initial exploration of all 20 neighborhoods in the dataset, I selected these 8 to represent the full spectrum of speculative dynamics, from luxury waterfront to working-class areas. The most striking pattern is nearly universal: corporate ownership rises steadily in every neighborhood while owner-occupancy falls or stagnates. The divergence is most dramatic in Charlestown, Fenway, and West End, where the two lines are visibly converging toward each other by 2024. Roxbury is the most alarming case; it is the only neighborhood where corporate ownership has nearly caught up to owner-occupancy entirely, suggesting that speculative investment is now penetrating historically working-class communities that were previously less targeted.
+				</figcaption>
+			</figure>
+
+			<h3>Phase 3, Question 3: Geographic Concentration of Speculative Displacement</h3>
+
+			<figure>
+				<img src="Value_Investor_Purchase_Density_in_Boston.png" alt="Value Investor Purchase Density by Zip Code" />
+				<figcaption>
+					<strong>Value Investor Purchase Density by Zip Code, Boston 2000 to 2022.</strong>
+					This map shows the density of Large and Institutional value investor purchases across Boston zip codes from 2000 to 2022, with darker red indicating higher concentration. The pattern is strikingly centralized: the darkest areas correspond to Downtown Boston and the Back Bay/South End corridor, which contains nearly 498 value investor purchases at its peak, dwarfing all surrounding areas. The outer neighborhoods like Dorchester and Hyde Park appear in pale yellow, suggesting that high-value speculation is overwhelmingly concentrated in already-expensive central neighborhoods rather than spreading evenly across the city. Note: a small number of zip codes appear as points rather than filled regions due to incomplete geographic boundary data for those postal codes in Tableau's mapping layer; this does not affect the analysis as those zip codes account for a negligible number of transactions.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="Value_Investor_PUrchase_Density_by_Zip_Code.png" alt="Value Investor Density 2000-2010 vs 2011-2022" />
+				<figcaption>
+					<strong>Value Investor Purchase Density by Zip Code: 2000 to 2010 vs. 2011 to 2022.</strong>
+					Building on the previous map, I split value investor purchase activity into two time periods, 2000 to 2010 and 2011 to 2022, to examine whether speculative investment has shifted geographically over time. To create this comparison I used a calculated field in Tableau splitting years into two groups. The comparison reveals two important trends: first, the core concentration in Downtown, Back Bay, and the South End has intensified dramatically in the post-2010 period, with the darkest zip codes becoming even darker. Second, and more strikingly, investor activity has visibly spread southward and eastward in the 2011 to 2022 map, with zip codes that appeared pale yellow in the first period now showing noticeably deeper orange shading. This pattern is consistent with the Homes for Profit report's finding that investor activity accelerated after 2010 as institutional capital flooded back into urban housing markets following the financial crisis recovery, and suggests that speculation is not staying contained in already-expensive neighborhoods but is actively expanding its footprint into new areas of the city.
+				</figcaption>
+			</figure>
+			
+			<figure>
+				<img src="value_investor_conc_vs_owner_occupancy_change_by_neighborhood_2.png" alt="Value Investor Concentration vs Owner-Occupancy Change" />
+				<figcaption>
+					<strong>Value Investor Concentration vs. Owner-Occupancy Change by Neighborhood, 2004 to 2024.</strong>
+					To connect the two datasets used in this analysis, I constructed a summary table linking each neighborhood to its corresponding zip codes, then aggregated Large and Institutional investor purchase counts from the residential transactions data. The owner-occupancy change field represents the difference in owner-occupancy rate between 2004 and 2024. This scatter plot reveals a clear downward trend: neighborhoods absorbing the most Large and Institutional investor purchases tend to show the steepest declines in owner-occupancy, with South End at 540 purchases and a change of -0.10 and Fenway at 400 purchases and a change of -0.07 being the clearest examples. West End is a striking outlier; despite only 135 investor purchases it shows the steepest owner-occupancy decline of any neighborhood at -0.16, suggesting other displacement pressures beyond high-value speculation are at work there. Notably, only three neighborhoods show any increase in owner-occupancy, and all have relatively low value investor activity, reinforcing the conclusion that high-value speculative investment and residential displacement are closely linked in Boston.
+				</figcaption>
+			</figure>
+
+
+		</section>
+
+		<section>
+			<h2>Summary</h2>
+
+			<p>
+				In Boston, speculative real estate investment is neither random nor evenly distributed. It is concentrated, compounding, and measurably linked to the displacement of long-term residents. Across this analysis, I found that Institutional investors extract dramatically higher flip profit margins of approximately 54% compared to any other investor type when they do choose to flip, that corporate ownership has risen in virtually every Boston neighborhood while owner-occupancy has fallen, and that the neighborhoods absorbing the most high-value investor purchases are consistently those losing resident owners at the fastest rates. The temporal comparison of investor maps reveals that this is not a static phenomenon: speculation intensified and spread geographically after 2010, moving from its core in Downtown and Back Bay into adjacent neighborhoods. While factors like West End's extreme owner-occupancy decline remind me that speculation alone does not explain every displacement story, the overall pattern is unmistakable. To fully understand the mechanisms driving Boston's affordability crisis, future analysis should incorporate eviction data, rental price trends, and building permit records to connect speculative ownership patterns to the lived experiences of the residents being displaced.
+			</p>
+		</section>
+	</main>
+</body>
+</html>
