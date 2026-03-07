@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 4 — Persuasive or Deceptive Visualization?</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Reset & base ───────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0d14;
+        --surface: #0f1520;
+        --border: #1a2438;
+        --text: #c8d0dc;
+        --muted: #4a5a72;
+        --accent: #dc2626;
+        --blue: #3b82f6;
+        --mono: "IBM Plex Mono", monospace;
+        --sans: "IBM Plex Sans", sans-serif;
+        --display: "Bebas Neue", sans-serif;
+      }
+
+      html {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+      }
+
+      body {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 60px 48px 100px;
+        font-size: 15px;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+
+      /* ── Header ─────────────────────────────────────────── */
+      .report-header {
+        border-left: 3px solid var(--accent);
+        padding-left: 20px;
+        margin-bottom: 56px;
+      }
+      .report-header .eyebrow {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 3px;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .report-header h1 {
+        font-family: var(--display);
+        font-size: 48px;
+        line-height: 1;
+        color: #f0ece4;
+        margin-bottom: 10px;
+      }
+      .report-header .meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      /* ── Section headings ───────────────────────────────── */
+      h2 {
+        font-family: var(--display);
+        font-size: 32px;
+        color: #f0ece4;
+        margin: 56px 0 6px;
+        letter-spacing: 0.5px;
+      }
+      h2.for-head {
+        color: var(--accent);
+      }
+      h2.against-head {
+        color: var(--blue);
+      }
+
+      h3 {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        margin-top: 4px;
+      }
+
+      /* ── Proposition box ────────────────────────────────── */
+      .proposition {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        padding: 20px 24px;
+        margin: 24px 0 40px;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: #d0d8e8;
+        line-height: 1.6;
+      }
+      .proposition strong {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 2.5px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      /* ── Stance intro ───────────────────────────────────── */
+      .stance-intro {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 16px 20px;
+        margin-bottom: 28px;
+        font-size: 13px;
+        color: var(--muted);
+        font-style: italic;
+        line-height: 1.65;
+      }
+
+      /* ── Visualization frame ────────────────────────────── */
+      .viz-frame {
+        width: 100%;
+        border: 1px solid var(--border);
+        background: #080c12;
+        overflow: hidden;
+        margin-bottom: 14px;
+      }
+      .viz-frame iframe {
+        width: 1200px;
+        transform-origin: top left;
+        display: block;
+        border: none;
+      }
+      .viz-caption {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--muted);
+        font-style: italic;
+        margin-bottom: 32px;
+        padding-left: 4px;
+      }
+
+      /* ── How it was made ────────────────────────────────── */
+      .how-made {
+        font-size: 13.5px;
+        color: #6a7a8e;
+        font-style: italic;
+        margin-bottom: 24px;
+        padding: 14px 18px;
+        border-left: 2px solid var(--border);
+      }
+
+      /* ── Design decisions list ──────────────────────────── */
+      .decisions {
+        margin: 0 0 16px;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .decision {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 20px 22px;
+      }
+      .decision-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 10px;
+      }
+      .decision-title {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #d0d8e8;
+        line-height: 1.4;
+        flex: 1;
+      }
+      .score-badge {
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 2px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .score-earnest {
+        background: rgba(59, 130, 246, 0.15);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.25);
+      }
+      .score-neutral {
+        background: rgba(100, 116, 139, 0.15);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.25);
+      }
+      .score-deceptive {
+        background: rgba(220, 38, 38, 0.12);
+        color: #fca5a5;
+        border: 1px solid rgba(220, 38, 38, 0.22);
+      }
+      .score-vdeceptive {
+        background: rgba(220, 38, 38, 0.22);
+        color: #fca5a5;
+        border: 1px solid rgba(220, 38, 38, 0.4);
+      }
+
+      .decision-body {
+        font-size: 14px;
+        color: #8a9aae;
+        line-height: 1.72;
+      }
+
+      /* ── Divider ────────────────────────────────────────── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 52px 0;
+      }
+
+      /* ── Final reflection ───────────────────────────────── */
+      .reflection {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-top: 2px solid var(--accent);
+        padding: 32px 36px;
+        margin-top: 40px;
+      }
+      .reflection h2 {
+        font-family: var(--display);
+        font-size: 28px;
+        color: #f0ece4;
+        margin: 0 0 4px;
+      }
+      .reflection h3 {
+        margin-bottom: 24px;
+      }
+      .reflection p {
+        font-size: 14.5px;
+        color: #8a9aae;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+      .reflection p:last-child {
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── HEADER ──────────────────────────────────────────── -->
+    <header class="report-header">
+      <p class="eyebrow">Vis &amp; Society 2026 · Assignment 4</p>
+      <h1>Persuasive or Deceptive Visualization?</h1>
+      <p class="meta">LeAnn Tai &nbsp;·&nbsp; <a>leanntai@mit.edu</a></p>
+    </header>
+
+    <!-- ── PROPOSITION ─────────────────────────────────────── -->
+    <h2>Proposition</h2>
+    <div class="proposition">
+      <strong>Statement</strong>
+      A small number of repeat-offender NYPD officers account for a
+      disproportionate share of civilian complaints, yet face little meaningful
+      accountability.
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ══════════════════════════════════════════════════════
+     FOR
+═══════════════════════════════════════════════════════ -->
+    <h2 class="for-head">FOR the Proposition</h2>
+    <h3>
+      The complaint record is concentrated among a few officers, and the CCRB
+      rarely substantiates findings even against the worst offenders
+    </h3>
+
+    <div class="stance-intro">
+      This visualization argues that civilian complaints are wildly concentrated
+      among a small group of repeat officers. Seven officers each accumulated
+      between 63 and 75 allegations over their careers, yet even among those
+      worst offenders, the CCRB substantiated only a fraction of cases. The orb
+      behind each badge encodes that ratio directly: most of the glow is dark
+      gray and blue, not red.
+    </div>
+
+    <!-- VIZ 1 -->
+    <div class="viz-frame">
+      <img
+        src="viz_for.png"
+        alt="FOR visualization: badge orb scatter"
+        style="width: 100%; display: block"
+      />
+    </div>
+    <p class="viz-caption">
+      Fig. 1 — Each badge represents one NYPD officer. The orb encodes complaint
+      outcomes (red = substantiated, blue = exonerated, dark = unsubstantiated);
+      orb area is proportional to total allegations. Seven heavy-offender badges
+      glow red against a field of 70 typical officers with small, dim orbs.
+    </p>
+
+    <!-- HOW MADE -->
+    <div class="how-made">
+      Built entirely in HTML/CSS/JavaScript using the Canvas API for orbs and
+      badges, with an SVG overlay for text and annotations. The underlying data
+      comes from ProPublica's CCRB release (33,358 allegation records); it was
+      grouped by officer ID in Python to compute each officer's total,
+      substantiated, exonerated, and unsubstantiated counts. The 7 officers with
+      the highest total allegations were selected as the "heavy" group, and 70
+      real officers sampled from those with 12 or fewer allegations formed the
+      "typical" group scattered around them.
+    </div>
+
+    <!-- DECISIONS FOR -->
+    <ul class="decisions">
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Data scope: only officers with at least one substantiated
+            allegation are included</span
+          >
+          <span class="score-badge score-deceptive">Score: -1</span>
+        </div>
+        <p class="decision-body">
+          The ProPublica dataset only covers officers still on the force as of
+          June 2020 who had at least one substantiated allegation. This means
+          every single officer shown, including the small-orb "typical"
+          officers, is already filtered to the most complaint-heavy slice of the
+          full NYPD. A viewer naturally reads the sea of small badges as
+          representing the average officer, but they do not. This framing serves
+          the FOR stance and is genuinely how the public data was released, but
+          it meaningfully overstates complaint prevalence across the full
+          department.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Orb size scaled by area, proportional to total allegations</span
+          >
+          <span class="score-badge score-earnest">Score: +1.5</span>
+        </div>
+        <p class="decision-body">
+          The radius of each orb was set so that its area scales with total
+          allegation count (radius proportional to the square root of total),
+          which is the perceptually correct encoding for circles. This makes the
+          heavy-offender orbs feel large without exaggerating them beyond what
+          the data supports. An alternative was to scale radius linearly with
+          total, which would have made the largest orbs even more visually
+          dominant, but that would have been misleading. The area-proportional
+          approach is earnest and still produces a striking visual contrast: a
+          75-allegation officer has roughly 6 times the area of a 12-allegation
+          officer.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Red glow effect applied only to heavy-offender orbs</span
+          >
+          <span class="score-badge score-deceptive">Score: -0.5</span>
+        </div>
+        <p class="decision-body">
+          The atmospheric red glow radiating from the seven largest orbs is a
+          purely aesthetic amplification. It signals danger and draws the eye
+          before the viewer reads a single label, priming them to interpret
+          those badges negatively. There is no data behind the glow radius; it
+          is decorative. I considered applying a neutral white glow to all orbs
+          to indicate "active" officers, but the red-only version is far more
+          persuasive for the FOR stance. It is a mild deception because it adds
+          emotional weight without informational content.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Title and subtitle framing: "A Few Badges Carry Everything"</span
+          >
+          <span class="score-badge score-deceptive">Score: -1</span>
+        </div>
+        <p class="decision-body">
+          The title is an editorial claim, not a neutral description. "Carry
+          Everything" implies burden and disproportionality, nudging the reader
+          toward the FOR interpretation before they engage with the visual at
+          all. The subtitle reinforces this by describing the orb as "glowing,"
+          a word with connotations of heat and alarm. An earnest alternative
+          title would be something like "Distribution of CCRB Allegations by
+          Officer," but that reads as a chart label, not an argument. For a
+          persuasive visualization this framing is intentional, but it is
+          unambiguously a slant.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Color assignment: red for substantiated, blue for exonerated, dark
+            slate for unsubstantiated</span
+          >
+          <span class="score-badge score-deceptive">Score: -0.5</span>
+        </div>
+        <p class="decision-body">
+          Red is viscerally associated with wrongdoing, warning, and guilt.
+          Assigning it to "substantiated" is technically accurate but exploits
+          the preexisting cultural valence of the color. A more neutral design
+          might use a sequential palette or avoid red entirely. The choice of
+          dark, receding slate for unsubstantiated cases also visually minimizes
+          the fact that most allegations, even on the worst officers, were not
+          confirmed. I considered a neutral gray-to-orange scale, but the
+          red/blue/slate split is more immediately legible and more persuasive
+          for the FOR stance, at the cost of some emotional loading.
+        </p>
+      </li>
+    </ul>
+
+    <hr class="divider" />
+
+    <!-- ══════════════════════════════════════════════════════
+     AGAINST
+═══════════════════════════════════════════════════════ -->
+    <h2 class="against-head">AGAINST the Proposition</h2>
+    <h3>
+      The distribution of complaints is heavily skewed toward low counts. The
+      CCRB is identifying a marginal bad-apple problem, not a systemic one
+    </h3>
+
+    <div class="stance-intro">
+      This visualization argues that the complaint record reveals a healthy,
+      functioning system. The vast majority of the 3,996 officers in the dataset
+      have very few allegations, and the distribution decays sharply after the
+      first few counts. The small cluster of high-allegation officers at the far
+      right is visually negligible.
+    </div>
+
+    <!-- VIZ 2 -->
+    <div class="viz-frame">
+      <img
+        src="viz_against.png"
+        alt="AGAINST visualization: inverted histogram"
+        style="width: 100%; display: block"
+      />
+    </div>
+    <p class="viz-caption">
+      Fig. 2 — Each bar represents officers sharing the same total allegation
+      count. Bars hang downward from a top baseline; longer bars mean more
+      officers at that level. Blue bars (1-49 allegations) dominate; red bars
+      (50+, flagged for Internal Affairs referral) are barely visible stubs at
+      the far right.
+    </p>
+
+    <!-- HOW MADE -->
+    <div class="how-made">
+      Built in HTML/CSS/JavaScript using the Canvas API for the inverted
+      histogram bars and shield caps, with an SVG overlay for all text and
+      annotations. The data comes from the same ProPublica CCRB release, grouped
+      by officer ID in Python and then aggregated into a frequency distribution
+      (how many officers share each complaint count from 1 to 75). No officers
+      were filtered out beyond what the original dataset already excluded; every
+      one of the 3,996 officers appears somewhere in the chart.
+    </div>
+
+    <!-- DECISIONS AGAINST -->
+    <ul class="decisions">
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Inverted bar direction: bars hang down from a top baseline rather
+            than rising up</span
+          >
+          <span class="score-badge score-deceptive">Score: -1</span>
+        </div>
+        <p class="decision-body">
+          In a conventional histogram, tall bars feel dominant and alarming. By
+          flipping the axis so bars hang downward, the longest bars
+          (representing the most officers) now occupy the visual center of
+          gravity calmly, like weight at rest. The short stubs at the far right
+          feel marginal and almost easy to miss. The same data in a standard
+          upward bar chart reads as a dramatic spike followed by a worrying
+          tail, while the inverted version reads as a stable majority with a
+          negligible fringe. A horizontal ranked bar chart was considered, but
+          it would have lost the continuous distribution shape that makes the
+          long-tail argument so immediate.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Red threshold set at 50+ allegations, justified by Internal Affairs
+            referral protocol</span
+          >
+          <span class="score-badge score-vdeceptive">Score: -1.5</span>
+        </div>
+        <p class="decision-body">
+          Marking only the 10 officers with 50+ allegations in red restricts the
+          alarm color to 0.25% of the dataset, making the red zone look like a
+          nearly invisible artifact at the far right. The Internal Affairs
+          referral framing gives this cutoff an institutional justification that
+          sounds procedural rather than editorial, which softens how arbitrary
+          it actually is. The CCRB data does not define a formal 50-allegation
+          threshold in its own documentation. This boundary was chosen because
+          it produces the most persuasive visual outcome for the AGAINST stance.
+          Setting the threshold at 30 would have colored 88 officers red instead
+          of 10, significantly undermining the "tiny fringe" argument.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Dataset scope is invisible: all 3,996 officers already have at
+            least one substantiated allegation</span
+          >
+          <span class="score-badge score-vdeceptive">Score: -2</span>
+        </div>
+        <p class="decision-body">
+          The chart presents itself as a picture of the full NYPD officer
+          complaint record, and a viewer naturally reads the leftmost bars as
+          "officers with almost no complaints." But every single officer in this
+          dataset was included precisely because they had at least one
+          substantiated allegation. Officers with entirely clean records were
+          excluded from the ProPublica release entirely. The 360 officers shown
+          at count=1 are not low-complaint officers in any absolute sense; they
+          are the lowest-complaint tier within an already-filtered population.
+          This is the most deceptive element of the visualization, inherited
+          from the dataset's structure rather than any active choice we made,
+          but we made no effort to disclose it, and the framing actively
+          encourages the wrong inference.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Blue color palette for the non-red majority</span
+          >
+          <span class="score-badge score-deceptive">Score: -0.5</span>
+        </div>
+        <p class="decision-body">
+          Blue carries connotations of calm, trust, order, and institutional
+          legitimacy, especially in a law enforcement context. Applying it to
+          the vast majority of officers primes the viewer to read them as
+          professional and unproblematic before engaging with any numbers. An
+          earnest alternative would be a neutral gray or a sequential single-hue
+          scale without strong cultural associations. The gradient deepening
+          from pale sky blue at low complaint counts to deep navy at higher ones
+          also subtly normalizes officers with 10 or 20 allegations by keeping
+          them in the same calm family as officers with 1 or 2, rather than
+          marking that transition as a warning.
+        </p>
+      </li>
+
+      <li class="decision">
+        <div class="decision-header">
+          <span class="decision-title"
+            >Title: "Most Officers Have Almost No Complaints"</span
+          >
+          <span class="score-badge score-deceptive">Score: -1</span>
+        </div>
+        <p class="decision-body">
+          The title states the AGAINST conclusion as a factual observation
+          rather than an interpretation, giving it rhetorical authority it has
+          not fully earned. "Almost no complaints" is doing meaningful work: an
+          officer with 12 allegations would not be described that way in plain
+          language, but they fall within the large blue majority of the chart.
+          The title also omits the dataset's pre-filtering, so a reader who does
+          not examine the footnotes will accept it as a description of the NYPD
+          at large. A more neutral title like "The Complaint Record Is Heavily
+          Concentrated" would describe the same pattern the FOR visualization
+          uses to argue the opposite, which would have been confusing rather
+          than persuasive.
+        </p>
+      </li>
+    </ul>
+
+    <hr class="divider" />
+
+    <!-- ══════════════════════════════════════════════════════
+     FINAL REFLECTION
+═══════════════════════════════════════════════════════ -->
+    <div class="reflection">
+      <h2>Final Reflection</h2>
+      <h3>Design process, surprises, and the ethics of persuasion</h3>
+
+      <p>
+        The straightforward part was building the FOR visualization. Once I had
+        a clear proposition and a strong visual metaphor (badges overwhelmed by
+        pie charts) the design decisions fell into place quickly. The harder
+        challenge was the AGAINST visualization. This is because the same dataset genuinely supports both
+        readings. Crafting a visual that feels honest while still being
+        persuasive required more deliberate choices about what to foreground and
+        what to let recede into the background. What surprised me most was how
+        much persuasive work the dataset's pre-filtering does before any design
+        choice is made at all. The ProPublica release only includes officers
+        with at least one substantiated allegation, meaning every officer in
+        both visualizations is already in the most complaint-heavy slice of the
+        full NYPD. The FOR visualization uses that framing to make concentrated complaints
+        feel systemic; the AGAINST visualization lets the distribution shape imply that
+        even complaint-heavy officers are mostly minor cases. Neither
+        visualization discloses this filter prominently, and both are more
+        persuasive because of that omission, which is itself a finding worth
+        sitting with.
+      </p>
+
+      <p>
+        Working on both sides of the same proposition forced a more honest
+        definition of "ethical analysis and visualization" than I would have
+        reached otherwise. I'd now define it as: making every design choice you
+        could defend in full daylight, including the ones that serve your
+        argument. The line between acceptable persuasion and misleading
+        visualization is not entirely about whether you have an opinion --- all
+        visualization encodes a perspective. I see it as whether your choices
+        exploit what the viewer cannot see. Truncating an axis to exaggerate a
+        trend is misleading because the viewer has no way to detect it without
+        the raw data. Choosing blue for calm and red for alarm is persuasive but
+        visible. A careful reader can name exactly what you did. The hardest
+        cases are omissions like ours: not lying about the data, but not
+        volunteering that the population shown is already pre-filtered in ways
+        that quietly undermine the apparent conclusion. That feels like the true
+        gray zone, where the distinction between "acceptable" and "misleading"
+        collapses into a question of how much you trust your audience to go
+        looking for what you left out, and how much responsibility you're
+        willing to take for what they don't.
+      </p>
+    </div>
+  </body>
+</html>
