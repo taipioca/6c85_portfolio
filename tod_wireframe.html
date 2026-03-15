@@ -529,7 +529,6 @@ body {
       <button class="toggle-btn" onclick="setMapToggle(this,'rent')">Rent Premium</button>
       <button class="toggle-btn" onclick="setMapToggle(this,'transit')">Transit Access</button>
     </div>
-    <button class="btn btn-primary" style="font-size:12px;padding:8px 16px;margin-left:auto;" onclick="go(5)">See the Act's fix →</button>
   </div>
   <div class="layout" style="height:calc(100% - 116px);">
     <div class="map-area" id="s4-map">
@@ -828,7 +827,7 @@ body {
         <div class="hotspot-card"><div style="font-size:13px;font-weight:800;margin-bottom:5px;">Lynn, MA</div><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="tag" style="background:#FAD9D0;color:var(--coral);font-size:9px;">Over-density 12.6%</span><span class="tag" style="background:#F4ECF4;color:var(--cr);font-size:9px;">POC 62%</span></div></div>
         <div class="hotspot-card"><div style="font-size:13px;font-weight:800;margin-bottom:5px;">Everett, MA</div><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="tag" style="background:#FAD9D0;color:var(--coral);font-size:9px;">Over-density 10.1%</span><span class="tag" style="background:#F4ECF4;color:var(--cr);font-size:9px;">POC 58%</span></div></div>
       </div>
-      <div style="background:var(--amber-lt);border-radius:7px;padding:12px;font-size:12px;line-height:1.5;color:var(--brown);margin-top:4px;"><strong>Key:</strong> Lower-middle income areas show the highest average over-density (7.9%) — crowding near the limited affordable housing close to transit.</div>
+      <div style="background:var(--amber-lt);border-radius:7px;padding:12px;font-size:12px;line-height:1.5;color:var(--brown);margin-top:4px;"><strong>Key insight:</strong> Lower-middle income areas show the highest average over-density (7.9%), crowding near the limited affordable housing close to transit.</div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:12px;" onclick="go(7)">Explore all 118 communities →</button>
     </div>
   </div>
@@ -839,12 +838,6 @@ body {
   <div class="navbar">
     <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
     <div class="search-bar" style="margin-left:20px;"><span>🔍</span><span>Search station or community…</span></div>
-    <div class="toggle-group" style="margin-left:12px;" id="dash-toggle">
-      <button class="toggle-btn active" onclick="setDashToggle(this)">Map</button>
-      <button class="toggle-btn" onclick="setDashToggle(this)">Table</button>
-      <button class="toggle-btn" onclick="setDashToggle(this)">Charts</button>
-    </div>
-    <button class="btn btn-outline" style="font-size:11px;padding:6px 14px;margin-left:auto;">↓ Download</button>
     <div class="nav-links" style="margin-left:12px;"><a onclick="go(6)">← Back</a></div>
   </div>
   <div class="layout" style="height:calc(100% - 56px);padding-top:56px;">
@@ -950,21 +943,21 @@ const lineData = {
   red: {
     name: 'Red Line', color: 'var(--red)', bg: '#FCEAEA',
     stops: [
-      { name:'Alewife', loc:'Cambridge, MA', rent:'$1,890', rentPct:48, mf:28, mfPct:28, bldg:1420, bldgPct:34, walk:'740m', walkPct:60, transit:'12%', tags:['tag-orange:Low Density','tag-teal:Moderate Transit'], insight:'End of the line — lower rent but sparse multi-family housing. Classic outer suburban mismatch.' },
-      { name:'Porter Square', loc:'Cambridge, MA', rent:'$2,640', rentPct:68, mf:52, mfPct:52, bldg:2800, bldgPct:68, walk:'620m', walkPct:50, transit:'28%', tags:['tag-teal:High Transit','tag-amber:Mid Supply'], insight:'Transitional zone — density is rising but rent follows close behind.' },
-      { name:'Central Square', loc:'Cambridge, MA', rent:'$2,850', rentPct:82, mf:71, mfPct:71, bldg:3240, bldgPct:78, walk:'680m', walkPct:55, transit:'38%', tags:['tag-red:Rent Premium','tag-orange:Low Supply','tag-teal:High Transit'], insight:'High transit access, high rents, limited affordable supply — the classic mismatch the Act targets.' },
-      { name:'Andrew Station', loc:'South Boston, MA', rent:'$2,400', rentPct:62, mf:44, mfPct:44, bldg:2100, bldgPct:52, walk:'730m', walkPct:60, transit:'22%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'Gentrification pressure is high — affordable units are disappearing faster than new ones are built.' },
-      { name:'Braintree', loc:'Braintree, MA', rent:'$1,720', rentPct:42, mf:18, mfPct:18, bldg:680, bldgPct:16, walk:'1,100m', walkPct:90, transit:'8%', tags:['tag-orange:Very Low Density','tag-amber:Long Walk'], insight:'End of the line — long walk to the station, low density, and low multi-family share despite being an MBTA community.' },
+      { name:'Alewife', loc:'Cambridge, MA', rent:'$1,890', rentPct:48, mf:28, mfPct:28, bldg:1420, bldgPct:34, walk:'740m', walkPct:60, transit:'12%', tags:['tag-orange:Low Density','tag-teal:Moderate Transit'], insight:'End of the line, lower rent but sparse multi-family housing. Common outer suburban mismatch.' },
+      { name:'Porter Square', loc:'Cambridge, MA', rent:'$2,640', rentPct:68, mf:52, mfPct:52, bldg:2800, bldgPct:68, walk:'620m', walkPct:50, transit:'28%', tags:['tag-teal:High Transit','tag-amber:Mid Supply'], insight:'Transitional zone, density is rising but rent follows close behind.' },
+      { name:'Central Square', loc:'Cambridge, MA', rent:'$2,850', rentPct:82, mf:71, mfPct:71, bldg:3240, bldgPct:78, walk:'680m', walkPct:55, transit:'38%', tags:['tag-red:Rent Premium','tag-orange:Low Supply','tag-teal:High Transit'], insight:'summary/insight here' },
+      { name:'Andrew Station', loc:'South Boston, MA', rent:'$2,400', rentPct:62, mf:44, mfPct:44, bldg:2100, bldgPct:52, walk:'730m', walkPct:60, transit:'22%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
+      { name:'Braintree', loc:'Braintree, MA', rent:'$1,720', rentPct:42, mf:18, mfPct:18, bldg:680, bldgPct:16, walk:'1,100m', walkPct:90, transit:'8%', tags:['tag-orange:Very Low Density','tag-amber:Long Walk'], insight:'summary/insight here' },
     ]
   },
   orange: {
     name: 'Orange Line', color: 'var(--orange)', bg: '#FEF3E2',
     stops: [
-      { name:'Oak Grove', loc:'Malden, MA', rent:'$1,580', rentPct:38, mf:22, mfPct:22, bldg:920, bldgPct:22, walk:'890m', walkPct:73, transit:'6%', tags:['tag-orange:Low Density','tag-amber:Outer Suburb'], insight:'Suburban end-point — low density and long walks despite existing MBTA access.' },
-      { name:'Wellington', loc:'Medford, MA', rent:'$1,950', rentPct:50, mf:30, mfPct:30, bldg:1640, bldgPct:40, walk:'750m', walkPct:61, transit:'14%', tags:['tag-teal:Moderate Transit','tag-orange:Low Supply'], insight:'Moderate transit access but multi-family share lags far behind potential.' },
-      { name:'North Station', loc:'Boston, MA', rent:'$2,980', rentPct:84, mf:68, mfPct:68, bldg:3300, bldgPct:80, walk:'480m', walkPct:39, transit:'42%', tags:['tag-red:Rent Premium','tag-teal:High Transit','tag-green:High Density'], insight:'Urban core — dense and transit-rich, but affordability is the casualty.' },
-      { name:'Ruggles', loc:'Boston, MA', rent:'$2,600', rentPct:68, mf:55, mfPct:55, bldg:2900, bldgPct:70, walk:'560m', walkPct:46, transit:'31%', tags:['tag-teal:High Transit','tag-amber:Mid Density'], insight:'Proximity to Northeastern and major hospitals drives demand and rent up.' },
-      { name:'Forest Hills', loc:'Jamaica Plain, MA', rent:'$2,100', rentPct:53, mf:40, mfPct:40, bldg:1980, bldgPct:48, walk:'670m', walkPct:55, transit:'20%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'Southern terminus — more affordable than the core, but supply still constrained relative to demand.' },
+      { name:'Oak Grove', loc:'Malden, MA', rent:'$1,580', rentPct:38, mf:22, mfPct:22, bldg:920, bldgPct:22, walk:'890m', walkPct:73, transit:'6%', tags:['tag-orange:Low Density','tag-amber:Outer Suburb'], insight:'summary/insight here' },
+      { name:'Wellington', loc:'Medford, MA', rent:'$1,950', rentPct:50, mf:30, mfPct:30, bldg:1640, bldgPct:40, walk:'750m', walkPct:61, transit:'14%', tags:['tag-teal:Moderate Transit','tag-orange:Low Supply'], insight:'summary/insight here' },
+      { name:'North Station', loc:'Boston, MA', rent:'$2,980', rentPct:84, mf:68, mfPct:68, bldg:3300, bldgPct:80, walk:'480m', walkPct:39, transit:'42%', tags:['tag-red:Rent Premium','tag-teal:High Transit','tag-green:High Density'], insight:'summary/insight here' },
+      { name:'Ruggles', loc:'Boston, MA', rent:'$2,600', rentPct:68, mf:55, mfPct:55, bldg:2900, bldgPct:70, walk:'560m', walkPct:46, transit:'31%', tags:['tag-teal:High Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
+      { name:'Forest Hills', loc:'Jamaica Plain, MA', rent:'$2,100', rentPct:53, mf:40, mfPct:40, bldg:1980, bldgPct:48, walk:'670m', walkPct:55, transit:'20%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
     ]
   },
   green: {
@@ -1114,7 +1107,7 @@ function renderStop() {
     </div>
   `;
 
-  document.getElementById('s2-insight').innerHTML = `<strong>💡 Story Insight</strong><br>${stop.insight}`;
+  document.getElementById('s2-insight').innerHTML = `💡<br>${stop.insight}`;
 
   // Map
   document.getElementById('s2-map').innerHTML = renderStopMap(stop, line);
