@@ -3,911 +3,957 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1440">
-<title>Follow the Line — Interactive Prototype</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Follow the Line, Wireframe v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&family=Literata:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --cream: #F7F0E3; --cream-dk: #EDE3D2; --brown: #2E1A0E; --brown-md: #6B4534;
-  --brown-lt: #A88070; --teal: #2AB5B2; --teal-lt: #D0EFEE; --teal-dk: #1A8A88;
-  --amber: #E8A022; --amber-lt: #FBE9C0; --coral: #D94F2A; --coral-lt: #FAD9D0;
-  --card: #FFFCF6; --border: #DCCFBC; --muted: #8A7060;
-  --red: #DA291C; --orange: #ED8B00; --green: #00843D; --blue: #0066CC; --cr: #80276C;
+  --bg:        #F0E8D5;
+  --surface:   #FAF5EB;
+  --navy:      #1B3D6B;
+  --maroon:    #7A1E2E;
+  --mustard:   #C89212;
+  --ink:       #18100A;
+  --mid:       #6A5840;
+  --border:    #C2B097;
+  --light:     #E4D9C4;
+  --navy-lt:   #D6E0EE;
+  --maroon-lt: #F0DADD;
+  --mustard-lt:#F6EBC8;
+  --wf:        #2B7ABF;
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
-  background: #1A1A1A;
+  font-family: 'Barlow', sans-serif;
+  background: #2A2A2A;
   display: flex; align-items: center; justify-content: center;
-  min-height: 100vh;
-  padding: 24px;
+  min-height: 100vh; padding: 24px;
 }
 
-/* ── PROTOTYPE SHELL ── */
 .proto-shell {
-  width: 1280px;
-  height: 800px;
-  background: var(--cream);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 40px 100px rgba(0,0,0,.6);
+  width: 1280px; height: 800px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden; position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,.65);
+  border: 2px solid #444;
 }
 
-/* ── SCREEN SYSTEM ── */
-.screen {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .35s ease;
-  overflow: hidden;
-}
-.screen.active {
-  opacity: 1;
-  pointer-events: all;
-}
-.screen.slide-in  { animation: slideIn .35s ease forwards; }
-.screen.slide-out { animation: slideOut .35s ease forwards; }
-@keyframes slideIn  { from { opacity:0; transform: translateX(40px); } to { opacity:1; transform: translateX(0); } }
-@keyframes slideOut { from { opacity:1; transform: translateX(0); }   to { opacity:0; transform: translateX(-40px); } }
+.screen { position: absolute; inset: 0; opacity: 0; pointer-events: none; overflow: hidden; }
+.screen.active { opacity: 1; pointer-events: all; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:translateX(0); } }
 
-/* ── NAV BAR ── */
+/* Wireframe placeholder */
+.ph {
+  background: var(--light);
+  border: 2px dashed var(--border);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 6px;
+  color: var(--mid); font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; text-align: center;
+}
+.ph .ph-icon { font-size: 26px; opacity: .35; }
+
+/* Wireframe annotation */
+.wf-note {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #EBF4FF; border: 1.5px solid var(--wf);
+  color: var(--wf); font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
+}
+.wf-note::before { content: 'WF'; font-size: 9px; opacity:.7; }
+
+/* Navbar */
 .navbar {
-  height: 56px; width: 100%;
-  background: var(--card);
-  border-bottom: 1.5px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 36px; gap: 28px;
+  height: 52px; width: 100%;
+  background: var(--navy);
+  display: flex; align-items: center; padding: 0 32px; gap: 24px;
   position: absolute; top: 0; left: 0; z-index: 20;
-  flex-shrink: 0;
 }
-.logo { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--brown); display: flex; align-items: center; gap: 8px; }
-.logo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--teal); }
+.logo {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 18px;
+  font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: #fff; display: flex; align-items: center; gap: 10px;
+}
+.logo-line { width: 20px; height: 3px; background: var(--mustard); border-radius: 2px; }
 .nav-links { display: flex; gap: 20px; margin-left: auto; }
-.nav-links a { font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: none; letter-spacing: .04em; cursor: pointer; }
-.nav-links a.active { color: var(--teal); border-bottom: 2px solid var(--teal); padding-bottom: 1px; }
+.nav-links a { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); text-decoration: none; cursor: pointer; letter-spacing: .05em; text-transform: uppercase; }
+.nav-links a:hover { color: #fff; }
 
-/* ── STEP BREADCRUMB ── */
-.breadcrumb {
-  display: flex; align-items: center; gap: 10px;
-  margin: 0 auto;
-}
-.bc-step { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--border); }
-.bc-step.done { color: var(--teal-dk); }
-.bc-step.active { color: var(--teal); }
-.bc-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--border); color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.bc-step.done .bc-dot { background: var(--teal-dk); }
-.bc-step.active .bc-dot { background: var(--teal); }
-.bc-sep { width: 20px; height: 1.5px; background: var(--border); }
+/* Typography */
+.headline { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; line-height: .95; letter-spacing: -.01em; }
+.subhead   { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .02em; }
+.overline  { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--mustard); }
+.body-lit  { font-family: 'Literata', serif; font-size: 14px; line-height: 1.65; color: var(--mid); }
 
-/* ── TYPOGRAPHY ── */
-.display { font-family: 'DM Serif Display', serif; }
-.overline { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); }
-.body-text { font-size: 14px; line-height: 1.65; color: var(--brown-md); }
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 3px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border: none; transition: all .15s; }
+.btn:hover { opacity: .88; transform: translateY(-1px); }
+.btn-navy    { background: var(--navy); color: #fff; }
+.btn-maroon  { background: var(--maroon); color: #fff; }
+.btn-mustard { background: var(--mustard); color: var(--ink); }
+.btn-outline { background: transparent; color: var(--ink); border: 2px solid var(--border); }
+.btn-ghost   { background: rgba(255,255,255,.12); color: #fff; border: 1.5px solid rgba(255,255,255,.2); }
 
-/* ── BUTTONS ── */
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: .03em; cursor: pointer; border: none; transition: all .15s; }
-.btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
-.btn-primary { background: var(--teal); color: #fff; }
-.btn-outline  { background: transparent; color: var(--brown); border: 2px solid var(--border); }
-.btn-amber    { background: var(--amber); color: var(--brown); }
-.btn-dark     { background: rgba(255,255,255,.12); color: #fff; }
+/* Tags */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 2px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.tag-navy    { background: var(--navy-lt); color: var(--navy); }
+.tag-maroon  { background: var(--maroon-lt); color: var(--maroon); }
+.tag-mustard { background: var(--mustard-lt); color: #7A5A00; }
+.tag-ok      { background: #DCF0E0; color: #1A6030; }
 
-/* ── TAGS ── */
-.tag { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
-.tag-red    { background: #FCEAEA; color: var(--red); }
-.tag-green  { background: #E5F4EC; color: var(--green); }
-.tag-orange { background: #FEF3E2; color: #B86A00; }
-.tag-teal   { background: var(--teal-lt); color: var(--teal-dk); }
-.tag-amber  { background: var(--amber-lt); color: #9A6900; }
+/* Card */
+.card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 3px; padding: 18px; }
 
-/* ── CARD ── */
-.card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; }
+/* Metric bar */
+.mbar-bg   { height: 5px; background: var(--light); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.mbar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
 
-/* ── METRIC BAR ── */
-.metric-bar-bg { height: 6px; background: var(--cream-dk); border-radius: 3px; overflow: hidden; margin-top: 4px; }
-.metric-bar-fill { height: 100%; border-radius: 3px; transition: width .5s ease; }
+/* Toggle */
+.toggle-group { display: flex; background: var(--light); border-radius: 3px; padding: 3px; gap: 3px; }
+.toggle-btn { padding: 5px 12px; border-radius: 2px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border: none; background: transparent; color: var(--mid); transition: all .18s; }
+.toggle-btn.active { background: var(--surface); color: var(--navy); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
 
-/* ── TOGGLE GROUP ── */
-.toggle-group { display: flex; background: var(--cream-dk); border-radius: 7px; padding: 3px; gap: 3px; }
-.toggle-btn { padding: 6px 14px; border-radius: 5px; font-size: 11px; font-weight: 800; letter-spacing: .04em; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: all .2s; }
-.toggle-btn.active { background: var(--card); color: var(--teal); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+/* Line btn */
+.line-btn { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 3px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; border: 2px solid transparent; width: 100%; background: var(--light); color: var(--ink); transition: all .15s; }
+.line-btn:hover { background: var(--surface); transform: translateX(3px); }
+.line-btn.selected { background: var(--surface); border-color: currentColor; }
+.ldot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
 
-/* ── PROGRESS PILL ── */
-.progress-pill { display: flex; align-items: center; gap: 6px; background: var(--cream-dk); border-radius: 20px; padding: 5px 12px; font-size: 11px; font-weight: 700; }
-
-/* ── STOP TIMELINE ── */
-.stop-timeline { display: flex; align-items: center; width: 460px; }
+/* Stop timeline */
+.stop-tl { display: flex; align-items: center; width: 440px; }
 .stop-node { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; position: relative; cursor: pointer; }
-.stop-node::before { content: ''; position: absolute; top: 4px; left: 50%; width: 100%; height: 2px; background: currentColor; opacity: .25; z-index: 0; }
+.stop-node::before { content: ''; position: absolute; top: 4px; left: 50%; width: 100%; height: 2px; background: currentColor; opacity: .2; }
 .stop-node:last-child::before { display: none; }
-.s-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid currentColor; background: #fff; z-index: 1; transition: background .2s; }
-.s-dot.visited, .s-dot.active { background: currentColor; }
-.stop-node span { font-size: 8px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.sdot { width: 9px; height: 9px; border-radius: 50%; border: 2px solid currentColor; background: var(--bg); z-index: 1; }
+.sdot.active, .sdot.visited { background: currentColor; }
+.stop-node span { font-family: 'Barlow Condensed', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mid); }
 
-/* ── SLIDER (decorative) ── */
-.slider-track { height: 4px; background: var(--border); border-radius: 2px; }
-.slider-fill { height: 100%; border-radius: 2px; }
+/* Pill */
+.pill { background: var(--light); border-radius: 20px; padding: 4px 11px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 
-/* ── LINE BUTTON ── */
-.line-btn { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 9px; font-size: 13px; font-weight: 800; cursor: pointer; border: 2px solid transparent; width: 100%; transition: all .15s; background: var(--cream); color: var(--brown-md); }
-.line-btn:hover { transform: translateX(3px); }
-.line-btn.selected { border-color: currentColor !important; box-shadow: 0 2px 12px rgba(0,0,0,.1); }
-.line-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+/* Checkbox */
+.cb-list { display: flex; flex-direction: column; gap: 7px; }
+.cb-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; cursor: pointer; }
+.cb { width: 13px; height: 13px; border-radius: 2px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; }
+.cb.on { background: var(--navy); border-color: var(--navy); color: #fff; }
 
-/* ── ANNOTATION BUBBLE ── */
-.annotation { background: var(--amber-lt); border: 1.5px solid var(--amber); border-radius: 8px; padding: 10px 12px; font-size: 11px; font-weight: 700; line-height: 1.4; }
+/* Divider */
+hr.wf { border: none; border-top: 1.5px dashed var(--border); margin: 14px 0; }
 
-/* ── HOTSPOT CARD ── */
-.hotspot-card { background: var(--coral-lt); border: 1.5px solid var(--coral); border-radius: 8px; padding: 12px 14px; }
+/* Slim bar */
+.sbar { height: 3px; background: var(--border); border-radius: 2px; }
+.sbar-fill { height: 100%; border-radius: 2px; }
 
-/* ─── GLOBAL PROTOTYPE CHROME ─── */
-.proto-chrome {
-  position: fixed;
-  bottom: 20px; left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,.75);
-  border-radius: 30px;
-  padding: 8px 20px;
-  display: flex; align-items: center; gap: 16px;
-  backdrop-filter: blur(10px);
-  z-index: 999;
-}
-.proto-chrome .screen-dots { display: flex; gap: 6px; }
-.proto-chrome .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.3); cursor: pointer; transition: all .2s; }
-.proto-chrome .dot.active { background: var(--teal); transform: scale(1.3); }
-.proto-chrome .label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.5); letter-spacing: .06em; text-transform: uppercase; }
-.proto-chrome .sep { width: 1px; height: 16px; background: rgba(255,255,255,.2); }
-
-/* ════════════════ SCREEN LAYOUTS ════════════════ */
-
-/* S0 HERO */
-#s0 { background: var(--brown); }
-#s0 .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, #4A2A16 0%, #2E1A0E 65%); }
-#s0 .hero-pattern { position: absolute; inset: 0; opacity: .04; background-image: repeating-linear-gradient(0deg, transparent, transparent 34px, #fff 34px, #fff 36px), repeating-linear-gradient(90deg, transparent, transparent 34px, #fff 34px, #fff 36px); }
-#s0 .hero-content { position: relative; z-index: 5; padding: 56px 80px 40px; display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 20px; max-width: 640px; }
-#s0 h1 { font-family: 'DM Serif Display', serif; font-size: 76px; line-height: .95; color: #fff; }
-#s0 .hero-sub { font-size: 17px; color: rgba(255,255,255,.6); line-height: 1.55; max-width: 460px; }
-#s0 .stats-row { display: flex; gap: 28px; margin-top: 8px; }
-#s0 .stat-n { font-family: 'DM Serif Display', serif; font-size: 36px; }
-#s0 .stat-l { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.4); }
-#s0 .hero-cta { display: flex; gap: 12px; margin-top: 8px; }
-#s0 .tmap { position: absolute; right: -20px; top: 30px; width: 560px; height: 740px; opacity: .14; }
-#s0 .scroll-hint { position: absolute; bottom: 24px; left: 80px; color: rgba(255,255,255,.3); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
-@keyframes bounce { to { transform: translateY(5px); } }
-.bounce { animation: bounce .7s infinite alternate; }
-.train-track { position: absolute; bottom: 64px; left: 0; right: 0; height: 3px; background: rgba(255,255,255,.07); }
-.train-icon { position: absolute; bottom: 44px; font-size: 28px; opacity: .65; animation: trainMove 6s linear infinite; }
-@keyframes trainMove { from { left: -60px; } to { left: 110%; } }
-
-/* S1 LINE SELECTION */
-#s1 .layout { display: grid; grid-template-columns: 380px 1fr; height: 100%; padding-top: 56px; }
-#s1 .sidebar { background: var(--card); border-right: 1.5px solid var(--border); padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; }
-#s1 .line-list { display: flex; flex-direction: column; gap: 8px; }
-#s1 .map-area { position: relative; background: #E5DDD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-#s1 .map-hint { position: absolute; top: 24px; right: 24px; background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 12px; font-weight: 700; color: var(--muted); max-width: 180px; text-align: center; line-height: 1.5; }
-
-/* S2 STATION */
-#s2 .layout { display: grid; grid-template-columns: 1fr 420px; height: 100%; padding-top: 56px; }
-#s2 .map-area { position: relative; background: #E0D9CE; overflow: hidden; }
-#s2 .station-panel { background: var(--card); border-left: 1.5px solid var(--border); padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-#s2 .metrics-grid { display: flex; flex-direction: column; gap: 14px; }
-#s2 .m-label { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-#s2 .m-val { font-family: 'DM Serif Display', serif; font-size: 26px; }
-#s2 .nav-row { display: flex; gap: 8px; margin-top: 4px; }
-#s2 .nav-row .btn { flex: 1; justify-content: center; font-size: 12px; }
-
-/* S3 PATTERN REVEAL */
-#s3 { background: var(--brown); }
-#s3 .layout { display: grid; grid-template-columns: 440px 1fr; height: 100%; }
-#s3 .text-panel { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
-#s3 h2 { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: .98; color: #fff; }
-#s3 .stats-row { display: flex; gap: 28px; }
-#s3 .stat-n { font-family: 'DM Serif Display', serif; font-size: 42px; color: var(--teal); }
-#s3 .stat-l { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.4); }
-#s3 .chart-panel { background: rgba(255,255,255,.04); border-left: 1px solid rgba(255,255,255,.08); padding: 40px 44px; display: flex; flex-direction: column; gap: 16px; }
-
-/* S4 MAP TOGGLE */
-#s4 .topbar { height: 60px; background: var(--card); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 32px; gap: 20px; }
-#s4 .layout { display: grid; grid-template-columns: 1fr 300px; height: calc(100% - 116px); }
-#s4 .map-area { position: relative; background: #DDD5C8; overflow: hidden; }
-#s4 .legend-panel { background: var(--card); border-left: 1.5px solid var(--border); padding: 24px 22px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; }
-
-/* S5 BEFORE/AFTER */
-#s5 .top-strip { background: var(--teal); color: #fff; padding: 12px 36px; display: flex; align-items: center; gap: 16px; font-size: 13px; font-weight: 700; }
-#s5 .badge { background: rgba(255,255,255,.2); border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 800; letter-spacing: .05em; }
-#s5 .layout { display: grid; grid-template-columns: 1fr 1fr; height: calc(100% - 100px); }
-#s5 .before { background: var(--cream); border-right: 1.5px solid var(--border); padding: 28px 36px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-#s5 .after  { background: #EBF6F6; padding: 28px 36px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-
-/* S6 EQUITY */
-#s6 .topbar { height: 60px; background: var(--card); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 32px; gap: 20px; }
-#s6 .layout { display: grid; grid-template-columns: 1fr 340px; height: calc(100% - 116px); }
-#s6 .map-area { position: relative; background: #DDD5C8; overflow: hidden; }
-#s6 .insight-panel { background: var(--card); border-left: 1.5px solid var(--border); padding: 24px 22px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-
-/* S7 DASHBOARD */
-#s7 .topbar { height: 60px; background: var(--card); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 32px; gap: 16px; }
-#s7 .layout { display: grid; grid-template-columns: 280px 1fr; height: calc(100% - 116px); }
-#s7 .filter-panel { background: var(--card); border-right: 1.5px solid var(--border); padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-#s7 .main-area { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-.search-bar { flex: 1; max-width: 320px; height: 36px; border-radius: 7px; border: 1.5px solid var(--border); background: var(--cream); display: flex; align-items: center; padding: 0 12px; gap: 7px; font-size: 13px; color: var(--muted); }
-.checkbox-list { display: flex; flex-direction: column; gap: 7px; }
-.checkbox-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.cb { width: 13px; height: 13px; border-radius: 3px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; }
-.cb.checked { background: var(--teal); border-color: var(--teal); color: #fff; }
+/* Data table */
 .data-table { width: 100%; border-collapse: collapse; }
-.data-table th { font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 9px 12px; border-bottom: 2px solid var(--border); background: var(--cream); }
-.data-table td { font-size: 12px; padding: 10px 12px; color: var(--brown); border-bottom: 1px solid var(--border); font-weight: 600; }
+.data-table th { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); background: var(--light); }
+.data-table td { font-size: 12px; padding: 9px 10px; border-bottom: 1px solid var(--border); font-weight: 500; }
+
+/* Proto chrome */
+.proto-chrome {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: rgba(10,10,10,.85); border-radius: 30px; padding: 7px 18px;
+  display: flex; align-items: center; gap: 14px;
+  backdrop-filter: blur(12px); z-index: 999;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.pdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: all .2s; }
+.pdot.active { background: var(--mustard); transform: scale(1.4); }
+.plabel { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; min-width: 150px; text-align: center; }
+.pnav { background: none; border: none; color: rgba(255,255,255,.4); cursor: pointer; font-size: 16px; padding: 2px 5px; }
+.pnav:hover { color: #fff; }
+.psep { width: 1px; height: 14px; background: rgba(255,255,255,.15); }
+
+/* ═════════════════ SCREEN LAYOUTS ═════════════════ */
+
+/* S0: Apartment Hunt */
+#s0 { background: var(--bg); }
+#s0 .layout { display: grid; grid-template-columns: 520px 1fr; height: 100%; padding-top: 52px; }
+#s0 .left { padding: 52px 48px; display: flex; flex-direction: column; gap: 22px; justify-content: center; }
+#s0 .right { background: var(--surface); border-left: 1.5px solid var(--border); padding: 40px 36px; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+#s0 .listing-card { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+#s0 .listing-img { height: 120px; background: var(--light); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; }
+#s0 .listing-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+#s0 .commute-row { display: flex; gap: 10px; }
+#s0 .commute-card { flex: 1; background: var(--light); border: 1.5px solid var(--border); border-radius: 3px; padding: 10px 12px; text-align: center; }
+
+/* S1: The Tradeoff */
+#s1 { background: var(--navy); }
+#s1 .layout { display: grid; grid-template-columns: 1fr 1fr; height: calc(100% - 52px); margin-top: 52px; }
+#s1 .option { padding: 48px 44px; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+#s1 .option.a { background: rgba(255,255,255,.04); border-right: 1px solid rgba(255,255,255,.1); }
+#s1 .option.b { background: rgba(255,255,255,.02); }
+#s1 .big-num { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; line-height: 1; }
+#s1 .option-tag { display: inline-flex; padding: 4px 12px; border-radius: 2px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* S2: Line Selection */
+#s2 .layout { display: grid; grid-template-columns: 360px 1fr; height: 100%; padding-top: 52px; }
+#s2 .sidebar { background: var(--surface); border-right: 1.5px solid var(--border); padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+#s2 .map-area { position: relative; background: var(--light); overflow: hidden; }
+
+/* S3: Station Stop */
+#s3 .layout { display: grid; grid-template-columns: 1fr 400px; height: 100%; padding-top: 52px; }
+#s3 .map-area { background: var(--light); position: relative; overflow: hidden; }
+#s3 .panel { background: var(--surface); border-left: 1.5px solid var(--border); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+#s3 .m-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
+#s3 .m-val { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; }
+
+/* S4: Pattern */
+#s4 { background: var(--navy); }
+#s4 .layout { display: grid; grid-template-columns: 420px 1fr; height: 100%; padding-top: 52px; }
+#s4 .text-panel { padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+#s4 .chart-panel { background: rgba(255,255,255,.04); border-left: 1px solid rgba(255,255,255,.1); padding: 36px 40px; display: flex; flex-direction: column; gap: 18px; }
+
+/* S5: Mismatch Map */
+#s5 .topbar { height: 56px; background: var(--surface); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+#s5 .layout { display: grid; grid-template-columns: 1fr 280px; height: calc(100% - 108px); }
+#s5 .map-area { position: relative; background: #D8D0BE; overflow: hidden; }
+#s5 .legend-panel { background: var(--surface); border-left: 1.5px solid var(--border); padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+
+/* S6: Before/After */
+#s6 .navy-bar { background: var(--navy); color: #fff; padding: 10px 32px; display: flex; align-items: center; gap: 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+#s6 .layout { display: grid; grid-template-columns: 1fr 1fr; height: calc(100% - 96px); }
+#s6 .side { padding: 24px 32px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+#s6 .side.before { background: var(--bg); border-right: 1.5px solid var(--border); }
+#s6 .side.after  { background: #EAF0F8; }
+
+/* S7: Equity */
+#s7 .topbar { height: 56px; background: var(--surface); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 28px; gap: 14px; }
+#s7 .layout { display: grid; grid-template-columns: 1fr 320px; height: calc(100% - 108px); }
+#s7 .map-area { background: var(--light); position: relative; overflow: hidden; }
+#s7 .panel { background: var(--surface); border-left: 1.5px solid var(--border); padding: 20px 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+
+/* S8: Dashboard */
+#s8 .topbar { height: 44px; background: var(--surface); border-bottom: 1.5px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 12px; }
+#s8 .layout { display: grid; grid-template-columns: 260px 1fr; height: calc(100% - 96px); }
+#s8 .filters { background: var(--surface); border-right: 1.5px solid var(--border); padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+#s8 .main { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ PROTOTYPE SHELL ═══════════════════ -->
 <div class="proto-shell" id="app">
 
-<!-- ══════════ SCREEN 0: HERO ══════════ -->
+<!-- ══════════════════════════════════════
+     S0: APARTMENT HUNT (personal hook)
+══════════════════════════════════════ -->
 <div class="screen active" id="s0">
-  <div class="hero-bg"></div>
-  <div class="hero-pattern"></div>
-  <svg class="tmap" viewBox="0 0 500 700" fill="none">
-    <path d="M80 640 L130 560 L180 480 L240 400 L290 340 L340 280 L380 210 L400 140 L410 80" stroke="#DA291C" stroke-width="7" stroke-linecap="round"/>
-    <path d="M60 320 L140 315 L220 310 L290 300 L340 290 L390 270 L450 250 L500 230" stroke="#00843D" stroke-width="7" stroke-linecap="round"/>
-    <path d="M290 340 L320 370 L350 420 L380 480" stroke="#00843D" stroke-width="5" opacity=".6"/>
-    <path d="M360 680 L365 620 L370 560 L375 500 L380 440 L385 380 L390 320 L390 270 L385 210 L380 150 L370 90" stroke="#ED8B00" stroke-width="7" stroke-linecap="round"/>
-    <path d="M290 340 L330 320 L380 310 L440 300 L500 290" stroke="#0066CC" stroke-width="7" stroke-linecap="round"/>
-    <circle cx="290" cy="340" r="12" fill="#fff" opacity=".9"/>
-    <circle cx="340" cy="280" r="8" fill="#fff" opacity=".7"/>
-    <circle cx="380" cy="310" r="6" fill="#fff" opacity=".6"/>
-    <circle cx="220" cy="310" r="6" fill="#fff" opacity=".6"/>
-    <circle cx="365" cy="560" r="6" fill="#fff" opacity=".6"/>
-  </svg>
-  <div class="train-track"></div>
-  <div class="train-icon">🚊</div>
-  <div class="hero-content">
-    <div class="overline" style="color: var(--teal); display:flex; align-items:center; gap:10px;">
-      <span style="display:block;width:28px;height:2px;background:var(--teal);"></span>
-      Transit-Oriented Development · Greater Boston
+  <div class="navbar">
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links"><a onclick="go(2)">Skip intro</a></div>
+  </div>
+  <div class="layout">
+    <!-- Left: Narrative -->
+    <div class="left">
+      <div class="overline">MIT · Off-Campus Housing</div>
+      <div class="headline" style="font-size:52px; color:var(--ink);">You want to<br>move off campus.</div>
+      <p class="body-lit">You open your laptop. 2,700+ apartments listed near MIT. This one catches your eye: a furnished room in Somerville, $900 per bedroom. That's almost reasonable.</p>
+      <div style="background:var(--mustard-lt);border-left:3px solid var(--mustard);padding:12px 14px;border-radius:2px;">
+        <p style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#6A4A00;letter-spacing:.04em;">Wow, this looks like a good deal!</p>
+      </div>
+      <button class="btn btn-navy" onclick="go(1)" style="align-self:flex-start;font-size:14px;padding:11px 22px;">But wait...</button>
     </div>
-    <h1>Follow<br><em>the<br>Line.</em></h1>
-    <p class="hero-sub">Affordable housing and public transit are deeply intertwined in Greater Boston. Pick a T line and see what's really going on.</p>
-    <div class="stats-row">
-      <div><div class="stat-n" style="color:var(--teal);">118</div><div class="stat-l">MBTA<br>Communities</div></div>
-      <div><div class="stat-n" style="color:var(--amber);">+$226</div><div class="stat-l">Monthly rent<br>premium near T</div></div>
-      <div><div class="stat-n" style="color:var(--coral);">59%</div><div class="stat-l">Avg single-family<br>housing stock</div></div>
-    </div>
-    <div class="hero-cta">
-      <button class="btn btn-primary" style="font-size:14px;padding:12px 28px;" onclick="go(1)">Choose a line →</button>
-      <button class="btn btn-dark" onclick="go(5)">What is the MBTA Communities Act?</button>
+
+    <!-- Right: Mock listing + commute -->
+    <div class="right">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:2px;">Off-Campus Apartments Near MIT · 2,724 Available</div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <div class="ph" style="height:100%;width:100%;border:none;border-radius:0;">
+            <div class="ph-icon">🛏</div>
+            <div>[ Apartment Photo ]</div>
+          </div>
+        </div>
+        <div class="listing-body">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.03em;">Furnished Room, Shared Apartment</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--mid);">20 Bonair Street, Somerville, MA 02145</div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:4px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy);">$900 <span style="font-size:13px;font-weight:600;">/bedroom</span></div>
+            <span class="tag tag-ok">2 Beds · 3 Month Lease</span>
+          </div>
+          <div style="font-size:12px;color:var(--mid);font-family:'Barlow',sans-serif;">1.7 miles to MIT</div>
+        </div>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">Commute Options to MIT</div>
+      <div class="commute-row">
+        <div class="commute-card">
+          <div style="font-size:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);">Best Route</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--maroon);">43 min</div>
+          <div style="font-size:10px;color:var(--mid);">Bus + Subway</div>
+          <div style="font-size:9px;color:var(--mid);">every 15 min</div>
+        </div>
+        <div class="commute-card">
+          <div style="font-size:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);">Fastest Option</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--maroon);">35 min</div>
+          <div style="font-size:10px;color:var(--mid);">Subway direct</div>
+          <div style="font-size:9px;color:var(--mid);">every 7 min</div>
+        </div>
+        <div class="commute-card">
+          <div style="font-size:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);">Walk Only</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--mid);">~33 min</div>
+          <div style="font-size:10px;color:var(--mid);">Not ideal daily</div>
+        </div>
+      </div>
+
+      <div class="ph" style="height:110px;">
+        <div class="ph-icon">🗺</div>
+        <div>[ Map: Routes from Somerville to MIT ]</div>
+      </div>
+
+      <button class="btn btn-maroon" onclick="go(1)" style="align-self:flex-start;font-size:13px;">35-43 minutes??</button>
     </div>
   </div>
-  <div class="scroll-hint">Click to begin <span class="bounce" style="font-size:16px;">↓</span></div>
 </div>
 
-<!-- ══════════ SCREEN 1: LINE SELECTION ══════════ -->
+
+<!-- ══════════════════════════════════════
+     S1: THE TRADEOFF (editorial beat)
+══════════════════════════════════════ -->
 <div class="screen" id="s1">
-  <div class="navbar">
-    <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
-    <div class="breadcrumb">
-      <div class="bc-step active"><div class="bc-dot">1</div>Choose a line</div>
-      <div class="bc-sep"></div>
-      <div class="bc-step"><div class="bc-dot">2</div>Pick stops</div>
-      <div class="bc-sep"></div>
-      <div class="bc-step"><div class="bc-dot">3</div>See the pattern</div>
+  <div class="navbar" style="background:rgba(27,61,107,.95);">
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links"><a onclick="go(0)">Back</a><a onclick="go(2)" style="margin-left:8px;">Skip</a></div>
+  </div>
+  <div class="layout">
+    <!-- Option A: Affordable, bad transit -->
+    <div class="option a">
+      <span class="option-tag" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.6);">Option A · Affordable</span>
+      <div class="big-num" style="color:var(--mustard);">$900<span style="font-size:32px;font-weight:600;">/bed</span></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.02em;">Somerville · 1.7 mi from MIT</div>
+      <hr class="wf" style="border-color:rgba(255,255,255,.15);">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);">Transit Access</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:#F08090;">Low</span></div>
+        <div style="height:4px;background:rgba(255,255,255,.1);border-radius:2px;"><div style="width:25%;height:100%;background:#F08090;border-radius:2px;"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);">Commute Time</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:rgba(255,255,255,.8);">43 min</span></div>
+        <div style="height:4px;background:rgba(255,255,255,.1);border-radius:2px;"><div style="width:72%;height:100%;background:rgba(255,255,255,.4);border-radius:2px;"></div></div>
+      </div>
+      <p style="font-family:'Literata',serif;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;">Shared housing, 3-month lease. Might as well just stay on campus.</p>
     </div>
-    <div class="nav-links" style="margin-left:auto;"><a onclick="go(0)">← Home</a></div>
+
+    <!-- Option B: Good transit, expensive -->
+    <div class="option b">
+      <span class="option-tag" style="background:rgba(200,146,18,.2);color:var(--mustard);">Option B · Good Transit</span>
+      <div class="big-num" style="color:#F08090;">$1,800<span style="font-size:32px;font-weight:600;">/bed</span></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.02em;">Porter Square · 2.4 mi from MIT</div>
+      <hr class="wf" style="border-color:rgba(255,255,255,.15);">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);">Transit Access</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:#6CF0C0;">High</span></div>
+        <div style="height:4px;background:rgba(255,255,255,.1);border-radius:2px;"><div style="width:85%;height:100%;background:#6CF0C0;border-radius:2px;"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);">Commute Time</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:rgba(255,255,255,.8);">12 min</span></div>
+        <div style="height:4px;background:rgba(255,255,255,.1);border-radius:2px;"><div style="width:20%;height:100%;background:rgba(255,255,255,.4);border-radius:2px;"></div></div>
+      </div>
+      <p style="font-family:'Literata',serif;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;">2 bedrooms, 12-month lease. Great transit. Brutal rent.</p>
+    </div>
+  </div>
+
+  <!-- Bottom callout strip -->
+  <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.08);padding:16px 44px;display:flex;align-items:center;justify-content:space-between;">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);">Sound familiar?</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.02em;">This tradeoff exists across all 118 MBTA communities.</div>
+    </div>
+    <button class="btn btn-mustard" onclick="go(2)" style="font-size:14px;padding:12px 24px;">Explore the data</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     S2: LINE SELECTION
+══════════════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="navbar">
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div style="margin:0 auto;display:flex;align-items:center;gap:10px;">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);">1 · Choose a line</span>
+      <span style="color:rgba(255,255,255,.25);">·</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);">2 · Explore stops</span>
+      <span style="color:rgba(255,255,255,.25);">·</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);">3 · See the pattern</span>
+    </div>
+    <div class="nav-links"><a onclick="go(1)">Back</a></div>
   </div>
   <div class="layout">
     <div class="sidebar">
-      <div>
-        <div class="overline">Step 1 of 3</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:28px;line-height:1.1;margin-top:6px;">Choose a T line<br>to explore</div>
-        <p class="body-text" style="margin-top:10px;font-size:13px;">Each line tells a different story about the tradeoffs between transit access, affordability, and housing density.</p>
-      </div>
-      <div class="line-list" id="line-list">
-        <button class="line-btn" data-line="red" onclick="selectLine('red',this)" style="color:#9A2020;">
-          <div class="line-dot" style="background:var(--red);"></div>
-          Red Line · Alewife → Braintree
-          <span style="margin-left:auto;font-size:10px;opacity:.6;">22 stops</span>
+      <div class="overline">Step 1 of 3</div>
+      <div class="headline" style="font-size:30px;color:var(--ink);">Choose a T line<br>to explore</div>
+      <p class="body-lit" style="font-size:13px;">Each line tells a different story about the tradeoff between transit access, affordability, and housing density.</p>
+      <hr class="wf">
+      <div style="display:flex;flex-direction:column;gap:7px;" id="line-list">
+        <button class="line-btn" data-line="red" onclick="selectLine('red',this)" style="color:#8A1515;">
+          <div class="ldot" style="background:#DA291C;"></div>Red Line · Alewife to Braintree
+          <span style="margin-left:auto;font-size:10px;opacity:.5;">22 stops</span>
         </button>
-        <button class="line-btn" data-line="orange" onclick="selectLine('orange',this)" style="color:#9A5500;">
-          <div class="line-dot" style="background:var(--orange);"></div>
-          Orange Line · Oak Grove → Forest Hills
-          <span style="margin-left:auto;font-size:10px;opacity:.6;">20 stops</span>
+        <button class="line-btn" data-line="orange" onclick="selectLine('orange',this)" style="color:#7A4000;">
+          <div class="ldot" style="background:#ED8B00;"></div>Orange Line · Oak Grove to Forest Hills
+          <span style="margin-left:auto;font-size:10px;opacity:.5;">20 stops</span>
         </button>
-        <button class="line-btn" data-line="green" onclick="selectLine('green',this)" style="color:#006030;">
-          <div class="line-dot" style="background:var(--green);"></div>
-          Green Line · 4 branches
-          <span style="margin-left:auto;font-size:10px;opacity:.6;">67 stops</span>
+        <button class="line-btn" data-line="green" onclick="selectLine('green',this)" style="color:#004820;">
+          <div class="ldot" style="background:#00843D;"></div>Green Line · 4 branches
+          <span style="margin-left:auto;font-size:10px;opacity:.5;">67 stops</span>
         </button>
-        <button class="line-btn" data-line="blue" onclick="selectLine('blue',this)" style="color:#004090;">
-          <div class="line-dot" style="background:var(--blue);"></div>
-          Blue Line · Wonderland → Bowdoin
-          <span style="margin-left:auto;font-size:10px;opacity:.6;">12 stops</span>
+        <button class="line-btn" data-line="blue" onclick="selectLine('blue',this)" style="color:#002C60;">
+          <div class="ldot" style="background:#0066CC;"></div>Blue Line · Wonderland to Bowdoin
+          <span style="margin-left:auto;font-size:10px;opacity:.5;">12 stops</span>
         </button>
-        <button class="line-btn" data-line="cr" onclick="selectLine('cr',this)" style="color:#5A1050;">
-          <div class="line-dot" style="background:var(--cr);border-radius:3px;"></div>
-          Commuter Rail · All lines
-          <span style="margin-left:auto;font-size:10px;opacity:.6;">132 stops</span>
+        <button class="line-btn" data-line="cr" onclick="selectLine('cr',this)" style="color:#400830;">
+          <div class="ldot" style="background:#80276C;border-radius:2px;"></div>Commuter Rail · All lines
+          <span style="margin-left:auto;font-size:10px;opacity:.5;">132 stops</span>
         </button>
       </div>
-      <div style="margin-top:auto;font-size:12px;color:var(--muted);line-height:1.5;">You'll visit <strong>5 sample stations</strong> and see rent, density, and walkability data at each stop.</div>
-      <button class="btn btn-primary" id="continue-btn" style="width:100%;justify-content:center;opacity:.4;" onclick="if(selectedLine) go(2)" id="continue-btn">Select a line to continue →</button>
+      <hr class="wf">
+      <p style="font-size:11px;color:var(--mid);font-family:'Barlow',sans-serif;line-height:1.5;">You will visit <strong>5 sample stations</strong> along your chosen line and see rent, density, and walkability at each stop.</p>
+      <button class="btn btn-navy" id="continue-btn" style="width:100%;justify-content:center;opacity:.4;" onclick="if(selectedLine) go(3)">Select a line to continue</button>
     </div>
-    <div class="map-area" id="s1-map">
-      <svg width="100%" height="100%" viewBox="0 0 720 744" fill="none">
-        <rect width="720" height="744" fill="#E0D8CC"/>
-        <path d="M610 0 L720 0 L720 400 L660 380 L630 420 L600 460 L585 390 L595 280 L575 200 L560 100 Z" fill="#C8D4DC" opacity=".65"/>
-        <path d="M90 680 L130 610 L170 540 L225 460 L270 400 L320 345 L365 295 L400 250 L430 195 L445 140 L455 80" stroke="#DA291C" stroke-width="7" stroke-linecap="round" opacity=".85"/>
-        <circle cx="90" cy="680" r="6" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <circle cx="225" cy="460" r="6" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <circle cx="365" cy="295" r="6" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <circle cx="400" cy="250" r="9" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <circle cx="445" cy="140" r="6" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <circle cx="455" cy="80"  r="6" fill="#fff" stroke="#DA291C" stroke-width="3"/>
-        <path d="M390 700 L392 630 L395 560 L398 490 L400 425 L400 360 L400 295 L398 240 L392 185 L382 130 L370 75" stroke="#ED8B00" stroke-width="7" stroke-linecap="round" opacity=".85"/>
-        <circle cx="390" cy="700" r="6" fill="#fff" stroke="#ED8B00" stroke-width="3"/>
-        <circle cx="398" cy="490" r="6" fill="#fff" stroke="#ED8B00" stroke-width="3"/>
-        <circle cx="400" cy="360" r="6" fill="#fff" stroke="#ED8B00" stroke-width="3"/>
-        <circle cx="392" cy="185" r="6" fill="#fff" stroke="#ED8B00" stroke-width="3"/>
-        <circle cx="370" cy="75"  r="6" fill="#fff" stroke="#ED8B00" stroke-width="3"/>
-        <path d="M70 330 L145 325 L220 320 L295 312 L350 300 L400 290 L450 270 L510 250 L565 230 L610 215" stroke="#00843D" stroke-width="7" stroke-linecap="round" opacity=".85"/>
-        <path d="M400 290 L420 330 L445 375 L470 430" stroke="#00843D" stroke-width="5" stroke-linecap="round" opacity=".6"/>
-        <path d="M350 300 L355 360 L362 420" stroke="#00843D" stroke-width="5" stroke-linecap="round" opacity=".6"/>
-        <circle cx="70"  cy="330" r="6" fill="#fff" stroke="#00843D" stroke-width="3"/>
-        <circle cx="220" cy="320" r="6" fill="#fff" stroke="#00843D" stroke-width="3"/>
-        <circle cx="400" cy="290" r="9" fill="#fff" stroke="#00843D" stroke-width="3"/>
-        <circle cx="610" cy="215" r="6" fill="#fff" stroke="#00843D" stroke-width="3"/>
-        <path d="M400 290 L440 275 L500 260 L560 248 L630 238 L695 228" stroke="#0066CC" stroke-width="7" stroke-linecap="round" opacity=".85"/>
-        <circle cx="490" cy="263" r="6" fill="#fff" stroke="#0066CC" stroke-width="3"/>
-        <circle cx="620" cy="240" r="6" fill="#fff" stroke="#0066CC" stroke-width="3"/>
-        <circle cx="695" cy="228" r="6" fill="#fff" stroke="#0066CC" stroke-width="3"/>
-        <path d="M400 290 L375 255 L345 205 L310 155 L275 95" stroke="#80276C" stroke-width="5" stroke-dasharray="11,6" stroke-linecap="round" opacity=".7"/>
-        <path d="M400 290 L435 330 L480 380 L540 440 L610 510 L680 570" stroke="#80276C" stroke-width="5" stroke-dasharray="11,6" stroke-linecap="round" opacity=".7"/>
-        <circle cx="400" cy="290" r="13" fill="#fff" stroke="#2E1A0E" stroke-width="3"/>
-        <text x="415" y="286" fill="#2E1A0E" font-size="9" font-weight="bold" font-family="Nunito">Park St</text>
-        <text x="76"  y="322" fill="#2E1A0E" font-size="8" font-family="Nunito" font-weight="700">Alewife</text>
-        <text x="604" y="207" fill="#2E1A0E" font-size="8" font-family="Nunito" font-weight="700">Lechmere</text>
-        <text x="688" y="220" fill="#2E1A0E" font-size="8" font-family="Nunito" font-weight="700">Wonderland</text>
-        <text x="76"  y="694" fill="#2E1A0E" font-size="8" font-family="Nunito" font-weight="700">Braintree</text>
-        <text x="363" y="714" fill="#2E1A0E" font-size="8" font-family="Nunito" font-weight="700">Forest Hills</text>
+
+    <!-- Map -->
+    <div class="map-area">
+      <svg width="100%" height="100%" viewBox="0 0 680 748" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;">
+        <rect width="680" height="748" fill="#E2DAC8"/>
+        <path d="M560 0 L680 0 L680 380 L620 360 L595 400 L570 440 L558 370 L562 270 L545 190 L528 90 Z" fill="#C0CED8" opacity=".6"/>
+        <path d="M82 668 L122 598 L162 526 L214 456 L258 396 L306 340 L350 288 L386 244 L414 188 L428 138 L436 80" stroke="#DA291C" stroke-width="6" stroke-linecap="round" opacity=".7" id="map-red"/>
+        <path d="M372 698 L375 630 L378 560 L382 492 L384 424 L386 356 L386 290 L384 234 L378 178 L368 122 L356 68" stroke="#ED8B00" stroke-width="6" stroke-linecap="round" opacity=".7" id="map-orange"/>
+        <path d="M60 318 L134 313 L208 308 L278 300 L332 290 L386 280 L438 262 L496 244 L548 228 L596 212" stroke="#00843D" stroke-width="6" stroke-linecap="round" opacity=".7" id="map-green"/>
+        <path d="M386 280 L406 318 L428 362 L452 412" stroke="#00843D" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+        <path d="M386 280 L426 266 L484 252 L542 240 L606 230 L664 220" stroke="#0066CC" stroke-width="6" stroke-linecap="round" opacity=".7" id="map-blue"/>
+        <path d="M386 280 L360 244 L330 198 L296 150 L262 92" stroke="#80276C" stroke-width="4" stroke-dasharray="10,6" stroke-linecap="round" opacity=".5" id="map-cr"/>
+        <path d="M386 280 L420 318 L466 368 L526 428 L588 496 L648 558" stroke="#80276C" stroke-width="4" stroke-dasharray="10,6" stroke-linecap="round" opacity=".5"/>
+        <circle cx="386" cy="280" r="11" fill="#fff" stroke="#1A100A" stroke-width="2.5"/>
+        <text x="400" y="276" fill="#1A100A" font-size="8" font-family="Barlow" font-weight="700">Park St</text>
+        <circle cx="82" cy="668" r="5" fill="#fff" stroke="#DA291C" stroke-width="2.5"/>
+        <circle cx="214" cy="456" r="5" fill="#fff" stroke="#DA291C" stroke-width="2.5"/>
+        <circle cx="350" cy="288" r="5" fill="#fff" stroke="#DA291C" stroke-width="2.5"/>
+        <circle cx="428" cy="138" r="5" fill="#fff" stroke="#DA291C" stroke-width="2.5"/>
+        <circle cx="372" cy="698" r="5" fill="#fff" stroke="#ED8B00" stroke-width="2.5"/>
+        <circle cx="60" cy="318" r="5" fill="#fff" stroke="#00843D" stroke-width="2.5"/>
+        <circle cx="596" cy="212" r="5" fill="#fff" stroke="#00843D" stroke-width="2.5"/>
+        <circle cx="664" cy="220" r="5" fill="#fff" stroke="#0066CC" stroke-width="2.5"/>
+        <text x="64" y="310" fill="#1A100A" font-size="8" font-family="Barlow" font-weight="600" opacity=".7">Alewife</text>
+        <text x="66" y="682" fill="#1A100A" font-size="8" font-family="Barlow" font-weight="600" opacity=".7">Braintree</text>
+        <text x="590" y="204" fill="#1A100A" font-size="8" font-family="Barlow" font-weight="600" opacity=".7">Lechmere</text>
+        <text x="646" y="212" fill="#1A100A" font-size="8" font-family="Barlow" font-weight="600" opacity=".7">Wonderland</text>
       </svg>
-      <div class="map-hint">☝️ <strong>Click a line</strong> in the list to highlight stations and start your journey</div>
+      <div style="position:absolute;top:20px;right:20px;background:var(--surface);border:1.5px solid var(--border);padding:12px 14px;max-width:170px;text-align:center;line-height:1.5;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);">Click a line to begin</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SCREEN 2: STATION STOP ══════════ -->
-<div class="screen" id="s2">
+
+<!-- ══════════════════════════════════════
+     S3: STATION STOP
+══════════════════════════════════════ -->
+<div class="screen" id="s3">
   <div class="navbar">
-    <div class="logo"><div class="logo-dot" id="s2-logo-dot"></div><span id="s2-line-name">Red Line</span></div>
-    <div class="stop-timeline" id="stop-timeline" style="color:var(--red);margin:0 auto;">
-      <!-- filled by JS -->
-    </div>
-    <div class="progress-pill">Stop <strong id="stop-num" style="color:var(--teal);">1</strong> / 5</div>
+    <div class="logo"><div class="logo-line" id="s3-line-bar"></div><span id="s3-line-name">Red Line</span></div>
+    <div class="stop-tl" id="stop-tl" style="color:#DA291C;margin:0 auto;"></div>
+    <div class="pill">Stop <strong id="snum" style="color:var(--navy);">1</strong> / 5</div>
   </div>
   <div class="layout">
-    <div class="map-area" id="s2-map">
-      <!-- filled by JS -->
+    <div class="map-area">
+      <div id="s3-map-label" style="position:absolute;top:14px;left:14px;z-index:5;background:var(--surface);border:1.5px solid var(--border);padding:5px 10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);"></div>
+      <svg width="100%" height="100%" viewBox="0 0 820 748" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="820" height="748" fill="#DDD5C2"/>
+        <line x1="0" y1="170" x2="820" y2="170" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="0" y1="250" x2="820" y2="250" stroke="#C8C0B0" stroke-width="8"/>
+        <line x1="0" y1="350" x2="820" y2="350" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="0" y1="450" x2="820" y2="450" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="0" y1="560" x2="820" y2="560" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="140" y1="0" x2="140" y2="748" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="280" y1="0" x2="280" y2="748" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="420" y1="0" x2="420" y2="748" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="560" y1="0" x2="560" y2="748" stroke="#C8C0B0" stroke-width="5"/>
+        <line x1="700" y1="0" x2="700" y2="748" stroke="#C8C0B0" stroke-width="5"/>
+        <rect x="20"  y="180" width="105" height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="155" y="180" width="110" height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="295" y="180" width="110" height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="435" y="180" width="110" height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="575" y="180" width="110" height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="715" y="180" width="90"  height="55" rx="2" fill="#C4BAA8"/>
+        <rect x="20"  y="265" width="105" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="155" y="265" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="295" y="265" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="435" y="265" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="575" y="265" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="20"  y="365" width="105" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="155" y="365" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="295" y="365" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="575" y="365" width="110" height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="715" y="365" width="90"  height="70" rx="2" fill="#C4BAA8"/>
+        <rect x="20"  y="465" width="105" height="80" rx="2" fill="#C4BAA8"/>
+        <rect x="155" y="465" width="110" height="80" rx="2" fill="#C4BAA8"/>
+        <rect x="435" y="465" width="110" height="80" rx="2" fill="#C4BAA8"/>
+        <rect x="575" y="465" width="110" height="80" rx="2" fill="#C4BAA8"/>
+        <rect x="435" y="365" width="110" height="70" rx="4" fill="#ADBFA8" opacity=".8"/>
+        <path d="M0 250 L820 250" stroke="#DA291C" stroke-width="7" stroke-linecap="round" id="s3-track"/>
+        <circle cx="420" cy="250" r="20" id="s3-pulse" fill="#DA291C" opacity=".12"/>
+        <circle cx="420" cy="250" r="13" fill="#fff" stroke="#DA291C" stroke-width="4" id="s3-station-outer"/>
+        <circle cx="420" cy="250" r="5"  fill="#DA291C" id="s3-station-inner"/>
+        <circle cx="420" cy="250" r="165" fill="none" stroke="#1B3D6B" stroke-width="1.5" stroke-dasharray="7,5" opacity=".5"/>
+        <text x="576" y="165" fill="#1B3D6B" font-size="9" font-family="Barlow" font-weight="700" opacity=".7">0.5 mi radius</text>
+        <rect x="55" y="468" width="140" height="44" rx="3" fill="#F6EBC8" stroke="#C89212" stroke-width="1.5"/>
+        <text x="125" y="486" fill="#7A5A00" font-size="9" font-family="Barlow" font-weight="700" text-anchor="middle">AVG RENT</text>
+        <text x="125" y="505" fill="#7A5A00" font-size="18" font-family="Barlow Condensed" font-weight="800" text-anchor="middle" id="s3-rent-bubble">$2,850/mo</text>
+        <rect x="610" y="468" width="140" height="44" rx="3" fill="#D6E0EE" stroke="#1B3D6B" stroke-width="1.5"/>
+        <text x="680" y="486" fill="#1B3D6B" font-size="9" font-family="Barlow" font-weight="700" text-anchor="middle">AVG WALK</text>
+        <text x="680" y="505" fill="#1B3D6B" font-size="18" font-family="Barlow Condensed" font-weight="800" text-anchor="middle" id="s3-walk-bubble">680m</text>
+      </svg>
     </div>
-    <div class="station-panel">
-      <div style="display:flex;align-items:flex-start;gap:12px;">
-        <div id="s2-station-icon" style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🚇</div>
+
+    <div class="panel">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div id="s3-icon" style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--light);">🚇</div>
         <div>
-          <div class="overline" id="s2-stop-label">Red Line · Stop 1 of 5</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1.1;" id="s2-station-name">Alewife</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="s2-location">Cambridge, MA</div>
+          <div class="overline" id="s3-stop-label">Red Line · Stop 1 of 5</div>
+          <div class="headline" style="font-size:26px;color:var(--ink);" id="s3-name">Station Name</div>
+          <div style="font-size:11px;color:var(--mid);" id="s3-loc">Location, MA</div>
         </div>
       </div>
-      <div id="s2-tags" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div class="metrics-grid" id="s2-metrics"></div>
-      <div id="s2-insight" class="annotation" style="margin-top:4px;"></div>
-      <div class="nav-row">
-        <button class="btn btn-outline" id="btn-prev" onclick="prevStop()">← Prev</button>
-        <button class="btn btn-primary" id="btn-next" onclick="nextStop()">Next →</button>
+      <div id="s3-tags" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+      <hr class="wf">
+      <div id="s3-metrics" style="display:flex;flex-direction:column;gap:12px;"></div>
+      <div id="s3-insight" style="background:var(--mustard-lt);border-left:3px solid var(--mustard);padding:10px 12px;border-radius:2px;font-family:'Literata',serif;font-size:12px;line-height:1.55;color:var(--ink);"></div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="btn btn-outline" id="s3-prev" onclick="prevStop()" style="flex:1;justify-content:center;font-size:11px;">Prev</button>
+        <button class="btn btn-navy"    id="s3-next" onclick="nextStop()" style="flex:1;justify-content:center;font-size:11px;">Next</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SCREEN 3: PATTERN REVEAL ══════════ -->
-<div class="screen" id="s3">
+
+<!-- ══════════════════════════════════════
+     S4: PATTERN REVEAL
+══════════════════════════════════════ -->
+<div class="screen" id="s4">
+  <div class="navbar" style="background:rgba(27,61,107,.9);">
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links"><a onclick="go(3)">Back</a><a onclick="go(5)" style="margin-left:8px;">Next</a></div>
+  </div>
   <div class="layout">
     <div class="text-panel">
-      <div class="overline" style="color:rgba(255,255,255,.4);">After 5 stops</div>
-      <h2>Rents rise<br>with the T.<br><em style="color:var(--amber);">Supply doesn't.</em></h2>
-      <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;max-width:320px;">Across 94 of 118 MBTA communities, multi-family housing share stays flat at 30–45% regardless of how much transit access a community has.</p>
-      <div class="stats-row">
-        <div><div class="stat-n">94</div><div class="stat-l">communities<br>with flat supply</div></div>
-        <div><div class="stat-n" style="color:var(--amber);">30–45%</div><div class="stat-l">multi-family %<br>flat band</div></div>
+      <div class="overline" style="color:rgba(255,255,255,.35);">After 5 stops</div>
+      <div class="headline" style="font-size:54px;color:#fff;">Rents rise<br>with the T.<br><span style="color:var(--mustard);">Supply doesn't.</span></div>
+      <p style="font-family:'Literata',serif;font-size:14px;color:rgba(255,255,255,.55);line-height:1.65;max-width:300px;">Across 94 of 118 MBTA communities, the multi-family housing share stays flat at 30 to 45% regardless of transit access. This is the problem the MBTA Communities Act is designed to solve.</p>
+      <div style="display:flex;gap:28px;margin-top:4px;">
+        <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#6CDDD8;">94</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);">communities<br>with flat supply</div></div>
+        <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--mustard);">30-45%</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);">multi-family %<br>flat band</div></div>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn btn-primary" onclick="go(4)">See the full map →</button>
-        <button class="btn btn-dark" onclick="go(7)">Explore all data</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+        <button class="btn btn-mustard" onclick="go(5)">See the full map</button>
+        <button class="btn btn-ghost"   onclick="go(8)">Explore all data</button>
       </div>
     </div>
     <div class="chart-panel">
-      <div>
-        <div class="overline" style="color:rgba(255,255,255,.4);">ACS Data · 118 MBTA Communities</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:#fff;margin-top:5px;">Multi-Family % vs. Transit Commute Rate</div>
+      <div class="overline" style="color:rgba(255,255,255,.3);">ACS Census Data · 118 MBTA Communities</div>
+      <div class="subhead" style="font-size:18px;color:#fff;letter-spacing:.02em;">Multi-Family % vs. Transit Commute Rate</div>
+      <div style="display:flex;gap:14px;">
+        <div style="display:flex;align-items:center;gap:5px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.45);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);"></div>MBTA community</div>
+        <div style="display:flex;align-items:center;gap:5px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.45);"><div style="width:8px;height:8px;border-radius:50%;background:#BE2134;"></div>Dense urban core</div>
       </div>
-      <div style="display:flex;gap:16px;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55);">
-          <div style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.45);"></div>MBTA community
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55);">
-          <div style="width:9px;height:9px;border-radius:50%;background:#E05030;"></div>Dense urban core
-        </div>
-      </div>
-      <div style="flex:1;min-height:0;">
-        <svg width="100%" height="100%" viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg">
-          <line x1="50" y1="15" x2="50" y2="290" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-          <line x1="50" y1="290" x2="465" y2="290" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-          <line x1="50" y1="248" x2="465" y2="248" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <line x1="50" y1="206" x2="465" y2="206" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <line x1="50" y1="164" x2="465" y2="164" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <line x1="50" y1="122" x2="465" y2="122" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <line x1="50" y1="80"  x2="465" y2="80"  stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <text x="42" y="293" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">0%</text>
-          <text x="42" y="251" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">20%</text>
-          <text x="42" y="209" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">40%</text>
-          <text x="42" y="167" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">60%</text>
-          <text x="42" y="125" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">80%</text>
-          <text x="42" y="83"  fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Nunito">100%</text>
-          <text x="115" y="306" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="middle" font-family="Nunito">Low (&lt;2%)</text>
-          <text x="225" y="306" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="middle" font-family="Nunito">Moderate (2–6%)</text>
-          <text x="330" y="306" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="middle" font-family="Nunito">High (6–12%)</text>
-          <text x="420" y="306" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="middle" font-family="Nunito">Very High</text>
-          <line x1="162" y1="15" x2="162" y2="290" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="4,3"/>
-          <line x1="275" y1="15" x2="275" y2="290" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="4,3"/>
-          <line x1="375" y1="15" x2="375" y2="290" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="4,3"/>
-          <!-- Low dots -->
-          <circle cx="80"  cy="248" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="92"  cy="241" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="104" cy="250" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="116" cy="236" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="128" cy="246" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="140" cy="252" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="150" cy="238" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="90"  cy="233" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="120" cy="257" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <!-- Moderate dots -->
-          <circle cx="185" cy="246" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="200" cy="237" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="215" cy="249" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="230" cy="240" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="245" cy="248" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="195" cy="232" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="220" cy="257" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="240" cy="228" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="260" cy="243" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <!-- High dots -->
-          <circle cx="295" cy="247" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="310" cy="235" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="325" cy="252" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="340" cy="242" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="305" cy="199" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="320" cy="214" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="355" cy="224" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <!-- Urban core (coral) -->
-          <circle cx="395" cy="86"  r="6" fill="#E05030" opacity=".9"/>
-          <circle cx="410" cy="78"  r="6" fill="#E05030" opacity=".9"/>
-          <circle cx="420" cy="97"  r="6" fill="#E05030" opacity=".9"/>
-          <circle cx="435" cy="83"  r="6" fill="#E05030" opacity=".9"/>
-          <circle cx="408" cy="107" r="6" fill="#E05030" opacity=".9"/>
-          <!-- Scattered MBTA high -->
-          <circle cx="385" cy="205" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="398" cy="192" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="412" cy="202" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="390" cy="246" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <circle cx="438" cy="210" r="4.5" fill="rgba(255,255,255,.38)"/>
-          <!-- Flat band highlight -->
-          <rect x="52" y="226" width="316" height="26" rx="3" fill="rgba(232,160,34,.14)" stroke="rgba(232,160,34,.4)" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="60" y="240" fill="rgba(232,160,34,.75)" font-size="8" font-family="Nunito" font-weight="800">FLAT SUPPLY BAND (30–45%) — 94 communities cluster here</text>
-          <!-- Trend line -->
-          <path d="M52 248 L162 245 L275 240 L375 235 L465 222" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-dasharray="7,4"/>
+      <div style="flex:1;min-height:0;position:relative;">
+        <svg width="100%" height="100%" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+          <line x1="48" y1="10"  x2="48"  y2="285" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <line x1="48" y1="285" x2="490" y2="285" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <line x1="48" y1="245" x2="490" y2="245" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <line x1="48" y1="205" x2="490" y2="205" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <line x1="48" y1="165" x2="490" y2="165" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <line x1="48" y1="125" x2="490" y2="125" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <text x="40" y="288" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="end" font-family="Barlow">0%</text>
+          <text x="40" y="248" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="end" font-family="Barlow">20%</text>
+          <text x="40" y="208" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="end" font-family="Barlow">40%</text>
+          <text x="40" y="168" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="end" font-family="Barlow">60%</text>
+          <text x="40" y="128" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="end" font-family="Barlow">80%</text>
+          <line x1="165" y1="10" x2="165" y2="285" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="280" y1="10" x2="280" y2="285" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="385" y1="10" x2="385" y2="285" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="107" y="302" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle" font-family="Barlow">Low (&lt;2%)</text>
+          <text x="222" y="302" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle" font-family="Barlow">Moderate</text>
+          <text x="332" y="302" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle" font-family="Barlow">High</text>
+          <text x="432" y="302" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle" font-family="Barlow">Very High</text>
+          <circle cx="72"  cy="243" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="86"  cy="237" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="100" cy="245" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="112" cy="232" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="126" cy="241" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="138" cy="248" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="148" cy="234" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="80"  cy="228" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="182" cy="241" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="196" cy="233" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="210" cy="245" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="224" cy="237" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="238" cy="243" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="192" cy="228" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="216" cy="252" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="254" cy="239" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="295" cy="242" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="309" cy="231" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="322" cy="247" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="338" cy="238" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="303" cy="196" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="317" cy="210" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="400" cy="84"  r="6" fill="#BE2134" opacity=".9"/>
+          <circle cx="415" cy="76"  r="6" fill="#BE2134" opacity=".9"/>
+          <circle cx="426" cy="95"  r="6" fill="#BE2134" opacity=".9"/>
+          <circle cx="440" cy="81"  r="6" fill="#BE2134" opacity=".9"/>
+          <circle cx="412" cy="105" r="6" fill="#BE2134" opacity=".9"/>
+          <circle cx="392" cy="200" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="406" cy="188" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="418" cy="198" r="4" fill="rgba(255,255,255,.32)"/>
+          <circle cx="395" cy="241" r="4" fill="rgba(255,255,255,.32)"/>
+          <rect x="50" y="224" width="310" height="24" rx="2" fill="rgba(200,146,18,.15)" stroke="rgba(200,146,18,.4)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="58" y="237" fill="rgba(200,146,18,.7)" font-size="8" font-family="Barlow" font-weight="700">FLAT SUPPLY BAND (30-45%) · 94 communities</text>
+          <path d="M50 244 L165 240 L280 235 L385 230 L480 218" stroke="rgba(255,255,255,.18)" stroke-width="1.5" stroke-dasharray="6,4"/>
         </svg>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SCREEN 4: MISMATCH MAP ══════════ -->
-<div class="screen" id="s4">
+
+<!-- ══════════════════════════════════════
+     S5: MISMATCH MAP
+══════════════════════════════════════ -->
+<div class="screen" id="s5">
   <div class="navbar">
-    <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
-    <div class="nav-links" style="margin-left:auto;"><a onclick="go(3)">← Back</a><a onclick="go(5)" style="margin-left:8px;">Next: The Act →</a></div>
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links" style="margin-left:auto;"><a onclick="go(4)">Back</a><a onclick="go(6)" style="margin-left:8px;">Next: The Act</a></div>
   </div>
-  <div class="topbar" style="margin-top:56px;">
-    <div style="font-family:'DM Serif Display',serif;font-size:18px;">Where is the mismatch?</div>
-    <div class="toggle-group" style="margin-left:24px;" id="map-toggle">
+  <div class="topbar" style="margin-top:52px;">
+    <div class="subhead" style="font-size:17px;color:var(--ink);letter-spacing:.02em;">Where is the mismatch?</div>
+    <div class="toggle-group" style="margin-left:20px;" id="map-toggle">
       <button class="toggle-btn active" onclick="setMapToggle(this,'density')">Housing Density</button>
       <button class="toggle-btn" onclick="setMapToggle(this,'rent')">Rent Premium</button>
       <button class="toggle-btn" onclick="setMapToggle(this,'transit')">Transit Access</button>
     </div>
+    <button class="btn btn-navy" style="font-size:11px;padding:7px 14px;margin-left:auto;" onclick="go(6)">See the Act's fix</button>
   </div>
-  <div class="layout" style="height:calc(100% - 116px);">
-    <div class="map-area" id="s4-map">
-      <svg width="100%" height="100%" viewBox="0 0 900 684" xmlns="http://www.w3.org/2000/svg">
-        <rect width="900" height="684" fill="#D9D0C4"/>
-        <path d="M640 0 L900 0 L900 420 L780 400 L750 440 L720 480 L705 400 L710 300 L690 220 L665 120 Z" fill="#B8C8D4" opacity=".65"/>
-        <polygon points="400,280 440,270 458,300 445,320 415,323 397,303" fill="#1A8A88" opacity=".8"/>
-        <polygon points="365,252 400,243 412,270 400,288 375,291 360,272" fill="#2AB5B2" opacity=".8"/>
-        <polygon points="373,295 412,287 422,314 410,330 385,333 368,315" fill="#2AB5B2" opacity=".78"/>
-        <polygon points="408,322 440,314 450,340 438,356 413,358 398,340" fill="#3CC5C2" opacity=".78"/>
-        <polygon points="343,278 375,270 383,296 370,312 347,314 332,297" fill="#5AD0CE" opacity=".72"/>
-        <polygon points="310,250 343,242 352,267 339,283 316,285 300,268" fill="#6CD8D6" opacity=".72"/>
-        <polygon points="350,305 382,297 390,322 378,338 355,340 340,323" fill="#5AD0CE" opacity=".72"/>
-        <polygon points="265,232 298,224 307,248 294,264 272,266 257,249" fill="#7CDEDE" opacity=".68"/>
-        <polygon points="460,275 495,267 503,292 491,308 469,310 453,293" fill="#5AD0CE" opacity=".72"/>
-        <polygon points="168,196 200,188 209,212 196,228 174,230 158,213" fill="#E8DFD0" opacity=".82"/>
-        <polygon points="200,218 232,210 241,234 228,250 206,252 190,235" fill="#EDE5D5" opacity=".82"/>
-        <polygon points="132,256 164,248 173,272 160,288 138,290 122,273" fill="#E8DFD0" opacity=".82"/>
-        <polygon points="232,278 264,270 273,294 260,310 238,312 222,295" fill="#EDE5D5" opacity=".82"/>
-        <polygon points="98,318 130,310 139,334 126,350 104,352 88,335" fill="#E8DFD0" opacity=".82"/>
-        <polygon points="510,258 545,250 553,274 540,290 518,292 502,275" fill="#EDE5D5" opacity=".82"/>
-        <polygon points="538,292 573,284 581,308 568,324 546,326 530,309" fill="#E8DFD0" opacity=".82"/>
-        <polygon points="298,322 330,314 339,338 326,354 304,356 288,339" fill="#EDE5D5" opacity=".82"/>
-        <polygon points="96,380 128,372 137,396 124,412 102,414 86,397" fill="#E8DFD0" opacity=".82"/>
-        <!-- MBTA lines -->
-        <path d="M96 596 L130 535 L164 472 L212 408 L256 356 L300 308 L345 268 L382 236 L406 198 L418 156" stroke="#DA291C" stroke-width="5" opacity=".45"/>
-        <path d="M55 296 L126 291 L196 287 L260 280 L310 272 L362 262 L410 252 L468 234 L525 216 L574 200" stroke="#00843D" stroke-width="5" opacity=".45"/>
-        <path d="M366 620 L370 562 L373 504 L376 446 L378 388 L380 330 L382 275 L381 222 L377 172 L370 122" stroke="#ED8B00" stroke-width="5" opacity=".45"/>
-        <!-- Station dots -->
-        <circle cx="382" cy="270" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="365" cy="255" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="375" cy="238" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="408" cy="256" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="422" cy="270" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="350" cy="262" r="4.5" fill="#2E1A0E" opacity=".65"/>
-        <circle cx="430" cy="248" r="3.5" fill="#2E1A0E" opacity=".55"/>
-        <circle cx="335" cy="275" r="3.5" fill="#2E1A0E" opacity=".55"/>
-        <circle cx="310" cy="265" r="3.5" fill="#2E1A0E" opacity=".55"/>
-        <!-- Mismatch rings -->
-        <circle cx="275" cy="248" r="28" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-        <circle cx="275" cy="248" r="28" fill="#D94F2A" opacity=".06"/>
-        <circle cx="260" cy="268" r="24" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-        <circle cx="510" cy="278" r="24" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-        <circle cx="510" cy="278" r="24" fill="#D94F2A" opacity=".06"/>
-        <rect x="508" y="235" width="145" height="32" rx="6" fill="white" opacity=".88"/>
-        <text x="580" y="251" fill="#D94F2A" font-size="9" font-family="Nunito" font-weight="800" text-anchor="middle">⚠ MISMATCH ZONES</text>
-        <text x="580" y="262" fill="#6B4534" font-size="8" font-family="Nunito" text-anchor="middle">Station + single-family zoning</text>
-        <rect x="358" y="296" width="68" height="22" rx="4" fill="#2E1A0E" opacity=".78"/>
-        <text x="392" y="311" fill="white" font-size="9" font-family="Nunito" font-weight="800" text-anchor="middle">Boston Core</text>
+  <div class="layout">
+    <!-- Simple choropleth map of Greater Boston -->
+    <div class="map-area">
+      <svg width="100%" height="100%" viewBox="0 0 760 580" xmlns="http://www.w3.org/2000/svg">
+        <!-- Water -->
+        <path d="M580 0 L760 0 L760 360 L700 340 L675 380 L650 420 L638 355 L645 270 L628 190 L610 90 Z" fill="#B8C8D4" opacity=".7"/>
+        <!-- Outer low-density suburbs (light cream) -->
+        <polygon points="60,100 105,88 118,115 103,133 68,136 48,118" fill="#E8E0CC" opacity=".9"/>
+        <polygon points="115,80 158,68 170,94 155,112 122,114 103,92" fill="#E5DCC8" opacity=".9"/>
+        <polygon points="168,90 212,78 224,104 209,122 175,124 157,102" fill="#E8E0CC" opacity=".9"/>
+        <polygon points="55,148 98,136 110,162 95,180 62,182 42,163" fill="#E5DCC8" opacity=".9"/>
+        <polygon points="55,200 98,188 110,214 95,232 62,234 42,215" fill="#E8E0CC" opacity=".9"/>
+        <polygon points="55,254 100,242 112,268 97,286 63,288 43,268" fill="#EAE2CE" opacity=".9"/>
+        <polygon points="55,310 100,298 112,325 97,342 63,344 43,325" fill="#E5DCC8" opacity=".9"/>
+        <polygon points="115,340 160,328 172,355 157,372 123,374 103,355" fill="#EAE2CE" opacity=".9"/>
+        <polygon points="228,88 270,76 282,102 268,120 234,122 215,103" fill="#E8E0CC" opacity=".9"/>
+        <polygon points="280,100 324,88 336,115 321,133 287,135 267,115" fill="#E5DCC8" opacity=".9"/>
+        <!-- Mid-density suburbs -->
+        <polygon points="112,148 156,136 168,163 153,181 120,183 100,163" fill="#C8B898" opacity=".85"/>
+        <polygon points="168,148 212,136 224,162 209,180 176,182 156,162" fill="#C2B290" opacity=".85"/>
+        <polygon points="112,202 156,190 168,216 153,234 120,236 100,216" fill="#C8B898" opacity=".85"/>
+        <polygon points="224,148 268,136 280,162 265,180 232,182 212,162" fill="#BFAC8A" opacity=".85"/>
+        <polygon points="224,202 268,190 280,216 265,234 232,236 212,216" fill="#C8B898" opacity=".85"/>
+        <polygon points="168,256 212,244 224,270 209,288 176,290 156,270" fill="#C2B290" opacity=".85"/>
+        <polygon points="280,202 324,190 336,216 321,234 288,236 268,216" fill="#C8B898" opacity=".85"/>
+        <polygon points="336,148 380,136 392,162 377,180 344,182 324,162" fill="#C2B290" opacity=".85"/>
+        <polygon points="390,200 434,188 446,215 431,232 398,234 378,215" fill="#C8B898" opacity=".85"/>
+        <polygon points="446,178 490,166 502,193 487,210 454,212 434,193" fill="#BFAC8A" opacity=".85"/>
+        <!-- Dense core near center (navy) -->
+        <polygon points="278,248 322,238 334,264 318,280 286,282 267,265" fill="#1B3D6B" opacity=".75"/>
+        <polygon points="308,292 352,282 362,307 347,323 316,325 298,308" fill="#1B3D6B" opacity=".8"/>
+        <polygon points="336,248 380,238 392,264 376,280 344,282 324,264" fill="#254E85" opacity=".8"/>
+        <polygon points="280,300 324,290 334,316 320,332 287,334 268,317" fill="#1B3D6B" opacity=".85"/>
+        <!-- Very dense (Boston/Cambridge core) -->
+        <polygon points="330,340 374,330 384,356 369,372 337,374 318,357" fill="#0F2548" opacity=".85"/>
+        <polygon points="378,330 420,320 430,346 415,362 384,364 365,347" fill="#1B3D6B" opacity=".9"/>
+        <!-- Mismatch zones (maroon rings) -->
+        <circle cx="168" cy="165" r="26" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4" opacity=".8"/>
+        <circle cx="115" cy="215" r="22" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4" opacity=".8"/>
+        <circle cx="500" cy="200" r="24" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4" opacity=".8"/>
+        <!-- MBTA station dots -->
+        <circle cx="290" cy="264" r="5" fill="#fff" stroke="#1B3D6B" stroke-width="2"/>
+        <circle cx="348" cy="264" r="5" fill="#fff" stroke="#1B3D6B" stroke-width="2"/>
+        <circle cx="350" cy="312" r="5" fill="#fff" stroke="#1B3D6B" stroke-width="2"/>
+        <circle cx="350" cy="352" r="5" fill="#fff" stroke="#1B3D6B" stroke-width="2"/>
+        <circle cx="392" cy="340" r="5" fill="#fff" stroke="#1B3D6B" stroke-width="2"/>
+        <circle cx="168" cy="165" r="5" fill="#fff" stroke="#7A1E2E" stroke-width="2"/>
+        <circle cx="115" cy="215" r="5" fill="#fff" stroke="#7A1E2E" stroke-width="2"/>
+        <circle cx="500" cy="200" r="4" fill="#fff" stroke="#7A1E2E" stroke-width="2" opacity=".8"/>
+        <!-- Labels -->
+        <text x="80"  y="180" fill="#6A5840" font-size="9" font-family="Barlow" font-weight="600" opacity=".7">Outer suburbs</text>
+        <text x="198" y="200" fill="#4A3820" font-size="9" font-family="Barlow" font-weight="600" opacity=".8">Mid suburbs</text>
+        <text x="318" y="356" fill="#fff" font-size="9" font-family="Barlow" font-weight="700" opacity=".9">Boston core</text>
+        <text x="148" y="132" fill="#7A1E2E" font-size="9" font-family="Barlow" font-weight="700">Mismatch zone</text>
       </svg>
+      <span class="wf-note" style="position:absolute;bottom:14px;left:14px;">Hover patch for community name + metrics</span>
     </div>
     <div class="legend-panel">
       <div class="overline">Currently Showing</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:22px;line-height:1.15;" id="map-legend-title">% Multi-Family<br>Housing Stock</div>
-      <div style="height:10px;border-radius:4px;background:linear-gradient(90deg,var(--teal-lt),var(--teal-dk));"></div>
-      <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);"><span>Low (0%)</span><span>High (100%)</span></div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div class="overline" style="margin-bottom:8px;">Key Findings</div>
+      <div class="headline" style="font-size:22px;line-height:1.15;color:var(--ink);" id="map-legend-title">% Multi-Family<br>Housing Stock</div>
+      <div style="height:8px;border-radius:2px;background:linear-gradient(90deg,var(--navy-lt),var(--navy));"></div>
+      <div style="display:flex;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);"><span>Low (0%)</span><span>High (100%)</span></div>
+      <hr class="wf">
+      <div class="overline" style="margin-bottom:6px;">Key Findings</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:11px;height:11px;border-radius:2px;background:#1A8A88;flex-shrink:0;margin-top:2px;"></div><p style="font-size:12px;line-height:1.5;color:var(--brown-md);">Dense core (Boston, Cambridge, Somerville) — high density AND high transit</p></div>
-        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:11px;height:11px;border-radius:2px;background:#E8DFD0;border:1px solid var(--border);flex-shrink:0;margin-top:2px;"></div><p style="font-size:12px;line-height:1.5;color:var(--brown-md);">Suburban stations surrounded by low-density zones — the mismatch</p></div>
-        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:11px;height:11px;border-radius:50%;background:var(--coral);flex-shrink:0;margin-top:2px;"></div><p style="font-size:12px;line-height:1.5;color:var(--brown-md);">⚠ Red rings = mismatch zones: good transit, poor density</p></div>
+        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:10px;height:10px;border-radius:2px;background:var(--navy);flex-shrink:0;margin-top:2px;"></div><p style="font-family:'Literata',serif;font-size:12px;line-height:1.5;color:var(--mid);">Dense core (Boston, Cambridge): high density and high transit</p></div>
+        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:10px;height:10px;border-radius:2px;background:var(--light);border:1px solid var(--border);flex-shrink:0;margin-top:2px;"></div><p style="font-family:'Literata',serif;font-size:12px;line-height:1.5;color:var(--mid);">Suburban stations ringed by low-density zoning. This is the mismatch.</p></div>
+        <div style="display:flex;gap:8px;align-items:flex-start;"><div style="width:10px;height:10px;border-radius:50%;background:var(--maroon);flex-shrink:0;margin-top:2px;"></div><p style="font-family:'Literata',serif;font-size:12px;line-height:1.5;color:var(--mid);">Maroon rings: good transit, poor density</p></div>
       </div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div class="overline" style="margin-bottom:8px;">Community Spotlight</div>
-      <div class="card" style="padding:14px 16px;gap:8px;display:flex;flex-direction:column;">
-        <div style="font-size:13px;font-weight:800;">Lexington, MA</div>
-        <div style="display:flex;gap:5px;"><span class="tag tag-teal">Commuter Rail</span><span class="tag tag-orange">Low Density</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:3px;">
-          <div><div style="font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;">Multi-Fam %</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--coral);">18%</div></div>
-          <div><div style="font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;">Over-Density</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--amber);">11.6%</div></div>
+      <hr class="wf">
+      <div class="overline" style="margin-bottom:6px;">Spotlight</div>
+      <div class="card" style="padding:12px 14px;gap:7px;display:flex;flex-direction:column;">
+        <div class="subhead" style="font-size:15px;color:var(--ink);letter-spacing:.02em;">Lexington, MA</div>
+        <div style="display:flex;gap:5px;"><span class="tag tag-navy">Comm. Rail</span><span class="tag tag-maroon">Low Density</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px;">
+          <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);">Multi-Fam %</div><div class="headline" style="font-size:24px;color:var(--maroon);">18%</div></div>
+          <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);">Over-Density</div><div class="headline" style="font-size:24px;color:var(--mustard);">11.6%</div></div>
         </div>
       </div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:12px;" onclick="go(5)">See the Act's fix →</button>
+      <button class="btn btn-navy" style="width:100%;justify-content:center;font-size:11px;" onclick="go(6)">See the Act's fix</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SCREEN 5: BEFORE/AFTER ══════════ -->
-<div class="screen" id="s5">
-  <div class="navbar">
-    <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
-    <div class="nav-links" style="margin-left:auto;"><a onclick="go(4)">← Back</a><a onclick="go(6)" style="margin-left:8px;">Next: Equity →</a></div>
-  </div>
-  <div class="top-strip" style="margin-top:56px;">
-    <span class="badge">Policy Spotlight</span>
-    <strong>The MBTA Communities Act</strong> requires 118 communities to allow multi-family housing by-right near transit stations.
-    <button class="btn" style="background:rgba(255,255,255,.2);color:#fff;font-size:11px;margin-left:auto;padding:7px 14px;">Learn more ↗</button>
-  </div>
-  <div class="layout" style="height:calc(100% - 100px);">
-    <div class="before">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--coral-lt);border:2px solid var(--coral);display:flex;align-items:center;justify-content:center;font-size:13px;">✗</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--coral);">Before the Act</div>
-      </div>
-      <p class="body-text" style="font-size:13px;">Most land within walking distance of MBTA stations is zoned exclusively for single-family homes, blocking multi-unit development.</p>
-      <div style="position:relative;height:300px;border-radius:10px;overflow:hidden;border:2px solid var(--border);">
-        <svg width="100%" height="100%" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="300" fill="#EDE5D5"/>
-          <line x1="0" y1="150" x2="480" y2="150" stroke="#D8D0C2" stroke-width="18"/>
-          <line x1="240" y1="0" x2="240" y2="300" stroke="#D8D0C2" stroke-width="18"/>
-          <line x1="0" y1="75" x2="480" y2="75" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="0" y1="225" x2="480" y2="225" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="120" y1="0" x2="120" y2="300" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="360" y1="0" x2="360" y2="300" stroke="#D8D0C2" stroke-width="9"/>
-          <rect x="0"   y="0"   width="110" height="65"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="130" y="0"   width="100" height="65"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="250" y="0"   width="100" height="65"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="370" y="0"   width="110" height="65"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="0"   y="84"  width="110" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="130" y="84"  width="100" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="250" y="84"  width="100" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="370" y="84"  width="110" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="0"   y="159" width="110" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="130" y="159" width="100" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="250" y="159" width="100" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="370" y="159" width="110" height="57"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="0"   y="234" width="110" height="66"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="130" y="234" width="100" height="66"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="250" y="234" width="100" height="66"  fill="#E8F4D0" opacity=".7"/>
-          <rect x="370" y="234" width="110" height="66"  fill="#E8F4D0" opacity=".7"/>
-          <text x="50"  y="38" font-size="20" text-anchor="middle">🏠</text>
-          <text x="175" y="38" font-size="20" text-anchor="middle">🏠</text>
-          <text x="295" y="38" font-size="20" text-anchor="middle">🏠</text>
-          <text x="415" y="38" font-size="20" text-anchor="middle">🏠</text>
-          <text x="50"  y="118" font-size="20" text-anchor="middle">🏠</text>
-          <text x="175" y="118" font-size="20" text-anchor="middle">🏠</text>
-          <text x="295" y="118" font-size="20" text-anchor="middle">🏠</text>
-          <text x="415" y="118" font-size="20" text-anchor="middle">🏠</text>
-          <text x="50"  y="193" font-size="20" text-anchor="middle">🏠</text>
-          <text x="175" y="193" font-size="20" text-anchor="middle">🏠</text>
-          <text x="295" y="193" font-size="20" text-anchor="middle">🏠</text>
-          <text x="415" y="193" font-size="20" text-anchor="middle">🏠</text>
-          <text x="50"  y="268" font-size="20" text-anchor="middle">🏠</text>
-          <text x="175" y="268" font-size="20" text-anchor="middle">🏠</text>
-          <text x="295" y="268" font-size="20" text-anchor="middle">🏠</text>
-          <text x="415" y="268" font-size="20" text-anchor="middle">🏠</text>
-          <circle cx="240" cy="150" r="20" fill="#DA291C" opacity=".85"/>
-          <text x="240" y="155" fill="white" font-size="12" text-anchor="middle">🚇</text>
-          <rect x="6" y="6" width="100" height="16" rx="3" fill="#D94F2A" opacity=".85"/>
-          <text x="56" y="17" fill="white" font-size="8" font-family="Nunito" font-weight="800" text-anchor="middle">SINGLE-FAMILY ONLY</text>
-        </svg>
-      </div>
-      <div style="display:flex;gap:12px;">
-        <div class="card" style="flex:1;padding:14px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Avg Single-Family %</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--coral);">59%</div></div>
-        <div class="card" style="flex:1;padding:14px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Stock built pre-1970</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--amber);">63%</div></div>
-      </div>
-    </div>
-    <div class="after">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--teal-lt);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;">✓</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--teal-dk);">After the Act</div>
-      </div>
-      <p class="body-text" style="font-size:13px;">A half-mile zone around each station is upzoned to allow multi-family development by-right — creating housing where transit already exists.</p>
-      <div style="position:relative;height:300px;border-radius:10px;overflow:hidden;border:2px solid var(--teal);">
-        <svg width="100%" height="100%" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="300" fill="#EDE5D5"/>
-          <line x1="0" y1="150" x2="480" y2="150" stroke="#D8D0C2" stroke-width="18"/>
-          <line x1="240" y1="0" x2="240" y2="300" stroke="#D8D0C2" stroke-width="18"/>
-          <line x1="0" y1="75" x2="480" y2="75" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="0" y1="225" x2="480" y2="225" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="120" y1="0" x2="120" y2="300" stroke="#D8D0C2" stroke-width="9"/>
-          <line x1="360" y1="0" x2="360" y2="300" stroke="#D8D0C2" stroke-width="9"/>
-          <rect x="0"   y="0"   width="110" height="65"  fill="#E8F4D0" opacity=".6"/>
-          <rect x="370" y="0"   width="110" height="65"  fill="#E8F4D0" opacity=".6"/>
-          <rect x="0"   y="234" width="110" height="66"  fill="#E8F4D0" opacity=".6"/>
-          <rect x="370" y="234" width="110" height="66"  fill="#E8F4D0" opacity=".6"/>
-          <text x="50"  y="38"  font-size="18" text-anchor="middle">🏠</text>
-          <text x="415" y="38"  font-size="18" text-anchor="middle">🏠</text>
-          <text x="50"  y="268" font-size="18" text-anchor="middle">🏠</text>
-          <text x="415" y="268" font-size="18" text-anchor="middle">🏠</text>
-          <circle cx="240" cy="150" r="160" fill="#2AB5B2" opacity=".1"/>
-          <circle cx="240" cy="150" r="160" fill="none" stroke="#2AB5B2" stroke-width="2" stroke-dasharray="8,5"/>
-          <rect x="130" y="0"   width="100" height="65"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="250" y="0"   width="100" height="65"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="0"   y="84"  width="110" height="57"  fill="#D0EFEE" opacity=".7"/>
-          <rect x="130" y="84"  width="100" height="57"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="250" y="84"  width="100" height="57"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="370" y="84"  width="110" height="57"  fill="#D0EFEE" opacity=".7"/>
-          <rect x="0"   y="159" width="110" height="57"  fill="#D0EFEE" opacity=".7"/>
-          <rect x="130" y="159" width="100" height="57"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="250" y="159" width="100" height="57"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="370" y="159" width="110" height="57"  fill="#D0EFEE" opacity=".7"/>
-          <rect x="130" y="234" width="100" height="66"  fill="#D0EFEE" opacity=".8"/>
-          <rect x="250" y="234" width="100" height="66"  fill="#D0EFEE" opacity=".8"/>
-          <text x="175" y="36"  font-size="20" text-anchor="middle">🏢</text>
-          <text x="295" y="36"  font-size="20" text-anchor="middle">🏢</text>
-          <text x="50"  y="118" font-size="16" text-anchor="middle">🏘</text>
-          <text x="175" y="118" font-size="20" text-anchor="middle">🏢</text>
-          <text x="295" y="118" font-size="20" text-anchor="middle">🏢</text>
-          <text x="415" y="118" font-size="16" text-anchor="middle">🏘</text>
-          <text x="50"  y="193" font-size="16" text-anchor="middle">🏘</text>
-          <text x="175" y="193" font-size="20" text-anchor="middle">🏢</text>
-          <text x="295" y="193" font-size="20" text-anchor="middle">🏢</text>
-          <text x="415" y="193" font-size="16" text-anchor="middle">🏘</text>
-          <text x="175" y="268" font-size="20" text-anchor="middle">🏢</text>
-          <text x="295" y="268" font-size="20" text-anchor="middle">🏢</text>
-          <circle cx="240" cy="150" r="20" fill="#2AB5B2" opacity=".9"/>
-          <text x="240" y="155" fill="white" font-size="12" text-anchor="middle">🚇</text>
-          <rect x="6" y="6" width="118" height="16" rx="3" fill="#2AB5B2" opacity=".9"/>
-          <text x="65" y="17" fill="white" font-size="8" font-family="Nunito" font-weight="800" text-anchor="middle">MULTI-FAMILY BY-RIGHT</text>
-          <text x="370" y="82" fill="#1A8A88" font-size="8" font-family="Nunito" font-weight="800">← 0.5 mi</text>
-        </svg>
-      </div>
-      <div style="display:flex;gap:12px;">
-        <div class="card" style="flex:1;padding:14px;border-color:var(--teal);"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Min. District</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--teal-dk);">50 ac</div></div>
-        <div class="card" style="flex:1;padding:14px;border-color:var(--teal);"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Min. Density</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--teal-dk);">15 u/ac</div></div>
-      </div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="go(6)">Explore equity implications →</button>
-    </div>
-  </div>
-</div>
 
-<!-- ══════════ SCREEN 6: EQUITY ══════════ -->
+<!-- ══════════════════════════════════════
+     S6: THE ACT (Before / After)
+══════════════════════════════════════ -->
 <div class="screen" id="s6">
   <div class="navbar">
-    <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
-    <div class="nav-links" style="margin-left:auto;"><a onclick="go(5)">← Back</a><a onclick="go(7)" style="margin-left:8px;">Explore All →</a></div>
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links" style="margin-left:auto;"><a onclick="go(5)">Back</a><a onclick="go(7)" style="margin-left:8px;">Next: Equity</a></div>
   </div>
-  <div class="topbar" style="margin-top:56px;">
-    <div style="font-family:'DM Serif Display',serif;font-size:18px;">Who lives where?</div>
-    <div class="toggle-group" style="margin-left:24px;" id="equity-toggle">
-      <button class="toggle-btn active" onclick="setEquityToggle(this)">Dominant Income</button>
-      <button class="toggle-btn" onclick="setEquityToggle(this)">% People of Color</button>
-      <button class="toggle-btn" onclick="setEquityToggle(this)">Over-Density %</button>
-    </div>
-    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);">
-      Show hotspots
-      <div id="hotspot-toggle" onclick="toggleHotspots()" style="width:36px;height:20px;background:var(--teal);border-radius:10px;position:relative;cursor:pointer;">
-        <div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
-      </div>
-    </div>
+  <div class="navy-bar" style="margin-top:52px;">
+    <span style="background:rgba(255,255,255,.15);padding:2px 10px;border-radius:2px;font-size:10px;letter-spacing:.1em;">Policy Spotlight</span>
+    The MBTA Communities Act requires 118 communities to allow multi-family housing by-right near transit.
+    <button class="btn btn-ghost" style="font-size:10px;padding:5px 12px;margin-left:auto;">Learn more</button>
   </div>
-  <div class="layout" style="height:calc(100% - 116px);">
-    <div class="map-area" id="s6-map">
-      <svg width="100%" height="100%" viewBox="0 0 860 684" xmlns="http://www.w3.org/2000/svg" id="equity-svg">
-        <rect width="860" height="684" fill="#D9D0C4"/>
-        <path d="M620 0 L860 0 L860 440 L755 420 L728 460 L700 500 L688 420 L692 310 L672 230 L648 120 Z" fill="#B8C8D4" opacity=".6"/>
-        <polygon points="174,166 208,157 217,183 204,200 179,202 163,184" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="480,136 514,127 522,153 509,170 485,172 468,154" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="554,204 588,195 596,221 583,238 559,240 542,222" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="136,306 170,297 178,323 165,340 141,342 124,324" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="578,272 612,263 620,289 607,306 583,308 566,290" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="212,342 246,333 254,359 241,376 217,378 200,360" fill="#6B2C5A" opacity=".8"/>
-        <polygon points="264,188 298,179 306,205 293,222 269,224 252,206" fill="#C87820" opacity=".8"/>
-        <polygon points="318,154 352,145 360,171 347,188 323,190 306,172" fill="#C87820" opacity=".8"/>
-        <polygon points="388,188 422,179 430,205 417,222 393,224 376,206" fill="#C87820" opacity=".8"/>
-        <polygon points="82,256 116,247 124,273 111,290 87,292 70,274" fill="#C87820" opacity=".8"/>
-        <polygon points="500,256 534,247 542,273 529,290 505,292 488,274" fill="#C87820" opacity=".8"/>
-        <polygon points="334,324 368,315 376,341 363,358 339,360 322,342" fill="#C87820" opacity=".8"/>
-        <polygon points="84,342 118,333 126,359 113,376 89,378 72,360" fill="#E8A022" opacity=".78"/>
-        <polygon points="430,290 464,281 472,307 459,324 435,326 418,308" fill="#E8A022" opacity=".78"/>
-        <polygon points="244,376 278,367 286,393 273,410 249,412 232,394" fill="#E8A022" opacity=".78"/>
-        <polygon points="298,410 332,401 340,427 327,444 303,446 286,428" fill="#E8A022" opacity=".78"/>
-        <polygon points="458,394 492,385 500,411 487,428 463,430 446,412" fill="#E8A022" opacity=".78"/>
-        <polygon points="122,410 156,401 164,427 151,444 127,446 110,428" fill="#E8A022" opacity=".78"/>
-        <polygon points="384,256 418,247 426,273 413,290 389,292 372,274" fill="#F0C060" opacity=".78"/>
-        <polygon points="326,392 360,383 368,409 355,426 331,428 314,410" fill="#F0C060" opacity=".78"/>
-        <polygon points="500,358 534,349 542,375 529,392 505,394 488,376" fill="#F0C060" opacity=".78"/>
-        <polygon points="172,410 206,401 214,427 201,444 177,446 160,428" fill="#F0C060" opacity=".78"/>
-        <!-- Core -->
-        <polygon points="392,272 430,263 448,292 436,316 406,318 385,296" fill="#A04060" opacity=".78"/>
-        <polygon points="364,243 397,235 408,260 394,276 366,278 352,260" fill="#8A3050" opacity=".82"/>
-        <polygon points="378,306 415,298 423,323 410,338 383,340 368,322" fill="#7A3860" opacity=".82"/>
-        <!-- MBTA lines overlay -->
-        <path d="M88 596 L122 535 L156 472 L202 410 L243 360 L285 314 L326 272 L362 238 L390 198 L402 158 L410 118" stroke="#DA291C" stroke-width="4" opacity=".4"/>
-        <path d="M50 290 L114 285 L178 281 L238 274 L285 266 L334 256 L390 246 L444 228 L498 210 L545 196" stroke="#00843D" stroke-width="4" opacity=".4"/>
-        <path d="M318 620 L322 562 L325 504 L328 446 L330 388 L332 330 L334 276 L333 224 L329 175 L322 126 L312 80" stroke="#ED8B00" stroke-width="4" opacity=".4"/>
-        <!-- Hotspot rings (togglable) -->
-        <g id="hotspot-rings">
-          <circle cx="244" cy="368" r="32" fill="#D94F2A" opacity=".12"/>
-          <circle cx="244" cy="368" r="32" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-          <text x="244" y="412" fill="#D94F2A" font-size="8" font-family="Nunito" font-weight="800" text-anchor="middle">Equity Hotspot</text>
-          <circle cx="460" cy="300" r="28" fill="#D94F2A" opacity=".12"/>
-          <circle cx="460" cy="300" r="28" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-          <circle cx="124" cy="418" r="24" fill="#D94F2A" opacity=".12"/>
-          <circle cx="124" cy="418" r="24" fill="none" stroke="#D94F2A" stroke-width="2.5" stroke-dasharray="6,4"/>
-        </g>
-      </svg>
+  <div class="layout" style="height:calc(100% - 96px);">
+    <div class="side before">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--maroon-lt);border:2px solid var(--maroon);display:flex;align-items:center;justify-content:center;font-size:11px;">✗</div>
+        <div class="headline" style="font-size:24px;color:var(--maroon);">Before the Act</div>
+      </div>
+      <p class="body-lit" style="font-size:13px;">Most land within walking distance of MBTA stations is zoned for single-family homes only, blocking multi-unit development.</p>
+      <div class="ph" style="height:240px;border:2px solid var(--border);">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px;width:100%;">
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;">🚇</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:var(--surface);border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+        </div>
+        <div style="font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--maroon);">[ Single-Family Zoning around station ]</div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <div class="card" style="flex:1;padding:12px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Avg Single-Fam %</div><div class="headline" style="font-size:28px;color:var(--maroon);">59%</div></div>
+        <div class="card" style="flex:1;padding:12px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Built Pre-1970</div><div class="headline" style="font-size:28px;color:var(--mustard);">63%</div></div>
+      </div>
     </div>
-    <div class="insight-panel">
-      <div class="overline">Equity Analysis</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:20px;line-height:1.15;">Dominant Income<br>by Municipality</div>
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;">Income Groups</div>
-        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><div style="width:11px;height:11px;border-radius:2px;background:#6B2C5A;"></div>Upper ($150K+)</div>
-        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><div style="width:11px;height:11px;border-radius:2px;background:#C87820;"></div>Upper-Middle ($100–150K)</div>
-        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><div style="width:11px;height:11px;border-radius:2px;background:#E8A022;"></div>Middle ($50–100K)</div>
-        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><div style="width:11px;height:11px;border-radius:2px;background:#F0C060;"></div>Lower-Middle ($25–50K)</div>
-        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><div style="width:11px;height:11px;border-radius:2px;background:#F5E8C8;border:1px solid var(--border);"></div>Low (under $25K)</div>
+
+    <div class="side after">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--navy-lt);border:2px solid var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;">✓</div>
+        <div class="headline" style="font-size:24px;color:var(--navy);">After the Act</div>
       </div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div class="overline" style="color:var(--coral);margin-bottom:8px;">Equity Hotspots</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Over-density &gt;10% AND POC &gt;40%</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div class="hotspot-card"><div style="font-size:13px;font-weight:800;margin-bottom:5px;">Lynn, MA</div><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="tag" style="background:#FAD9D0;color:var(--coral);font-size:9px;">Over-density 12.6%</span><span class="tag" style="background:#F4ECF4;color:var(--cr);font-size:9px;">POC 62%</span></div></div>
-        <div class="hotspot-card"><div style="font-size:13px;font-weight:800;margin-bottom:5px;">Everett, MA</div><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="tag" style="background:#FAD9D0;color:var(--coral);font-size:9px;">Over-density 10.1%</span><span class="tag" style="background:#F4ECF4;color:var(--cr);font-size:9px;">POC 58%</span></div></div>
+      <p class="body-lit" style="font-size:13px;">A half-mile zone around each station is upzoned to allow multi-family development by-right, creating housing where transit already exists.</p>
+      <div class="ph" style="height:240px;border:2px solid var(--navy);background:var(--navy-lt);">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px;width:100%;">
+          <div style="background:#fff;border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+          <div style="background:#D6E0EE;border:1.5px dashed var(--navy);padding:10px;text-align:center;font-size:20px;">🏢</div>
+          <div style="background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;">🚇</div>
+          <div style="background:#D6E0EE;border:1.5px dashed var(--navy);padding:10px;text-align:center;font-size:20px;">🏢</div>
+          <div style="background:#D6E0EE;border:1.5px dashed var(--navy);padding:10px;text-align:center;font-size:20px;">🏘</div>
+          <div style="background:#D6E0EE;border:1.5px dashed var(--navy);padding:10px;text-align:center;font-size:20px;">🏢</div>
+          <div style="background:#D6E0EE;border:1.5px dashed var(--navy);padding:10px;text-align:center;font-size:20px;">🏢</div>
+          <div style="background:#fff;border:1.5px solid var(--border);padding:10px;text-align:center;font-size:20px;">🏠</div>
+        </div>
+        <div style="font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);">[ Multi-Family by-right within 0.5 mi radius ]</div>
       </div>
-      <div style="background:var(--amber-lt);border-radius:7px;padding:12px;font-size:12px;line-height:1.5;color:var(--brown);margin-top:4px;"><strong>Key insight:</strong> Lower-middle income areas show the highest average over-density (7.9%), crowding near the limited affordable housing close to transit.</div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:12px;" onclick="go(7)">Explore all 118 communities →</button>
+      <div style="display:flex;gap:10px;">
+        <div class="card" style="flex:1;padding:12px;border-color:var(--navy);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Min. District</div><div class="headline" style="font-size:28px;color:var(--navy);">50 ac</div></div>
+        <div class="card" style="flex:1;padding:12px;border-color:var(--navy);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Min. Density</div><div class="headline" style="font-size:28px;color:var(--navy);">15 u/ac</div></div>
+      </div>
+      <button class="btn btn-navy" style="width:100%;justify-content:center;" onclick="go(7)">Explore equity implications</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SCREEN 7: DASHBOARD ══════════ -->
+
+<!-- ══════════════════════════════════════
+     S7: WHO LIVES WHERE (Equity Layer)
+══════════════════════════════════════ -->
 <div class="screen" id="s7">
   <div class="navbar">
-    <div class="logo"><div class="logo-dot"></div>Follow the Line</div>
-    <div class="search-bar" style="margin-left:20px;"><span>🔍</span><span>Search station or community…</span></div>
-    <div class="nav-links" style="margin-left:12px;"><a onclick="go(6)">← Back</a></div>
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div class="nav-links" style="margin-left:auto;"><a onclick="go(6)">Back</a><a onclick="go(8)" style="margin-left:8px;">Explore All</a></div>
   </div>
-  <div class="layout" style="height:calc(100% - 56px);padding-top:56px;">
-    <div class="filter-panel">
-      <div style="font-size:13px;font-weight:800;">Filters</div>
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Transit Type</div>
-        <div class="checkbox-list">
-          <div class="checkbox-item"><div class="cb checked">✓</div>Rapid Transit</div>
-          <div class="checkbox-item"><div class="cb checked">✓</div>Commuter Rail</div>
-          <div class="checkbox-item"><div class="cb checked">✓</div>Bus / RTA</div>
-          <div class="checkbox-item"><div class="cb"></div>No Transit</div>
+  <div class="topbar" style="margin-top:52px;">
+    <div class="subhead" style="font-size:17px;color:var(--ink);letter-spacing:.02em;">Who lives where?</div>
+    <div class="toggle-group" style="margin-left:20px;" id="eq-toggle">
+      <button class="toggle-btn active" onclick="setEqToggle(this)">Dominant Income</button>
+      <button class="toggle-btn" onclick="setEqToggle(this)">% People of Color</button>
+      <button class="toggle-btn" onclick="setEqToggle(this)">Over-Density %</button>
+    </div>
+    <button class="btn btn-navy" style="font-size:11px;padding:7px 14px;margin-left:auto;" onclick="go(8)">Explore all 118 communities</button>
+  </div>
+  <div class="layout">
+    <div class="map-area">
+      <svg width="100%" height="100%" viewBox="0 0 760 580" xmlns="http://www.w3.org/2000/svg">
+        <!-- Water -->
+        <path d="M580 0 L760 0 L760 360 L700 340 L675 380 L650 420 L638 355 L645 270 L628 190 L610 90 Z" fill="#B8C8D4" opacity=".65"/>
+        <!-- Income-colored municipality patches -->
+        <polygon points="60,100 105,88 118,115 103,133 68,136 48,118" fill="#6B2C5A" opacity=".8"/>
+        <polygon points="168,90 212,78 224,104 209,122 175,124 157,102" fill="#6B2C5A" opacity=".8"/>
+        <polygon points="520,180 564,168 576,195 561,212 528,214 508,195" fill="#6B2C5A" opacity=".8"/>
+        <polygon points="280,100 324,88 336,115 321,133 287,135 267,115" fill="#6B2C5A" opacity=".75"/>
+        <polygon points="115,80 158,68 170,94 155,112 122,114 103,92" fill="#C87820" opacity=".8"/>
+        <polygon points="228,88 270,76 282,102 268,120 234,122 215,103" fill="#C87820" opacity=".8"/>
+        <polygon points="572,220 616,208 628,235 613,252 580,254 560,235" fill="#C87820" opacity=".8"/>
+        <polygon points="55,148 98,136 110,162 95,180 62,182 42,163" fill="#C87820" opacity=".75"/>
+        <polygon points="336,148 380,136 392,162 377,180 344,182 324,162" fill="#C87820" opacity=".78"/>
+        <polygon points="112,148 156,136 168,163 153,181 120,183 100,163" fill="#E8A022" opacity=".78"/>
+        <polygon points="224,148 268,136 280,162 265,180 232,182 212,162" fill="#E8A022" opacity=".78"/>
+        <polygon points="55,200 98,188 110,214 95,232 62,234 42,215" fill="#E8A022" opacity=".78"/>
+        <polygon points="280,202 324,190 336,216 321,234 288,236 268,216" fill="#E8A022" opacity=".78"/>
+        <polygon points="390,200 434,188 446,215 431,232 398,234 378,215" fill="#E8A022" opacity=".75"/>
+        <polygon points="446,178 490,166 502,193 487,210 454,212 434,193" fill="#E8A022" opacity=".75"/>
+        <polygon points="168,148 212,136 224,162 209,180 176,182 156,162" fill="#F0C060" opacity=".78"/>
+        <polygon points="112,202 156,190 168,216 153,234 120,236 100,216" fill="#F0C060" opacity=".78"/>
+        <polygon points="168,256 212,244 224,270 209,288 176,290 156,270" fill="#F0C060" opacity=".78"/>
+        <polygon points="224,202 268,190 280,216 265,234 232,236 212,216" fill="#F0C060" opacity=".75"/>
+        <polygon points="446,232 490,220 502,246 487,264 454,266 434,246" fill="#F0C060" opacity=".75"/>
+        <polygon points="55,254 100,242 112,268 97,286 63,288 43,268" fill="#F0C060" opacity=".75"/>
+        <polygon points="55,310 100,298 112,325 97,342 63,344 43,325" fill="#F5E8C8" opacity=".85"/>
+        <polygon points="115,340 160,328 172,355 157,372 123,374 103,355" fill="#F5E8C8" opacity=".85"/>
+        <polygon points="172,368 216,356 228,383 213,400 180,402 160,383" fill="#F5E8C8" opacity=".85"/>
+        <!-- Core mix -->
+        <polygon points="278,248 322,238 334,264 318,280 286,282 267,265" fill="#C87820" opacity=".72"/>
+        <polygon points="336,248 380,238 392,264 376,280 344,282 324,264" fill="#E8A022" opacity=".75"/>
+        <polygon points="280,300 324,290 334,316 320,332 287,334 268,317" fill="#C87820" opacity=".78"/>
+        <polygon points="336,300 378,290 388,315 374,332 342,334 322,316" fill="#E8A022" opacity=".75"/>
+        <!-- Equity hotspot circles (static visual) -->
+        <circle cx="155" cy="230" r="30" fill="#7A1E2E" opacity=".1"/>
+        <circle cx="155" cy="230" r="30" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4"/>
+        <circle cx="100" cy="310" r="26" fill="#7A1E2E" opacity=".1"/>
+        <circle cx="100" cy="310" r="26" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4"/>
+        <circle cx="465" cy="245" r="24" fill="#7A1E2E" opacity=".1"/>
+        <circle cx="465" cy="245" r="24" fill="none" stroke="#7A1E2E" stroke-width="2" stroke-dasharray="6,4"/>
+        <!-- Station dots -->
+        <circle cx="290" cy="264" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="348" cy="264" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="350" cy="312" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="350" cy="352" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="392" cy="340" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="168" cy="162" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <circle cx="155" cy="215" r="4" fill="#fff" stroke="#2E1A0E" stroke-width="1.5"/>
+        <text x="72" y="118" fill="#fff" font-size="7" font-family="Barlow" font-weight="700" opacity=".85">Lexington</text>
+        <text x="126" y="318" fill="#6A5840" font-size="7" font-family="Barlow" font-weight="600" opacity=".8">Brockton</text>
+        <text x="65" y="264" fill="#6A5840" font-size="7" font-family="Barlow" font-weight="600" opacity=".8">Lynn</text>
+      </svg>
+      <span class="wf-note" style="position:absolute;bottom:14px;left:14px;">Toggle recolors patches and updates panel</span>
+    </div>
+    <div class="panel">
+      <div class="overline">Equity Analysis</div>
+      <div class="headline" style="font-size:20px;color:var(--ink);" id="eq-panel-title">Dominant Income<br>by Municipality</div>
+      <div id="eq-panel-content"></div>
+      <button class="btn btn-navy" style="width:100%;justify-content:center;font-size:11px;margin-top:auto;" onclick="go(8)">Explore all 118 communities</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     S8: ALL COMMUNITIES (Dashboard)
+══════════════════════════════════════ -->
+<div class="screen" id="s8">
+  <div class="navbar">
+    <div class="logo"><div class="logo-line"></div>Follow the Line</div>
+    <div style="margin-left:20px;background:var(--light);height:28px;width:260px;border-radius:3px;border:1.5px solid var(--border);display:flex;align-items:center;padding:0 10px;gap:6px;font-family:'Barlow',sans-serif;font-size:12px;color:var(--mid);">🔍 Search community or station...</div>
+    <div class="nav-links" style="margin-left:auto;"><a onclick="go(7)">Back</a></div>
+  </div>
+  <div class="layout" style="height:calc(100% - 52px);padding-top:52px;">
+    <div class="filters">
+      <div class="subhead" style="font-size:15px;color:var(--ink);letter-spacing:.04em;">Filters</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">Transit Type</div>
+        <div class="cb-list">
+          <div class="cb-item"><div class="cb on">✓</div><span style="font-size:12px;">Rapid Transit</span></div>
+          <div class="cb-item"><div class="cb on">✓</div><span style="font-size:12px;">Commuter Rail</span></div>
+          <div class="cb-item"><div class="cb on">✓</div><span style="font-size:12px;">Bus / RTA</span></div>
+          <div class="cb-item"><div class="cb"></div><span style="font-size:12px;">No Transit</span></div>
         </div>
       </div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Avg Rent Range</div>
-        <div class="slider-track"><div class="slider-fill" style="width:72%;background:var(--teal);height:4px;border-radius:2px;"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);"><span>$800</span><span>$3,500+</span></div>
-        <div style="font-size:11px;font-weight:700;color:var(--teal);">Up to $2,800 / mo</div>
+      <hr class="wf">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">Avg Rent Range</div>
+        <div class="sbar"><div class="sbar-fill" style="width:71%;background:var(--navy);"></div></div>
+        <div style="display:flex;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);"><span>$800</span><span>$3,500+</span></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--navy);">Up to $2,800/mo</div>
       </div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Multi-Family %</div>
-        <div class="slider-track"><div class="slider-fill" style="width:46%;background:var(--amber);height:4px;border-radius:2px;"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);"><span>0%</span><span>100%</span></div>
-        <div style="font-size:11px;font-weight:700;color:var(--amber);">40%+</div>
+      <hr class="wf">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">Multi-Family %</div>
+        <div class="sbar"><div class="sbar-fill" style="width:45%;background:var(--mustard);"></div></div>
+        <div style="display:flex;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);"><span>0%</span><span>100%</span></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--mustard);">40%+</div>
       </div>
-      <hr style="border:none;border-top:1.5px solid var(--border);">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Act Status</div>
-        <div class="checkbox-list">
-          <div class="checkbox-item"><div class="cb checked">✓</div>Compliant</div>
-          <div class="checkbox-item"><div class="cb checked">✓</div>In progress</div>
-          <div class="checkbox-item"><div class="cb"></div>Non-compliant</div>
+      <hr class="wf">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">Act Status</div>
+        <div class="cb-list">
+          <div class="cb-item"><div class="cb on">✓</div><span style="font-size:12px;">Compliant</span></div>
+          <div class="cb-item"><div class="cb on">✓</div><span style="font-size:12px;">In progress</span></div>
+          <div class="cb-item"><div class="cb"></div><span style="font-size:12px;">Non-compliant</span></div>
         </div>
       </div>
       <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:11px;margin-top:auto;">Reset filters</button>
     </div>
-    <div class="main-area">
+    <div class="main">
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:12px;font-weight:700;color:var(--muted);">Showing <strong style="color:var(--brown);">86 communities</strong></span>
-        <span class="tag tag-teal">Rapid Transit ✕</span><span class="tag tag-teal">Commuter Rail ✕</span><span class="tag tag-amber">Rent &lt; $2,800 ✕</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mid);">Showing <strong style="color:var(--ink);">86 of 118</strong> communities</span>
+        <span class="tag tag-navy">Rapid Transit ✕</span>
+        <span class="tag tag-navy">Commuter Rail ✕</span>
+        <span class="tag tag-mustard">Rent &lt; $2,800 ✕</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-        <div class="card" style="padding:14px 16px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Communities</div><div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--teal);">86</div><div style="font-size:10px;color:var(--muted);">of 118 match</div></div>
-        <div class="card" style="padding:14px 16px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Avg Rent</div><div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--coral);">$2,140</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
-        <div class="card" style="padding:14px 16px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Avg Multi-Fam %</div><div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--amber);">44%</div><div style="font-size:10px;color:var(--muted);">of housing stock</div></div>
-        <div class="card" style="padding:14px 16px;"><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Avg Walk Dist</div><div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--brown);">710m</div><div style="font-size:10px;color:var(--muted);">to nearest station</div></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+        <div class="card" style="padding:12px 14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Communities</div><div class="headline" style="font-size:32px;color:var(--navy);">86</div><div style="font-size:10px;color:var(--mid);font-family:'Barlow',sans-serif;">of 118 match</div></div>
+        <div class="card" style="padding:12px 14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Avg Rent</div><div class="headline" style="font-size:32px;color:var(--maroon);">$2,140</div><div style="font-size:10px;color:var(--mid);font-family:'Barlow',sans-serif;">per month</div></div>
+        <div class="card" style="padding:12px 14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Avg Multi-Fam %</div><div class="headline" style="font-size:32px;color:var(--mustard);">44%</div><div style="font-size:10px;color:var(--mid);font-family:'Barlow',sans-serif;">of stock</div></div>
+        <div class="card" style="padding:12px 14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);">Avg Walk Dist</div><div class="headline" style="font-size:32px;color:var(--ink);">710m</div><div style="font-size:10px;color:var(--mid);font-family:'Barlow',sans-serif;">to station</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div class="card" style="padding:16px;">
-          <div style="font-size:11px;font-weight:800;margin-bottom:10px;">Rent vs. Transit Access</div>
-          <div style="height:160px;background:var(--cream-dk);border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--brown-lt);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;"><span style="font-size:24px;opacity:.4;">◎</span>Scatter Plot<br>Rent × Transit Commute %</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="card" style="padding:14px;">
+          <div class="subhead" style="font-size:12px;color:var(--ink);margin-bottom:8px;letter-spacing:.04em;">Rent vs. Transit Access</div>
+          <div class="ph" style="height:140px;"><div class="ph-icon">◎</div><div>Scatter Plot<br>Rent x Transit Commute %</div></div>
         </div>
-        <div class="card" style="padding:16px;">
-          <div style="font-size:11px;font-weight:800;margin-bottom:10px;">Housing Type by Transit Tier</div>
-          <div style="height:160px;background:var(--cream-dk);border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--brown-lt);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;"><span style="font-size:24px;opacity:.4;">▬▬</span>Stacked Bar<br>Single / MF by tier</div>
+        <div class="card" style="padding:14px;">
+          <div class="subhead" style="font-size:12px;color:var(--ink);margin-bottom:8px;letter-spacing:.04em;">Housing Type by Transit Tier</div>
+          <div class="ph" style="height:140px;"><div class="ph-icon">▬</div><div>Stacked Bar<br>by transit type</div></div>
         </div>
       </div>
       <div class="card" style="padding:0;overflow:hidden;">
-        <div style="padding:12px 16px;border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><div style="font-size:12px;font-weight:800;">Community Data</div><button class="btn btn-outline" style="font-size:10px;padding:5px 12px;">Sort: Rent ↓</button></div>
+        <div style="padding:10px 14px;border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--light);">
+          <div class="subhead" style="font-size:12px;color:var(--ink);letter-spacing:.04em;">Community Data</div>
+          <button class="btn btn-outline" style="font-size:10px;padding:4px 10px;">Sort: Rent</button>
+        </div>
         <table class="data-table">
-          <thead><tr><th>Community</th><th>Transit</th><th>Avg Rent</th><th>Multi-Fam %</th><th>Walk Dist</th><th>Over-Density</th><th>Act Status</th></tr></thead>
+          <thead><tr><th>Community</th><th>Transit</th><th>Avg Rent</th><th>Multi-Fam %</th><th>Walk</th><th>Over-Density</th><th>Act Status</th></tr></thead>
           <tbody>
-            <tr><td><strong>Cambridge</strong></td><td><span class="tag tag-teal" style="font-size:9px;">Rapid</span></td><td style="color:var(--coral);font-weight:800;">$3,200</td><td>78%</td><td>540m</td><td>6.2%</td><td><span class="tag tag-green" style="font-size:9px;">Compliant</span></td></tr>
-            <tr><td><strong>Somerville</strong></td><td><span class="tag tag-teal" style="font-size:9px;">Rapid</span></td><td style="color:var(--coral);font-weight:800;">$2,950</td><td>72%</td><td>490m</td><td>7.1%</td><td><span class="tag tag-green" style="font-size:9px;">Compliant</span></td></tr>
-            <tr style="background:var(--amber-lt);"><td><strong>Lexington</strong></td><td><span class="tag" style="background:#F4ECF4;color:var(--cr);font-size:9px;">C.Rail</span></td><td style="font-weight:800;">$2,100</td><td style="color:var(--coral);">18%</td><td>820m</td><td style="color:var(--coral);font-weight:800;">11.6%</td><td><span class="tag tag-orange" style="font-size:9px;">In Progress</span></td></tr>
-            <tr><td><strong>Lynn</strong></td><td><span class="tag tag-teal" style="font-size:9px;">Rapid</span></td><td style="font-weight:800;">$1,650</td><td>34%</td><td>710m</td><td style="color:var(--coral);font-weight:800;">12.6%</td><td><span class="tag tag-red" style="font-size:9px;">Non-compliant</span></td></tr>
-            <tr><td colspan="7" style="text-align:center;font-size:11px;color:var(--muted);padding:12px;">… 82 more · <span style="color:var(--teal);cursor:pointer;font-weight:700;">Load all</span></td></tr>
+            <tr><td><strong>Cambridge</strong></td><td><span class="tag tag-navy" style="font-size:9px;">Rapid</span></td><td style="color:var(--maroon);font-weight:700;">$3,200</td><td>78%</td><td>540m</td><td>6.2%</td><td><span class="tag tag-ok" style="font-size:9px;">Compliant</span></td></tr>
+            <tr><td><strong>Somerville</strong></td><td><span class="tag tag-navy" style="font-size:9px;">Rapid</span></td><td style="color:var(--maroon);font-weight:700;">$2,950</td><td>72%</td><td>490m</td><td>7.1%</td><td><span class="tag tag-ok" style="font-size:9px;">Compliant</span></td></tr>
+            <tr style="background:var(--mustard-lt);"><td><strong>Lexington</strong></td><td><span class="tag tag-maroon" style="font-size:9px;">C.Rail</span></td><td style="font-weight:700;">$2,100</td><td style="color:var(--maroon);">18%</td><td>820m</td><td style="color:var(--maroon);font-weight:700;">11.6%</td><td><span class="tag tag-mustard" style="font-size:9px;">In Progress</span></td></tr>
+            <tr><td><strong>Lynn</strong></td><td><span class="tag tag-navy" style="font-size:9px;">Rapid</span></td><td style="font-weight:700;">$1,650</td><td>34%</td><td>710m</td><td style="color:var(--maroon);font-weight:700;">12.6%</td><td><span class="tag tag-maroon" style="font-size:9px;">Non-compliant</span></td></tr>
+            <tr><td colspan="7" style="text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);padding:10px;">82 more · <span style="color:var(--navy);cursor:pointer;">Load all</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -917,337 +963,375 @@ body {
 
 </div><!-- /proto-shell -->
 
-<!-- PROTOTYPE CHROME (bottom nav) -->
+<!-- Proto chrome -->
 <div class="proto-chrome">
-  <span class="label">Follow the Line</span>
-  <div class="sep"></div>
-  <div class="screen-dots" id="proto-dots"></div>
-  <div class="sep"></div>
-  <button onclick="go(currentScreen-1)" style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;padding:2px 6px;">‹</button>
-  <span id="proto-label" style="font-size:10px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;min-width:120px;text-align:center;">HOME</span>
-  <button onclick="go(currentScreen+1)" style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;padding:2px 6px;">›</button>
+  <span class="plabel" id="proto-lbl">Apartment Hunt</span>
+  <div class="psep"></div>
+  <div style="display:flex;gap:5px;" id="pdots"></div>
+  <div class="psep"></div>
+  <button class="pnav" onclick="go(cur-1)">&#8249;</button>
+  <button class="pnav" onclick="go(cur+1)">&#8250;</button>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
-const SCREENS = ['s0','s1','s2','s3','s4','s5','s6','s7'];
-const LABELS  = ['Home','Line Select','Station Stop','Pattern','Mismatch Map','The Act','Equity','Dashboard'];
-let currentScreen = 0;
-let selectedLine = null;
-let currentStop = 0;
-
-// Station data per line
-const lineData = {
-  red: {
-    name: 'Red Line', color: 'var(--red)', bg: '#FCEAEA',
-    stops: [
-      { name:'Alewife', loc:'Cambridge, MA', rent:'$1,890', rentPct:48, mf:28, mfPct:28, bldg:1420, bldgPct:34, walk:'740m', walkPct:60, transit:'12%', tags:['tag-orange:Low Density','tag-teal:Moderate Transit'], insight:'End of the line, lower rent but sparse multi-family housing. Common outer suburban mismatch.' },
-      { name:'Porter Square', loc:'Cambridge, MA', rent:'$2,640', rentPct:68, mf:52, mfPct:52, bldg:2800, bldgPct:68, walk:'620m', walkPct:50, transit:'28%', tags:['tag-teal:High Transit','tag-amber:Mid Supply'], insight:'Transitional zone, density is rising but rent follows close behind.' },
-      { name:'Central Square', loc:'Cambridge, MA', rent:'$2,850', rentPct:82, mf:71, mfPct:71, bldg:3240, bldgPct:78, walk:'680m', walkPct:55, transit:'38%', tags:['tag-red:Rent Premium','tag-orange:Low Supply','tag-teal:High Transit'], insight:'summary/insight here' },
-      { name:'Andrew Station', loc:'South Boston, MA', rent:'$2,400', rentPct:62, mf:44, mfPct:44, bldg:2100, bldgPct:52, walk:'730m', walkPct:60, transit:'22%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
-      { name:'Braintree', loc:'Braintree, MA', rent:'$1,720', rentPct:42, mf:18, mfPct:18, bldg:680, bldgPct:16, walk:'1,100m', walkPct:90, transit:'8%', tags:['tag-orange:Very Low Density','tag-amber:Long Walk'], insight:'summary/insight here' },
-    ]
-  },
-  orange: {
-    name: 'Orange Line', color: 'var(--orange)', bg: '#FEF3E2',
-    stops: [
-      { name:'Oak Grove', loc:'Malden, MA', rent:'$1,580', rentPct:38, mf:22, mfPct:22, bldg:920, bldgPct:22, walk:'890m', walkPct:73, transit:'6%', tags:['tag-orange:Low Density','tag-amber:Outer Suburb'], insight:'summary/insight here' },
-      { name:'Wellington', loc:'Medford, MA', rent:'$1,950', rentPct:50, mf:30, mfPct:30, bldg:1640, bldgPct:40, walk:'750m', walkPct:61, transit:'14%', tags:['tag-teal:Moderate Transit','tag-orange:Low Supply'], insight:'summary/insight here' },
-      { name:'North Station', loc:'Boston, MA', rent:'$2,980', rentPct:84, mf:68, mfPct:68, bldg:3300, bldgPct:80, walk:'480m', walkPct:39, transit:'42%', tags:['tag-red:Rent Premium','tag-teal:High Transit','tag-green:High Density'], insight:'summary/insight here' },
-      { name:'Ruggles', loc:'Boston, MA', rent:'$2,600', rentPct:68, mf:55, mfPct:55, bldg:2900, bldgPct:70, walk:'560m', walkPct:46, transit:'31%', tags:['tag-teal:High Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
-      { name:'Forest Hills', loc:'Jamaica Plain, MA', rent:'$2,100', rentPct:53, mf:40, mfPct:40, bldg:1980, bldgPct:48, walk:'670m', walkPct:55, transit:'20%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'summary/insight here' },
-    ]
-  },
-  green: {
-    name: 'Green Line', color: 'var(--green)', bg: '#E5F4EC',
-    stops: [
-      { name:'Lechmere', loc:'Cambridge/Somerville', rent:'$2,780', rentPct:74, mf:58, mfPct:58, bldg:2400, bldgPct:58, walk:'620m', walkPct:50, transit:'24%', tags:['tag-teal:High Transit','tag-amber:Mid Supply'], insight:'New GLX extension has already pushed rents up in anticipation of increased access.' },
-      { name:'Copley', loc:'Back Bay, Boston', rent:'$3,400', rentPct:96, mf:88, mfPct:88, bldg:4092, bldgPct:99, walk:'420m', walkPct:34, transit:'51%', tags:['tag-red:Highest Rent','tag-green:Dense','tag-teal:High Transit'], insight:'Most expensive station area on the Green Line — ultra-dense but nearly unaffordable.' },
-      { name:'Kenmore', loc:'Fenway, Boston', rent:'$2,900', rentPct:80, mf:72, mfPct:72, bldg:3200, bldgPct:78, walk:'590m', walkPct:48, transit:'36%', tags:['tag-red:Rent Premium','tag-teal:High Transit'], insight:'Student density drives up rents near BU — seasonal demand distorts affordability.' },
-      { name:'Brookline Village', loc:'Brookline, MA', rent:'$2,450', rentPct:63, mf:48, mfPct:48, bldg:2100, bldgPct:52, walk:'680m', walkPct:55, transit:'19%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'Brookline\'s wealth shields it from density pressure — zoning is highly restrictive despite transit.' },
-      { name:'Riverside', loc:'Newton, MA', rent:'$2,050', rentPct:52, mf:16, mfPct:16, bldg:540, bldgPct:13, walk:'980m', walkPct:80, transit:'7%', tags:['tag-orange:Low Density','tag-amber:Long Walk'], insight:'Newton\'s western terminus — low density end-point in an affluent suburb resistant to upzoning.' },
-    ]
-  },
-  blue: {
-    name: 'Blue Line', color: 'var(--blue)', bg: '#EAF1FB',
-    stops: [
-      { name:'Wonderland', loc:'Revere, MA', rent:'$1,480', rentPct:35, mf:26, mfPct:26, bldg:780, bldgPct:19, walk:'920m', walkPct:75, transit:'9%', tags:['tag-orange:Low Density','tag-amber:Affordable End'], insight:'Most affordable stop on the Blue Line — but low density means limited options for new housing.' },
-      { name:'Revere Beach', loc:'Revere, MA', rent:'$1,620', rentPct:40, mf:32, mfPct:32, bldg:1100, bldgPct:27, walk:'840m', walkPct:68, transit:'11%', tags:['tag-orange:Low Density','tag-teal:Coastal'], insight:'Coastal location creates unique development constraints despite relatively affordable rents.' },
-      { name:'Airport', loc:'East Boston, MA', rent:'$2,050', rentPct:52, mf:44, mfPct:44, bldg:1800, bldgPct:44, walk:'710m', walkPct:58, transit:'18%', tags:['tag-teal:Moderate Transit','tag-amber:Mid Density'], insight:'East Boston has faced rapid gentrification as Blue Line access makes it more desirable.' },
-      { name:'Aquarium', loc:'Downtown Boston', rent:'$3,200', rentPct:92, mf:84, mfPct:84, bldg:3600, bldgPct:88, walk:'380m', walkPct:31, transit:'48%', tags:['tag-red:Rent Premium','tag-green:Dense','tag-teal:High Transit'], insight:'Financial district proximity — ultra-high rents with very short walks to transit.' },
-      { name:'Bowdoin', loc:'Downtown Boston', rent:'$3,050', rentPct:88, mf:80, mfPct:80, bldg:3400, bldgPct:83, walk:'410m', walkPct:33, transit:'44%', tags:['tag-red:Rent Premium','tag-green:Dense'], insight:'End-point of the Blue Line — dense urban core where supply is high but affordability is not.' },
-    ]
-  },
-  cr: {
-    name: 'Commuter Rail', color: 'var(--cr)', bg: '#F4ECF4',
-    stops: [
-      { name:'Needham Heights', loc:'Needham, MA', rent:'$1,950', rentPct:50, mf:14, mfPct:14, bldg:410, bldgPct:10, walk:'1,200m', walkPct:98, transit:'4%', tags:['tag-orange:Very Low Density','tag-amber:Car Dependent'], insight:'Quintessential car-dependent suburb — low transit use, very long walks, and single-family zoning dominate.' },
-      { name:'Walpole', loc:'Walpole, MA', rent:'$1,820', rentPct:44, mf:11, mfPct:11, bldg:320, bldgPct:8, walk:'1,400m', walkPct:99, transit:'3%', tags:['tag-orange:Very Low Density','tag-red:Over-Density'], insight:'Over-density of 16.7% — the highest in any community near a commuter rail stop. Demand far exceeds supply.' },
-      { name:'Brockton', loc:'Brockton, MA', rent:'$1,350', rentPct:28, mf:38, mfPct:38, bldg:1200, bldgPct:29, walk:'880m', walkPct:72, transit:'7%', tags:['tag-amber:Affordable','tag-red:Over-Density'], insight:'Equity hotspot — low income, high POC population, and significant over-density near transit.' },
-      { name:'Worcester', loc:'Worcester, MA', rent:'$1,280', rentPct:26, mf:45, mfPct:45, bldg:1560, bldgPct:38, walk:'720m', walkPct:59, transit:'10%', tags:['tag-green:Affordable','tag-teal:Mid Transit'], insight:'Worcester shows that affordability and transit access CAN coexist — but supply needs to keep growing.' },
-      { name:'Newburyport', loc:'Newburyport, MA', rent:'$2,200', rentPct:58, mf:12, mfPct:12, bldg:280, bldgPct:7, walk:'1,600m', walkPct:99, transit:'5%', tags:['tag-orange:Very Low Density','tag-amber:Coastal'], insight:'Historic seaside town — restrictive zoning and limited transit use make upzoning politically contentious.' },
-    ]
-  }
-};
-
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
 // NAVIGATION
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
+const SCREENS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8'];
+const LABELS  = ['Apartment Hunt','The Tradeoff','Choose a Line','Explore Stops','The Pattern','The Mismatch','The Act','Who Lives Where','All Communities'];
+let cur = 0, selectedLine = null, curStop = 0;
+
 function go(n) {
   if (n < 0 || n >= SCREENS.length) return;
-  document.getElementById(SCREENS[currentScreen]).classList.remove('active');
-  currentScreen = n;
-  document.getElementById(SCREENS[currentScreen]).classList.add('active','slide-in');
-  setTimeout(() => document.getElementById(SCREENS[currentScreen]).classList.remove('slide-in'), 400);
-  updateChrome();
+  document.getElementById(SCREENS[cur]).classList.remove('active');
+  cur = n;
+  document.getElementById(SCREENS[cur]).classList.add('active');
+  document.getElementById('proto-lbl').textContent = LABELS[cur];
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===cur));
+  if (n === 3) { renderStopTl(); renderStop(); }
 }
 
-function updateChrome() {
-  document.getElementById('proto-label').textContent = LABELS[currentScreen];
-  document.querySelectorAll('#proto-dots .dot').forEach((d,i) => {
-    d.classList.toggle('active', i === currentScreen);
-  });
-}
-
-// Build dots
-const dotsEl = document.getElementById('proto-dots');
-SCREENS.forEach((_, i) => {
+SCREENS.forEach((_,i) => {
   const d = document.createElement('div');
-  d.className = 'dot' + (i === 0 ? ' active' : '');
-  d.title = LABELS[i];
-  d.onclick = () => go(i);
-  dotsEl.appendChild(d);
+  d.className = 'pdot' + (i===0?' active':'');
+  d.title = LABELS[i]; d.onclick = () => go(i);
+  document.getElementById('pdots').appendChild(d);
 });
 
-// Keyboard nav
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(currentScreen + 1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(currentScreen - 1);
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') go(cur+1);
+  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(cur-1);
 });
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
+// LINE DATA
+// ════════════════════════════════════════
+const lineData = {
+  red: {
+    name:'Red Line', color:'#DA291C', bg:'#FCEAEA',
+    stops:[
+      {name:'Alewife',       loc:'Cambridge, MA',    rent:'$1,890',rentPct:48,mf:28,mfPct:28,walk:'740m',walkPct:60,transit:'12%',
+       tags:['tag-mustard:Low Density','tag-navy:Moderate Transit'],
+       insight:'End of the line: lower rent but sparse multi-family housing. A classic outer suburban mismatch.'},
+      {name:'Porter Square', loc:'Cambridge, MA',    rent:'$2,640',rentPct:68,mf:52,mfPct:52,walk:'620m',walkPct:50,transit:'28%',
+       tags:['tag-navy:High Transit','tag-mustard:Mid Supply'],
+       insight:'Transitional zone, density is rising but rent follows close behind.'},
+      {name:'Central Square',loc:'Cambridge, MA',    rent:'$2,850',rentPct:82,mf:71,mfPct:71,walk:'680m',walkPct:55,transit:'38%',
+       tags:['tag-maroon:Rent Premium','tag-mustard:Low Supply','tag-navy:High Transit'],
+       insight:'High transit, high rents, limited affordable supply. This is the classic mismatch the Act targets.'},
+      {name:'Andrew',        loc:'South Boston, MA', rent:'$2,400',rentPct:62,mf:44,mfPct:44,walk:'730m',walkPct:60,transit:'22%',
+       tags:['tag-navy:Moderate Transit','tag-mustard:Mid Density'],
+       insight:'Gentrification pressure is high. Affordable units are disappearing faster than new ones are built.'},
+      {name:'Braintree',     loc:'Braintree, MA',    rent:'$1,720',rentPct:42,mf:18,mfPct:18,walk:'1,100m',walkPct:90,transit:'8%',
+       tags:['tag-mustard:Very Low Density','tag-maroon:Long Walk'],
+       insight:'End of the line: long walk, low density, low multi-family share despite being an MBTA community.'},
+    ]},
+  orange: {
+    name:'Orange Line', color:'#ED8B00', bg:'#FEF3E2',
+    stops:[
+      {name:'Oak Grove',    loc:'Malden, MA',        rent:'$1,580',rentPct:38,mf:22,mfPct:22,walk:'890m',walkPct:73,transit:'6%',
+       tags:['tag-mustard:Low Density','tag-mustard:Outer Suburb'],
+       insight:'Suburban end-point: low density and long walks despite existing MBTA access.'},
+      {name:'Wellington',   loc:'Medford, MA',       rent:'$1,950',rentPct:50,mf:30,mfPct:30,walk:'750m',walkPct:61,transit:'14%',
+       tags:['tag-navy:Moderate Transit','tag-mustard:Low Supply'],
+       insight:'Moderate transit access but multi-family share lags far behind potential.'},
+      {name:'North Station',loc:'Boston, MA',        rent:'$2,980',rentPct:84,mf:68,mfPct:68,walk:'480m',walkPct:39,transit:'42%',
+       tags:['tag-maroon:Rent Premium','tag-navy:High Transit','tag-ok:High Density'],
+       insight:'Urban core: dense and transit-rich, but affordability is the casualty.'},
+      {name:'Ruggles',      loc:'Boston, MA',        rent:'$2,600',rentPct:68,mf:55,mfPct:55,walk:'560m',walkPct:46,transit:'31%',
+       tags:['tag-navy:High Transit','tag-mustard:Mid Density'],
+       insight:'Proximity to universities drives demand and rent up significantly.'},
+      {name:'Forest Hills', loc:'Jamaica Plain, MA', rent:'$2,100',rentPct:53,mf:40,mfPct:40,walk:'670m',walkPct:55,transit:'20%',
+       tags:['tag-navy:Moderate Transit','tag-mustard:Mid Density'],
+       insight:'Southern terminus: more affordable, but supply still constrained relative to demand.'},
+    ]},
+  green: {
+    name:'Green Line', color:'#00843D', bg:'#E5F4EC',
+    stops:[
+      {name:'Lechmere',         loc:'Cambridge/Somerville',rent:'$2,780',rentPct:74,mf:58,mfPct:58,walk:'620m',walkPct:50,transit:'24%',
+       tags:['tag-navy:High Transit','tag-mustard:Mid Supply'],
+       insight:'New GLX extension has already pushed rents up in anticipation of increased access.'},
+      {name:'Copley',           loc:'Back Bay, Boston',   rent:'$3,400',rentPct:96,mf:88,mfPct:88,walk:'420m',walkPct:34,transit:'51%',
+       tags:['tag-maroon:Highest Rent','tag-ok:Dense','tag-navy:High Transit'],
+       insight:'Most expensive station area on the Green Line: ultra-dense but nearly unaffordable.'},
+      {name:'Kenmore',          loc:'Fenway, Boston',     rent:'$2,900',rentPct:80,mf:72,mfPct:72,walk:'590m',walkPct:48,transit:'36%',
+       tags:['tag-maroon:Rent Premium','tag-navy:High Transit'],
+       insight:'Student density drives rents near BU. Seasonal demand distorts affordability.'},
+      {name:'Brookline Village',loc:'Brookline, MA',      rent:'$2,450',rentPct:63,mf:48,mfPct:48,walk:'680m',walkPct:55,transit:'19%',
+       tags:['tag-navy:Moderate Transit','tag-mustard:Mid Density'],
+       insight:'Brookline wealth shields it from density pressure. Zoning is restrictive despite transit access.'},
+      {name:'Riverside',        loc:'Newton, MA',         rent:'$2,050',rentPct:52,mf:16,mfPct:16,walk:'980m',walkPct:80,transit:'7%',
+       tags:['tag-mustard:Low Density','tag-mustard:Long Walk'],
+       insight:"Western terminus: low density end-point in an affluent suburb resistant to upzoning."},
+    ]},
+  blue: {
+    name:'Blue Line', color:'#0066CC', bg:'#EAF1FB',
+    stops:[
+      {name:'Wonderland',  loc:'Revere, MA',      rent:'$1,480',rentPct:35,mf:26,mfPct:26,walk:'920m',walkPct:75,transit:'9%',
+       tags:['tag-mustard:Low Density','tag-navy:Affordable End'],
+       insight:'Most affordable stop on the Blue Line: low density limits options for new housing.'},
+      {name:'Revere Beach',loc:'Revere, MA',      rent:'$1,620',rentPct:40,mf:32,mfPct:32,walk:'840m',walkPct:68,transit:'11%',
+       tags:['tag-mustard:Low Density','tag-navy:Coastal'],
+       insight:'Coastal constraints limit development despite relatively affordable rents.'},
+      {name:'Airport',     loc:'East Boston, MA', rent:'$2,050',rentPct:52,mf:44,mfPct:44,walk:'710m',walkPct:58,transit:'18%',
+       tags:['tag-navy:Moderate Transit','tag-mustard:Mid Density'],
+       insight:'East Boston has faced rapid gentrification as Blue Line access increases desirability.'},
+      {name:'Aquarium',    loc:'Downtown Boston', rent:'$3,200',rentPct:92,mf:84,mfPct:84,walk:'380m',walkPct:31,transit:'48%',
+       tags:['tag-maroon:Rent Premium','tag-ok:Dense','tag-navy:High Transit'],
+       insight:'Financial district proximity: ultra-high rents with very short walks to transit.'},
+      {name:'Bowdoin',     loc:'Downtown Boston', rent:'$3,050',rentPct:88,mf:80,mfPct:80,walk:'410m',walkPct:33,transit:'44%',
+       tags:['tag-maroon:Rent Premium','tag-ok:Dense'],
+       insight:'End-point of the Blue Line: dense urban core where supply is high but affordability is not.'},
+    ]},
+  cr: {
+    name:'Commuter Rail', color:'#80276C', bg:'#F4ECF4',
+    stops:[
+      {name:'Needham Hts', loc:'Needham, MA',    rent:'$1,950',rentPct:50,mf:14,mfPct:14,walk:'1,200m',walkPct:98,transit:'4%',
+       tags:['tag-mustard:Very Low Density','tag-mustard:Car Dependent'],
+       insight:'Quintessential car-dependent suburb: single-family zoning dominates with very low transit use.'},
+      {name:'Walpole',     loc:'Walpole, MA',    rent:'$1,820',rentPct:44,mf:11,mfPct:11,walk:'1,400m',walkPct:99,transit:'3%',
+       tags:['tag-mustard:Very Low Density','tag-maroon:Over-Density'],
+       insight:'Over-density of 16.7%, the highest near any commuter rail stop. Demand far exceeds supply.'},
+      {name:'Brockton',    loc:'Brockton, MA',   rent:'$1,350',rentPct:28,mf:38,mfPct:38,walk:'880m',walkPct:72,transit:'7%',
+       tags:['tag-ok:Affordable','tag-maroon:Over-Density'],
+       insight:'Equity hotspot: low income, high POC population, and significant over-density near transit.'},
+      {name:'Worcester',   loc:'Worcester, MA',  rent:'$1,280',rentPct:26,mf:45,mfPct:45,walk:'720m',walkPct:59,transit:'10%',
+       tags:['tag-ok:Affordable','tag-navy:Mid Transit'],
+       insight:'Worcester shows that affordability and transit access can coexist. But supply needs to keep growing.'},
+      {name:'Newburyport', loc:'Newburyport, MA',rent:'$2,200',rentPct:56,mf:12,mfPct:12,walk:'1,600m',walkPct:99,transit:'5%',
+       tags:['tag-mustard:Very Low Density','tag-mustard:Coastal'],
+       insight:'Historic coastal town: restrictive zoning and limited transit use make upzoning contentious.'},
+    ]},
+};
+
+// ════════════════════════════════════════
 // LINE SELECTION
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
 function selectLine(line, btn) {
   selectedLine = line;
-  currentStop = 0;
+  curStop = 0;
   document.querySelectorAll('.line-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+  const lineIds = {red:'map-red',orange:'map-orange',green:'map-green',blue:'map-blue',cr:'map-cr'};
+  Object.entries(lineIds).forEach(([k,id]) => {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('opacity', k===line ? '1' : '0.2');
+  });
   document.getElementById('continue-btn').style.opacity = '1';
-  document.getElementById('continue-btn').textContent = 'Explore ' + lineData[line].name + ' →';
-  renderStopTimeline();
-  renderStop();
+  document.getElementById('continue-btn').textContent = 'Explore ' + lineData[line].name;
 }
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
 // STOP NAVIGATION
-// ══════════════════════════════════════════════
-function renderStopTimeline() {
+// ════════════════════════════════════════
+function renderStopTl() {
   const line = lineData[selectedLine || 'red'];
-  const tl = document.getElementById('stop-timeline');
+  const tl = document.getElementById('stop-tl');
   tl.style.color = line.color;
-  document.getElementById('s2-logo-dot').style.background = line.color;
-  document.getElementById('s2-line-name').textContent = line.name;
+  const bar = document.getElementById('s3-line-bar');
+  if (bar) bar.style.background = line.color;
+  const nm = document.getElementById('s3-line-name');
+  if (nm) nm.textContent = line.name;
+
   tl.innerHTML = line.stops.map((s, i) => `
-    <div class="stop-node" style="color:${line.color};${i > currentStop ? 'opacity:.35;' : ''}" onclick="jumpStop(${i})">
-      <div class="s-dot ${i < currentStop ? 'visited' : i === currentStop ? 'active' : ''}"></div>
+    <div class="stop-node" style="color:${line.color};${i > curStop ? 'opacity:.35;' : ''}" onclick="jumpStop(${i})">
+      <div class="sdot ${i < curStop ? 'visited' : i === curStop ? 'active' : ''}"></div>
       <span>${s.name.split(' ')[0]}</span>
     </div>
-    ${i < line.stops.length - 1 ? '' : ''}
   `).join('');
 }
 
 function renderStop() {
   if (!selectedLine) return;
   const line = lineData[selectedLine];
-  const stop = line.stops[currentStop];
-  const num = currentStop + 1;
+  const stop = line.stops[curStop];
+  const c = line.color;
 
-  document.getElementById('s2-stop-label').textContent = `${line.name} · Stop ${num} of 5`;
-  document.getElementById('s2-stop-label').style.color = line.color;
-  document.getElementById('s2-station-icon').style.background = line.bg;
-  document.getElementById('s2-station-name').textContent = stop.name;
-  document.getElementById('s2-location').textContent = stop.loc;
-  document.getElementById('stop-num').textContent = num;
+  document.getElementById('s3-stop-label').textContent = `${line.name} · Stop ${curStop+1} of 5`;
+  document.getElementById('s3-stop-label').style.color = c;
+  document.getElementById('s3-icon').style.background = line.bg;
+  document.getElementById('s3-name').textContent = stop.name;
+  document.getElementById('s3-loc').textContent = stop.loc;
+  document.getElementById('snum').textContent = curStop + 1;
+
+  // Update map SVG
+  document.getElementById('s3-track').setAttribute('stroke', c);
+  document.getElementById('s3-pulse').setAttribute('fill', c);
+  document.getElementById('s3-station-outer').setAttribute('stroke', c);
+  document.getElementById('s3-station-inner').setAttribute('fill', c);
+  document.getElementById('s3-map-label').textContent = stop.loc;
+  document.getElementById('s3-rent-bubble').textContent = stop.rent + '/mo';
+  document.getElementById('s3-walk-bubble').textContent = stop.walk;
 
   // Tags
-  document.getElementById('s2-tags').innerHTML = stop.tags.map(t => {
+  document.getElementById('s3-tags').innerHTML = stop.tags.map(t => {
     const [cls, label] = t.split(':');
     return `<span class="tag ${cls}">${label}</span>`;
   }).join('');
 
   // Metrics
-  document.getElementById('s2-metrics').innerHTML = `
+  document.getElementById('s3-metrics').innerHTML = `
     <div>
       <div class="m-label">Avg 1BR Rent</div>
-      <div class="m-val" style="color:var(--coral);">${stop.rent}/mo</div>
-      <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${stop.rentPct}%;background:var(--coral);"></div></div>
+      <div class="m-val" style="color:var(--maroon);">${stop.rent}/mo</div>
+      <div class="mbar-bg"><div class="mbar-fill" style="width:${stop.rentPct}%;background:var(--maroon);"></div></div>
     </div>
     <div>
       <div class="m-label">Multi-Family Housing %</div>
-      <div class="m-val" style="color:var(--teal);">${stop.mf}%</div>
-      <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${stop.mfPct}%;background:var(--teal);"></div></div>
+      <div class="m-val" style="color:var(--navy);">${stop.mf}%</div>
+      <div class="mbar-bg"><div class="mbar-fill" style="width:${stop.mfPct}%;background:var(--navy);"></div></div>
     </div>
     <div>
-      <div class="m-label">Buildings within 0.5 mi</div>
-      <div class="m-val">${stop.bldg.toLocaleString()}</div>
-      <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${stop.bldgPct}%;background:var(--amber);"></div></div>
-    </div>
-    <div>
-      <div class="m-label">Avg Walk Distance to Station</div>
+      <div class="m-label">Avg Walk to Station</div>
       <div class="m-val">${stop.walk}</div>
-      <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${stop.walkPct}%;background:var(--teal);"></div></div>
+      <div class="mbar-bg"><div class="mbar-fill" style="width:${stop.walkPct}%;background:var(--mustard);"></div></div>
     </div>
     <div>
       <div class="m-label">Transit Commute Rate</div>
-      <div class="m-val" style="color:var(--teal);">${stop.transit}</div>
-      <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${parseInt(stop.transit)}%;background:var(--teal);"></div></div>
+      <div class="m-val" style="color:var(--navy);">${stop.transit}</div>
+      <div class="mbar-bg"><div class="mbar-fill" style="width:${parseInt(stop.transit)}%;background:var(--navy);"></div></div>
     </div>
   `;
 
-  document.getElementById('s2-insight').innerHTML = `💡<br>${stop.insight}`;
+  document.getElementById('s3-insight').innerHTML = `<strong>Story Insight</strong><br>${stop.insight}`;
 
-  // Map
-  document.getElementById('s2-map').innerHTML = renderStopMap(stop, line);
+  const prev = document.getElementById('s3-prev');
+  prev.disabled = curStop === 0;
+  prev.style.opacity = curStop === 0 ? '.4' : '1';
 
-  // Buttons
-  document.getElementById('btn-prev').disabled = currentStop === 0;
-  document.getElementById('btn-prev').style.opacity = currentStop === 0 ? '.4' : '1';
-  document.getElementById('btn-prev').textContent = currentStop > 0 ? `← ${line.stops[currentStop-1].name.split(' ')[0]}` : '← Prev';
-  if (currentStop === 4) {
-    document.getElementById('btn-next').textContent = 'See the pattern →';
-    document.getElementById('btn-next').onclick = () => go(3);
+  const next = document.getElementById('s3-next');
+  if (curStop === 4) {
+    next.textContent = 'See the pattern';
+    next.onclick = () => go(4);
   } else {
-    document.getElementById('btn-next').textContent = `${line.stops[currentStop+1].name.split(' ')[0]} →`;
-    document.getElementById('btn-next').onclick = nextStop;
+    next.textContent = 'Next stop';
+    next.onclick = nextStop;
   }
 
-  renderStopTimeline();
+  renderStopTl();
 }
 
-function renderStopMap(stop, line) {
-  const lc = line.color.replace('var(--','').replace(')','');
-  const colors = { red:'#DA291C', orange:'#ED8B00', green:'#00843D', blue:'#0066CC', cr:'#80276C' };
-  const c = colors[selectedLine] || '#DA291C';
-  return `
-  <div style="position:absolute;top:16px;left:16px;background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);">${stop.loc}</div>
-  <svg width="100%" height="100%" viewBox="0 0 760 744" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="760" height="744" fill="#E2D9CD"/>
-    <line x1="0"   y1="180" x2="760" y2="180" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="0"   y1="260" x2="760" y2="260" stroke="#D0C8BC" stroke-width="7"/>
-    <line x1="0"   y1="360" x2="760" y2="360" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="0"   y1="460" x2="760" y2="460" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="0"   y1="560" x2="760" y2="560" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="130" y1="0"   x2="130" y2="744" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="260" y1="0"   x2="260" y2="744" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="390" y1="0"   x2="390" y2="744" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="520" y1="0"   x2="520" y2="744" stroke="#D0C8BC" stroke-width="5"/>
-    <line x1="650" y1="0"   x2="650" y2="744" stroke="#D0C8BC" stroke-width="5"/>
-    <rect x="20"  y="190" width="95"  height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="140" y="190" width="105" height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="270" y="190" width="105" height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="400" y="190" width="105" height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="530" y="190" width="105" height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="660" y="190" width="85"  height="55" rx="3" fill="#CBC3B7"/>
-    <rect x="20"  y="275" width="95"  height="70" rx="3" fill="#CBC3B7"/>
-    <rect x="140" y="275" width="105" height="70" rx="3" fill="#CBC3B7"/>
-    <rect x="270" y="275" width="105" height="70" rx="3" fill="#CBC3B7"/>
-    <rect x="400" y="275" width="105" height="70" rx="3" fill="#CBC3B7"/>
-    <rect x="530" y="275" width="105" height="70" rx="3" fill="#CBC3B7"/>
-    <rect x="140" y="370" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="270" y="370" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="400" y="370" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="530" y="370" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="660" y="370" width="85"  height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="20"  y="470" width="95"  height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="140" y="470" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="270" y="470" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="530" y="470" width="105" height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="660" y="470" width="85"  height="75" rx="3" fill="#CBC3B7"/>
-    <rect x="20"  y="575" width="95"  height="65" rx="3" fill="#CBC3B7"/>
-    <rect x="140" y="575" width="105" height="65" rx="3" fill="#CBC3B7"/>
-    <rect x="270" y="575" width="105" height="65" rx="3" fill="#CBC3B7"/>
-    <rect x="400" y="575" width="105" height="65" rx="3" fill="#CBC3B7"/>
-    <rect x="530" y="575" width="105" height="65" rx="3" fill="#CBC3B7"/>
-    <rect x="660" y="575" width="85"  height="65" rx="3" fill="#CBC3B7"/>
-    <!-- Park block -->
-    <rect x="400" y="370" width="105" height="75" rx="5" fill="#B8CDB0" opacity=".8"/>
-    <!-- Line track -->
-    <path d="M0 260 L760 260" stroke="${c}" stroke-width="7" stroke-linecap="round"/>
-    <!-- Station -->
-    <circle cx="380" cy="260" r="22" fill="${c}" opacity=".15"/>
-    <circle cx="380" cy="260" r="30" fill="${c}" opacity=".06"/>
-    <circle cx="380" cy="260" r="14" fill="#fff" stroke="${c}" stroke-width="4"/>
-    <circle cx="380" cy="260" r="6" fill="${c}"/>
-    <!-- Walkability ring -->
-    <circle cx="380" cy="260" r="170" fill="none" stroke="#2AB5B2" stroke-width="2" stroke-dasharray="7,5" opacity=".55"/>
-    <!-- Station label -->
-    <rect x="270" y="288" width="220" height="26" rx="5" fill="white" opacity=".88"/>
-    <text x="380" y="305" fill="${c}" font-size="11" font-family="Nunito" font-weight="800" text-anchor="middle">🚇 ${stop.name}</text>
-    <!-- Rent bubble -->
-    <rect x="50" y="470" width="145" height="46" rx="5" fill="#FBE9C0" stroke="#E8A022" stroke-width="1.5"/>
-    <text x="122" y="489" fill="#9A6900" font-size="9" font-family="Nunito" font-weight="800" text-anchor="middle">AVG RENT</text>
-    <text x="122" y="508" fill="#9A6900" font-size="17" font-family="DM Serif Display" text-anchor="middle">${stop.rent}/mo</text>
-    <!-- Walk dist bubble -->
-    <rect x="560" y="470" width="145" height="46" rx="5" fill="#D0EFEE" stroke="#2AB5B2" stroke-width="1.5"/>
-    <text x="632" y="489" fill="#1A8A88" font-size="9" font-family="Nunito" font-weight="800" text-anchor="middle">AVG WALK</text>
-    <text x="632" y="508" fill="#1A8A88" font-size="17" font-family="DM Serif Display" text-anchor="middle">${stop.walk}</text>
-  </svg>`;
-}
+function nextStop() { if (curStop < 4) { curStop++; renderStop(); } }
+function prevStop() { if (curStop > 0) { curStop--; renderStop(); } }
+function jumpStop(i) { curStop = i; renderStop(); }
 
-function nextStop() {
-  if (currentStop < 4) { currentStop++; renderStop(); }
-}
-function prevStop() {
-  if (currentStop > 0) { currentStop--; renderStop(); }
-}
-function jumpStop(i) { currentStop = i; renderStop(); }
-
-// Override go(2) to trigger render
-const _go = go;
-window.go = function(n) {
-  if (n === 2 && !selectedLine) { selectLine('red', document.querySelector('[data-line="red"]')); }
-  if (n === 2) { renderStopTimeline(); renderStop(); }
-  _go(n);
-};
-
-// ══════════════════════════════════════════════
-// TOGGLES
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════
+// MAP TOGGLE (Mismatch Map)
+// ════════════════════════════════════════
 function setMapToggle(btn, view) {
   document.querySelectorAll('#map-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const titles = { density:'% Multi-Family<br>Housing Stock', rent:'Rent Premium<br>vs. Non-MBTA', transit:'Transit<br>Commute Rate' };
+  const titles = {
+    density: '% Multi-Family<br>Housing Stock',
+    rent:    'Rent Premium<br>vs. Non-MBTA',
+    transit: 'Transit<br>Commute Rate'
+  };
   document.getElementById('map-legend-title').innerHTML = titles[view] || titles.density;
 }
 
-function setEquityToggle(btn) {
-  document.querySelectorAll('#equity-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-function setDashToggle(btn) {
-  document.querySelectorAll('#dash-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-let hotspotsVisible = true;
-function toggleHotspots() {
-  hotspotsVisible = !hotspotsVisible;
-  const el = document.getElementById('hotspot-rings');
-  if (el) el.style.opacity = hotspotsVisible ? '1' : '0';
-  const tog = document.getElementById('hotspot-toggle');
-  if (tog) {
-    tog.style.background = hotspotsVisible ? 'var(--teal)' : 'var(--border)';
-    tog.querySelector('div').style.right = hotspotsVisible ? '2px' : 'auto';
-    tog.querySelector('div').style.left  = hotspotsVisible ? 'auto' : '2px';
+// ════════════════════════════════════════
+// EQUITY TOGGLE (Who Lives Where)
+// ════════════════════════════════════════
+const eqContent = {
+  income: {
+    title: 'Dominant Income<br>by Municipality',
+    html: `
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:2px;">Income Groups</div>
+        <div style="display:flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;"><div style="width:11px;height:11px;border-radius:2px;background:#6B2C5A;"></div>Upper ($150K+)</div>
+        <div style="display:flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;"><div style="width:11px;height:11px;border-radius:2px;background:#C87820;"></div>Upper-Middle ($100-150K)</div>
+        <div style="display:flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;"><div style="width:11px;height:11px;border-radius:2px;background:#E8A022;"></div>Middle ($50-100K)</div>
+        <div style="display:flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;"><div style="width:11px;height:11px;border-radius:2px;background:#F0C060;"></div>Lower-Middle ($25-50K)</div>
+        <div style="display:flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;"><div style="width:11px;height:11px;border-radius:2px;background:var(--light);border:1px solid var(--border);"></div>Low (under $25K)</div>
+      </div>
+      <hr class="wf">
+      <div class="overline" style="color:var(--maroon);margin-bottom:6px;">Key Pattern</div>
+      <p style="font-family:'Literata',serif;font-size:11px;color:var(--mid);margin-bottom:8px;">Lower-middle income communities show the highest average over-density (7.9%). People are crowding into limited affordable housing near transit.</p>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--maroon-lt);border:1.5px solid var(--maroon);border-radius:3px;padding:10px 12px;">
+          <div class="subhead" style="font-size:13px;color:var(--ink);letter-spacing:.02em;margin-bottom:3px;">Lynn, MA</div>
+          <div style="display:flex;gap:4px;"><span class="tag tag-maroon" style="font-size:9px;">Over-density 12.6%</span><span class="tag tag-navy" style="font-size:9px;">POC 62%</span></div>
+        </div>
+        <div style="background:var(--maroon-lt);border:1.5px solid var(--maroon);border-radius:3px;padding:10px 12px;">
+          <div class="subhead" style="font-size:13px;color:var(--ink);letter-spacing:.02em;margin-bottom:3px;">Everett, MA</div>
+          <div style="display:flex;gap:4px;"><span class="tag tag-maroon" style="font-size:9px;">Over-density 10.1%</span><span class="tag tag-navy" style="font-size:9px;">POC 58%</span></div>
+        </div>
+      </div>
+      <div style="background:var(--mustard-lt);border-left:3px solid var(--mustard);border-radius:2px;padding:10px 12px;font-family:'Literata',serif;font-size:12px;line-height:1.55;color:var(--ink);margin-top:4px;"><strong>Key:</strong> Lower-middle income areas show the highest average over-density (7.9%). People are crowding into the limited affordable housing near transit.</div>`
+  },
+  poc: {
+    title: '% People of Color<br>by Municipality',
+    html: `
+      <div style="height:8px;border-radius:2px;background:linear-gradient(90deg,#F5E8C8,#7A1E2E);margin-bottom:4px;"></div>
+      <div style="display:flex;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);margin-bottom:12px;"><span>Low (0%)</span><span>High (100%)</span></div>
+      <hr class="wf">
+      <div class="overline" style="color:var(--maroon);margin-bottom:6px;">Highest POC Concentrations</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--maroon-lt);border-radius:3px;border:1.5px solid var(--maroon);">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">Randolph</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--maroon);">72%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--maroon-lt);border-radius:3px;border:1.5px solid var(--maroon);">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">Brockton</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--maroon);">68%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--maroon-lt);border-radius:3px;border:1.5px solid var(--maroon);">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">Lynn</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--maroon);">62%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--maroon-lt);border-radius:3px;border:1.5px solid var(--maroon);">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">Everett</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--maroon);">58%</span>
+        </div>
+      </div>
+      <div style="background:var(--mustard-lt);border-left:3px solid var(--mustard);border-radius:2px;padding:10px 12px;font-family:'Literata',serif;font-size:12px;line-height:1.55;color:var(--ink);margin-top:4px;"><strong>Pattern:</strong> Communities with higher POC populations tend to cluster in areas with both high transit use and high over-density, suggesting these residents bear a disproportionate share of the housing crunch.</div>`
+  },
+  overdensity: {
+    title: 'Over-Density %<br>by Municipality',
+    html: `
+      <div style="height:8px;border-radius:2px;background:linear-gradient(90deg,var(--navy-lt),var(--navy));margin-bottom:4px;"></div>
+      <div style="display:flex;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mid);margin-bottom:12px;"><span>Low (0%)</span><span>High (&gt;15%)</span></div>
+      <hr class="wf">
+      <div class="overline" style="color:var(--navy);margin-bottom:4px;">What is Over-Density?</div>
+      <p style="font-family:'Literata',serif;font-size:11px;color:var(--mid);line-height:1.5;margin-bottom:10px;">The share of parcels exceeding their zoned density. A higher percentage means more people are packed into spaces not designed for them.</p>
+      <div class="overline" style="color:var(--maroon);margin-bottom:6px;">Most Over-Dense Communities</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--navy-lt);border-radius:3px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;">Essex</span>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:80px;height:5px;background:var(--light);border-radius:2px;"><div style="width:100%;height:100%;background:var(--navy);border-radius:2px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);">54%</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--navy-lt);border-radius:3px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;">Walpole</span>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:80px;height:5px;background:var(--light);border-radius:2px;"><div style="width:31%;height:100%;background:var(--navy);border-radius:2px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);">16.7%</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--navy-lt);border-radius:3px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;">Lynn</span>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:80px;height:5px;background:var(--light);border-radius:2px;"><div style="width:23%;height:100%;background:var(--navy);border-radius:2px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);">12.6%</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--navy-lt);border-radius:3px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;">Lexington</span>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:80px;height:5px;background:var(--light);border-radius:2px;"><div style="width:21%;height:100%;background:var(--navy);border-radius:2px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);">11.6%</span></div>
+        </div>
+      </div>
+      <div style="background:var(--mustard-lt);border-left:3px solid var(--mustard);border-radius:2px;padding:10px 12px;font-family:'Literata',serif;font-size:12px;line-height:1.55;color:var(--ink);margin-top:4px;"><strong>Note:</strong> All top 15 over-dense municipalities are MBTA Communities, meaning the Act directly targets them for upzoning relief.</div>`
   }
+};
+
+function setEqToggle(btn) {
+  document.querySelectorAll('#eq-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const views = ['income','poc','overdensity'];
+  const idx = Array.from(document.querySelectorAll('#eq-toggle .toggle-btn')).indexOf(btn);
+  const key = views[idx] || 'income';
+  document.getElementById('eq-panel-title').innerHTML = eqContent[key].title;
+  document.getElementById('eq-panel-content').innerHTML = eqContent[key].html;
 }
 
-// Initialize
-updateChrome();
+// Initialize equity panel
+document.getElementById('eq-panel-content').innerHTML = eqContent.income.html;
+
+// Initialize stop timeline
+renderStopTl();
 </script>
 </body>
 </html>
